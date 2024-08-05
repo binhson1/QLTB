@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -74,8 +75,10 @@ public class Device implements Serializable {
     @Column(name = "status")
     private Integer status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
+    @JsonIgnore
     private Set<Report> reportSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
+    @JsonIgnore
     private Set<Locationhistory> locationhistorySet;
     @JoinColumn(name = "device_category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -84,6 +87,7 @@ public class Device implements Serializable {
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
+    @JsonIgnore
     private Set<Schedulemaintenance> schedulemaintenanceSet;
 
     public Device() {

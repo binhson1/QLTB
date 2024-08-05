@@ -6,9 +6,11 @@ package com.husony.configs;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -23,6 +25,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
+@ComponentScan(basePackages = {
+    "com.husony.controllers",
+    "com.husony.repository",
+    "com.husony.service"
+})
 public class WebAppContextConfigs implements WebMvcConfigurer {
 
     @Override

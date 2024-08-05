@@ -50,6 +50,7 @@ class Device(models.Model):
     bought_date = models.DateField()
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE)
     device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE)
+    location_history = models.ManyToManyField("Location", through="LocationHistory")
 
     class StatusChoice(models.IntegerChoices):
         ACTIVE = 1
@@ -73,13 +74,18 @@ class ScheduleRepair(models.Model):
 
 
 class ScheduleMaintenance(models.Model):
-    device = models.ForeignKey('Device', on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True)
+    date = models.DateField()
     frequency = models.CharField(max_length=50)
     maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
+    device = models.ManyToManyField("Device", through="Device_Maintenance")
 
     class Meta:
         db_table = 'ScheduleMaintenance'
+
+
+class Device_Maintenance(models.Model):
+    device = models.ForeignKey("Device", on_delete=models.CASCADE)
+    schedule_maintenance = models.ForeignKey("ScheduleMaintenance", on_delete=models.CASCADE)
 
 
 class Job(models.Model):
@@ -118,7 +124,8 @@ class LocationHistory(models.Model):
     device = models.ForeignKey('Device', on_delete=models.CASCADE)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     begin_date = models.DateField(auto_now=True)
-    end_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    active = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'LocationHistory'
@@ -136,4 +143,3 @@ class RepairType(models.Model):
 
     class Meta:
         db_table = 'RepairType'
-

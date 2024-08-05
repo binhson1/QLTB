@@ -1,10 +1,3 @@
-
-<%-- 
-    Document   : base
-    Created on : Jul 15, 2024, 7:38:30 AM
-    Author     : admin
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -22,7 +15,8 @@
     <body>
         <tiles:insertAttribute name="header" />
         
-        <div class="container">
+        <div class="container-fluid d-flex p-0" style="min-height: 80vh;">
+            <tiles:insertAttribute name="sidebar" />
             <tiles:insertAttribute name="content" />
         </div>
         

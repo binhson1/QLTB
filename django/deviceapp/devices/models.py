@@ -47,7 +47,7 @@ class Device(models.Model):
     name = models.CharField(max_length=50, null=False)
     image = models.TextField()
     descriptions = models.TextField()
-    bought_date = models.DateField(auto_now=True)
+    bought_date = models.DateField()
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE)
     device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE)
 
@@ -65,7 +65,7 @@ class Device(models.Model):
 class ScheduleRepair(models.Model):
     date = models.DateField(auto_now=True)
     cost = models.FloatField(null=False)
-    device = models.ForeignKey('Device', on_delete=models.CASCADE)
+    report = models.ForeignKey('Report', on_delete=models.CASCADE)
     repair_type = models.ForeignKey('RepairType', on_delete=models.CASCADE)
 
     class Meta:
@@ -74,9 +74,8 @@ class ScheduleRepair(models.Model):
 
 class ScheduleMaintenance(models.Model):
     device = models.ForeignKey('Device', on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
     frequency = models.CharField(max_length=50)
-    next_date = models.DateField(auto_now=True)
-    reminder_sent = models.BooleanField()
     maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
 
     class Meta:

@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'devicedb',
         'USER': 'root',
-        'PASSWORD': 'Sonhaian123.',
+        'PASSWORD': '123456',
         'HOST': ''  # mặc định localhost
     }
 }

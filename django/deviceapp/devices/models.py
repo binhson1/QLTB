@@ -86,6 +86,8 @@ class ScheduleMaintenance(models.Model):
 class Device_Maintenance(models.Model):
     device = models.ForeignKey("Device", on_delete=models.CASCADE)
     schedule_maintenance = models.ForeignKey("ScheduleMaintenance", on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'DeviceMaintenance'
 
 
 class Job(models.Model):

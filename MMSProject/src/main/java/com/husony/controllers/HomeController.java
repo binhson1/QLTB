@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.husony.service.CategoryService;
 
 /**
  *
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
     @Autowired
     private DeviceService deviceService;
+    
+    
     
     @RequestMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params) {

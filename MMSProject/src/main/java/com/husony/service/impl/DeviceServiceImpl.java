@@ -24,5 +24,15 @@ public class DeviceServiceImpl implements DeviceService {
     public List<Device> getDevices() {
         return this.deviceRepo.getDevices();
     }
+
+    @Override
+    public void addOrUpdate(Device d) {
+        this.deviceRepo.addOrUpdate(d);
+    }
+
+    @Override
+    public Device getDeviceById(int id) {
+        return this.deviceRepo.getDeviceById(id);
+    }
     
 }

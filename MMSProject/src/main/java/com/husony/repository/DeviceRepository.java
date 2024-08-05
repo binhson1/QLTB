@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface DeviceRepository {
     List<Device> getDevices();
+    void addOrUpdate(Device d);
+    Device getDeviceById(int id);
 }

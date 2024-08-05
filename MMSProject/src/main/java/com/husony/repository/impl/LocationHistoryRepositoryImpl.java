@@ -5,11 +5,12 @@
 package com.husony.repository.impl;
 
 import com.husony.pojo.Device;
-import com.husony.repository.DeviceRepository;
-import java.util.List;
+import com.husony.pojo.Locationhistory;
+import com.husony.repository.LocationHistoryRepository;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,35 +24,23 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class DeviceRepositoryImpl implements DeviceRepository {
+public class LocationHistoryRepositoryImpl implements LocationHistoryRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Device> getDevices() {
+    public Locationhistory getLocationByDevice(Device d) {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Device> q = b.createQuery(Device.class);
-        Root root = q.from(Device.class);
+        CriteriaQuery<Locationhistory> q = b.createQuery(Locationhistory.class);
+        Root root = q.from(Locationhistory.class);
         q.select(root);
+        Predicate p1 = b.equal(root.get("deviceId").as(Device.class), d);
+        Predicate p2 = b.equal(root.get("active").as(Boolean.class), true);
+        q = q.where(b.and(p1, p2));
         Query query = s.createQuery(q);
-        return query.getResultList();
+        return s.get(Locationhistory.class, query.getFirstResult());
     }
 
-    @Override
-    public void addOrUpdate(Device d) {
-        Session s = this.factory.getObject().getCurrentSession();
-        if (d.getId() != null) {
-            s.update(d);
-        } else {
-            s.save(d);
-        }
-    }
-
-    @Override
-    public Device getDeviceById(int id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Device.class, id);
-    }
-    
 }

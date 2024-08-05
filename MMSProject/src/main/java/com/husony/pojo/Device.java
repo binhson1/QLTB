@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,10 +25,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -76,9 +79,11 @@ public class Device implements Serializable {
     private Integer status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
     @JsonIgnore
-    private Set<Report> reportSet;
+    private Set<DeviceMaintenance> deviceMaintenanceSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
     @JsonIgnore
+    private Set<Report> reportSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId", fetch = FetchType.EAGER)
     private Set<Locationhistory> locationhistorySet;
     @JoinColumn(name = "device_category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -86,9 +91,11 @@ public class Device implements Serializable {
     @JoinColumn(name = "manufacturer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
-    @JsonIgnore
-    private Set<Schedulemaintenance> schedulemaintenanceSet;
+    
+    @Transient
+    private Location location;
+    @Transient
+    private MultipartFile file;
 
     public Device() {
     }
@@ -154,6 +161,15 @@ public class Device implements Serializable {
     }
 
     @XmlTransient
+    public Set<DeviceMaintenance> getDeviceMaintenanceSet() {
+        return deviceMaintenanceSet;
+    }
+
+    public void setDeviceMaintenanceSet(Set<DeviceMaintenance> deviceMaintenanceSet) {
+        this.deviceMaintenanceSet = deviceMaintenanceSet;
+    }
+
+    @XmlTransient
     public Set<Report> getReportSet() {
         return reportSet;
     }
@@ -187,15 +203,6 @@ public class Device implements Serializable {
         this.manufacturerId = manufacturerId;
     }
 
-    @XmlTransient
-    public Set<Schedulemaintenance> getSchedulemaintenanceSet() {
-        return schedulemaintenanceSet;
-    }
-
-    public void setSchedulemaintenanceSet(Set<Schedulemaintenance> schedulemaintenanceSet) {
-        this.schedulemaintenanceSet = schedulemaintenanceSet;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -220,5 +227,19 @@ public class Device implements Serializable {
     public String toString() {
         return "com.husony.pojo.Device[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
 }

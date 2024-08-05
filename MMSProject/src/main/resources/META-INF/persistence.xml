@@ -15,6 +15,7 @@
     <class>com.husony.pojo.Repairtype</class>
     <class>com.husony.pojo.User</class>
     <class>com.husony.pojo.Report</class>
+    <class>com.husony.pojo.DeviceMaintenance</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/devicedb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

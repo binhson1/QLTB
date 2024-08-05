@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Locationhistory.findAll", query = "SELECT l FROM Locationhistory l"),
     @NamedQuery(name = "Locationhistory.findById", query = "SELECT l FROM Locationhistory l WHERE l.id = :id"),
     @NamedQuery(name = "Locationhistory.findByBeginDate", query = "SELECT l FROM Locationhistory l WHERE l.beginDate = :beginDate"),
-    @NamedQuery(name = "Locationhistory.findByEndDate", query = "SELECT l FROM Locationhistory l WHERE l.endDate = :endDate")})
+    @NamedQuery(name = "Locationhistory.findByEndDate", query = "SELECT l FROM Locationhistory l WHERE l.endDate = :endDate"),
+    @NamedQuery(name = "Locationhistory.findByActive", query = "SELECT l FROM Locationhistory l WHERE l.active = :active")})
 public class Locationhistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,11 +49,13 @@ public class Locationhistory implements Serializable {
     @Column(name = "begin_date")
     @Temporal(TemporalType.DATE)
     private Date beginDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "active")
+    private boolean active;
     @JoinColumn(name = "device_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Device deviceId;
@@ -66,10 +70,10 @@ public class Locationhistory implements Serializable {
         this.id = id;
     }
 
-    public Locationhistory(Long id, Date beginDate, Date endDate) {
+    public Locationhistory(Long id, Date beginDate, boolean active) {
         this.id = id;
         this.beginDate = beginDate;
-        this.endDate = endDate;
+        this.active = active;
     }
 
     public Long getId() {
@@ -94,6 +98,14 @@ public class Locationhistory implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Device getDeviceId() {

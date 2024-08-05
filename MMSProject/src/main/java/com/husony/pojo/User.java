@@ -5,6 +5,7 @@
 package com.husony.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,10 +37,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+    @NamedQuery(name = "User.findByLastLogin", query = "SELECT u FROM User u WHERE u.lastLogin = :lastLogin"),
+    @NamedQuery(name = "User.findByIsSuperuser", query = "SELECT u FROM User u WHERE u.isSuperuser = :isSuperuser"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
     @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "User.findByIsStaff", query = "SELECT u FROM User u WHERE u.isStaff = :isStaff"),
     @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive"),
+    @NamedQuery(name = "User.findByDateJoined", query = "SELECT u FROM User u WHERE u.dateJoined = :dateJoined"),
     @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")})
@@ -54,6 +61,13 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     @Column(name = "password")
     private String password;
+    @Column(name = "last_login")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastLogin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "is_superuser")
+    private boolean isSuperuser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
@@ -71,8 +85,17 @@ public class User implements Serializable {
     private String lastName;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "is_staff")
+    private boolean isStaff;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "is_active")
     private boolean isActive;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "date_joined")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateJoined;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -106,13 +129,16 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Long id, String password, String username, String firstName, String lastName, boolean isActive, String avatar, String userRole, String email, String phone) {
+    public User(Long id, String password, boolean isSuperuser, String username, String firstName, String lastName, boolean isStaff, boolean isActive, Date dateJoined, String avatar, String userRole, String email, String phone) {
         this.id = id;
         this.password = password;
+        this.isSuperuser = isSuperuser;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isStaff = isStaff;
         this.isActive = isActive;
+        this.dateJoined = dateJoined;
         this.avatar = avatar;
         this.userRole = userRole;
         this.email = email;
@@ -133,6 +159,22 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public boolean getIsSuperuser() {
+        return isSuperuser;
+    }
+
+    public void setIsSuperuser(boolean isSuperuser) {
+        this.isSuperuser = isSuperuser;
     }
 
     public String getUsername() {
@@ -159,12 +201,28 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public boolean getIsStaff() {
+        return isStaff;
+    }
+
+    public void setIsStaff(boolean isStaff) {
+        this.isStaff = isStaff;
+    }
+
     public boolean getIsActive() {
         return isActive;
     }
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public Date getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(Date dateJoined) {
+        this.dateJoined = dateJoined;
     }
 
     public String getAvatar() {

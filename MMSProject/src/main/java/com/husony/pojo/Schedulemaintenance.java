@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,11 +57,10 @@ public class Schedulemaintenance implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "frequency")
     private String frequency;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "scheduleMaintenanceId")
+    private Set<DeviceMaintenance> deviceMaintenanceSet;
     @OneToMany(mappedBy = "maintenanceId")
     private Set<Job> jobSet;
-    @JoinColumn(name = "device_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Device deviceId;
     @JoinColumn(name = "maintenance_type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Maintenancetype maintenanceTypeId;
@@ -103,20 +103,21 @@ public class Schedulemaintenance implements Serializable {
     }
 
     @XmlTransient
+    public Set<DeviceMaintenance> getDeviceMaintenanceSet() {
+        return deviceMaintenanceSet;
+    }
+
+    public void setDeviceMaintenanceSet(Set<DeviceMaintenance> deviceMaintenanceSet) {
+        this.deviceMaintenanceSet = deviceMaintenanceSet;
+    }
+
+    @XmlTransient
     public Set<Job> getJobSet() {
         return jobSet;
     }
 
     public void setJobSet(Set<Job> jobSet) {
         this.jobSet = jobSet;
-    }
-
-    public Device getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Device deviceId) {
-        this.deviceId = deviceId;
     }
 
     public Maintenancetype getMaintenanceTypeId() {

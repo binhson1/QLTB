@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -54,6 +55,7 @@ public class Location implements Serializable {
     @Column(name = "address")
     private String address;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
+    @JsonIgnore
     private Set<Locationhistory> locationhistorySet;
 
     public Location() {

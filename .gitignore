@@ -1,2 +1,6 @@
 /MMSProject/target/
 django/.idea
+.vscode
+devicedb.sql
+/django/deviceapp/devices/__pycache__
+devicedb.sql

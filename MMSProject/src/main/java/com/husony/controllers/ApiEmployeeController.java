@@ -4,14 +4,13 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Devicecategory;
-import com.husony.service.CategoryService;
+import com.husony.pojo.Employee;
+import com.husony.service.EmployeeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,19 +23,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @Controller
 @RequestMapping("/api")
-@CrossOrigin
-public class ApiCategoryController {
-    @Autowired
-    private CategoryService cateService;
+public class ApiEmployeeController {
     
-    @DeleteMapping("/category/delete/{categoryId}")
+    @Autowired
+    private EmployeeService employeeService;
+    
+    @DeleteMapping("/employee/delete/{employeeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "categoryId") int id) {
-        this.cateService.deleteCate(id);
+    public void delete(@PathVariable(value = "employeeId") int id){
+        this.employeeService.deleteEmployee(id);
     }
     
-    @GetMapping("/categories")
-    public ResponseEntity<List<Devicecategory>> list() {
-        return new ResponseEntity<>(this.cateService.getCates(), HttpStatus.OK);
+    @GetMapping("/employees")
+    public ResponseEntity<List<Employee>> list(){
+        return new ResponseEntity<>(this.employeeService.getEmployee(), HttpStatus.OK);
     }
 }

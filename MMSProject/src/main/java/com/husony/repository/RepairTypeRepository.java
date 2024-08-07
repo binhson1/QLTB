@@ -4,16 +4,16 @@
  */
 package com.husony.repository;
 
-import com.husony.pojo.Devicecategory;
+import com.husony.pojo.Repairtype;
 import java.util.List;
 
 /**
  *
  * @author ACER
  */
-public interface CategoryRepository {
-    List<Devicecategory> getCates();
-    void addOrUpdateCate(Devicecategory c);
-    Devicecategory getCateById(long id);
-    void deleteCate(long id);
+public interface RepairTypeRepository {
+    List<Repairtype> getRepairType();
+    Repairtype getRepairTypeById(int id);
+    void addOrUpdateRepairType(Repairtype r);
+    void deleteRepairType(int id);
 }

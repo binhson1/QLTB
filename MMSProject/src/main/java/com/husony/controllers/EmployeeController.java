@@ -4,8 +4,8 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Manufacturer;
-import com.husony.service.ManufacturerService;
+import com.husony.pojo.Employee;
+import com.husony.service.EmployeeService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,40 +21,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author ACER
  */
 @Controller
-public class ManufacturerController {
+public class EmployeeController {
     
     @Autowired
-    private ManufacturerService manuService;
+    private EmployeeService employeeService;
     
-    @GetMapping("/manufacturer/add")
-    public String createView(Model model) {
-        model.addAttribute("manufacturer", new Manufacturer());
-        return "addManu";
+    @RequestMapping("/employee")
+    public String employee(Model model){
+        
+        model.addAttribute("employee", this.employeeService.getEmployee());
+        return "employee";
     }
     
-    @PostMapping("/manufacturer/add")
+    @GetMapping("/employee/add")
+    public String createView(Model model) {
+        
+        model.addAttribute("employee", new Employee());
+        return "addEmployee";
+    }
+    
+    @PostMapping("/employee/add")
     public String createView(Model model, 
-            @ModelAttribute(value = "manufacturer") @Valid Manufacturer m,
+            @ModelAttribute(value = "employee") @Valid Employee c,
             BindingResult rs) {
         if (rs.hasErrors())
-            return "addManu";
+            return "addEmployee";
         
         try {
-            this.manuService.addOrUpdateManu(m);
+            this.employeeService.addOrUpdateEmployee(c);
             
-            return "redirect:/manufacturer";            
+            return "redirect:/employee";
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }
         
-        return "addManu";
-    }
-    
-    @RequestMapping("/manufacturer")
-    public String manu(Model model){        
-        
-        model.addAttribute("manu", this.manuService.getManufac());
-        
-        return "manufacturer";
+        return "addEmployee";
     }
 }
+

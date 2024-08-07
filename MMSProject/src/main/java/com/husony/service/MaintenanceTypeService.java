@@ -4,16 +4,16 @@
  */
 package com.husony.service;
 
-import com.husony.pojo.Devicecategory;
+import com.husony.pojo.Maintenancetype;
 import java.util.List;
 
 /**
  *
  * @author ACER
  */
-public interface CategoryService {
-    List<Devicecategory> getCates();
-    void addOrUpdateCate(Devicecategory c);
-    Devicecategory getCateById(long id);
-    void deleteCate(long id);
+public interface MaintenanceTypeService {
+     List<Maintenancetype> getMaintenanceType();
+    Maintenancetype getMaintenanceTypeById(int id);
+    void addOrUpdateMaintenanceType(Maintenancetype m);
+    void deleteMaintenanceType(int id);
 }

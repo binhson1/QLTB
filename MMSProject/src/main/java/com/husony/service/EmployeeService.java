@@ -4,16 +4,16 @@
  */
 package com.husony.service;
 
-import com.husony.pojo.Devicecategory;
+import com.husony.pojo.Employee;
 import java.util.List;
 
 /**
  *
  * @author ACER
  */
-public interface CategoryService {
-    List<Devicecategory> getCates();
-    void addOrUpdateCate(Devicecategory c);
-    Devicecategory getCateById(long id);
-    void deleteCate(long id);
+public interface EmployeeService {
+    List<Employee> getEmployee();
+    Employee getEmployeeById(int id);
+    void addOrUpdateEmployee(Employee e);
+    void deleteEmployee(int id);
 }

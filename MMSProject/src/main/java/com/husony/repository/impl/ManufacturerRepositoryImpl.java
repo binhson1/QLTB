@@ -24,6 +24,7 @@ import com.husony.repository.ManufacturerRepository;
 @Repository
 @Transactional
 public class ManufacturerRepositoryImpl implements ManufacturerRepository{
+    
     @Autowired
     private LocalSessionFactoryBean factory;
     

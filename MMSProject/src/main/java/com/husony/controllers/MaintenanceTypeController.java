@@ -4,8 +4,8 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Manufacturer;
-import com.husony.service.ManufacturerService;
+import com.husony.pojo.Maintenancetype;
+import com.husony.service.MaintenanceTypeService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,40 +21,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author ACER
  */
 @Controller
-public class ManufacturerController {
+public class MaintenanceTypeController {
     
     @Autowired
-    private ManufacturerService manuService;
+    private MaintenanceTypeService maintenTypeService;
     
-    @GetMapping("/manufacturer/add")
-    public String createView(Model model) {
-        model.addAttribute("manufacturer", new Manufacturer());
-        return "addManu";
+    @RequestMapping("/maintenancetype")
+    public String maintenc(Model model){
+        model.addAttribute("maintenancetyp", this.maintenTypeService.getMaintenanceType());
+        return "maintenanceType";
+    }        
+    
+    @GetMapping("/maintenancetype/add")
+    public String createView(Model model){
+        model.addAttribute("maintenancetype", new Maintenancetype());
+        return "addMaintenanceType";
     }
-    
-    @PostMapping("/manufacturer/add")
+    @PostMapping("/maintenancetype/add")
     public String createView(Model model, 
-            @ModelAttribute(value = "manufacturer") @Valid Manufacturer m,
-            BindingResult rs) {
+            @ModelAttribute(value = "maintenancetype") @Valid Maintenancetype m, 
+            BindingResult rs){
         if (rs.hasErrors())
-            return "addManu";
+            return "addMaintenanceType";
         
         try {
-            this.manuService.addOrUpdateManu(m);
+            this.maintenTypeService.addOrUpdateMaintenanceType(m);
             
-            return "redirect:/manufacturer";            
+            return "redirect:/maintenanceType";            
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }
         
-        return "addManu";
+        return "addMaintenanceType";
     }
     
-    @RequestMapping("/manufacturer")
-    public String manu(Model model){        
-        
-        model.addAttribute("manu", this.manuService.getManufac());
-        
-        return "manufacturer";
-    }
 }

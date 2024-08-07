@@ -14,18 +14,60 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+    
+    
     <definition name="category" extends="baseLayout">
         <put-attribute name="title" value="Trang quản lý danh mục" />
         <put-attribute name="content" value="/WEB-INF/pages/category.jsp" />
     </definition>
+    <definition name="addCate" extends="baseLayout">
+        <put-attribute name="title" value="Thêm danh mục" />
+        <put-attribute name="content" value="/WEB-INF/pages/addCategory.jsp" />
+    </definition>
+    
+    
     <definition name="manufacturer" extends="baseLayout">
         <put-attribute name="title" value="Trang quản lý nhà cung cấp" />
         <put-attribute name="content" value="/WEB-INF/pages/manufacturer.jsp" />
     </definition>
-        <definition name="addDevice" extends="baseLayout">
+    <definition name="addManu" extends="baseLayout">
+        <put-attribute name="title" value="Thêm nhà cung cấp" />
+        <put-attribute name="content" value="/WEB-INF/pages/addManufacturer.jsp" />
+    </definition>
+    
+    
+    <definition name="addDevice" extends="baseLayout">
         <put-attribute name="title" value="Qu?n ly thiets b?" />
         <put-attribute name="content" value="/WEB-INF/pages/addDevice.jsp" />
     </definition>
+    
+    <definition name="repairType" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý loại sửa chữa" />
+        <put-attribute name="content" value="/WEB-INF/pages/repairType.jsp" />
+    </definition>
+    <definition name="addRepairType" extends="baseLayout">
+        <put-attribute name="title" value="Thêm loại sửa chữa" />
+        <put-attribute name="content" value="/WEB-INF/pages/addRepairType.jsp" />
+    </definition>
+    
+    <definition name="maintenanceType" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý loại bảo trì" />
+        <put-attribute name="content" value="/WEB-INF/pages/maintenanceType.jsp" />
+    </definition>
+    <definition name="addMaintenanceType" extends="baseLayout">
+        <put-attribute name="title" value="Thêm loại bảo trì" />
+        <put-attribute name="content" value="/WEB-INF/pages/addMaintenanceType.jsp" />
+    </definition>
+    
+     <definition name="employee" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý nhân viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/employee.jsp" />
+    </definition>
+    <definition name="addEmployee" extends="baseLayout">
+        <put-attribute name="title" value="Thêm nhân viên" />
+        <put-attribute name="content" value="/WEB-INF/pages/addEmployee.jsp" />
+    </definition>
+    
     <!--
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản trị sản phẩm" />

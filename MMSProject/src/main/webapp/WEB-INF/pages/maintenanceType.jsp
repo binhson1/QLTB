@@ -1,22 +1,22 @@
 <%-- 
-    Document   : manufacturer
-    Created on : Aug 5, 2024, 4:04:20 PM
+    Document   : maintenancetype
+    Created on : Aug 6, 2024, 3:42:17 PM
     Author     : ACER
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <section class="container">
-    <div class="col-md-10 col-12">
-        <a href="<c:url value="/manufacturer/add"></c:url>"class="btn btn-success m-1">Thêm</a>        
-        <table class="table table-striped">
-            <tr>                
-                <th>Id</th>
-                <th>Tên</th>            
-                <th>Sửa</th>
-            </tr>
-            <c:forEach items="${manu}" var="m">
-                <tr id="manu${m.id}">                
+    <a href="<c:url value="/maintenancetype/add"></c:url>"class="btn btn-success m-1">Thêm</a>
+        <div class="col-md-10 col-12">
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Tên</th>            
+                </tr>
+            <c:forEach items="${maintenancetyp}" var="m">
+                <tr id="maintenancetyp${m.id}">                
                     <td>${m.id}</td>
                     <td>${m.name}</td>                
                     <td>
@@ -26,7 +26,7 @@
                         <button onclick="deleteProduct('${uD}', ${m.id})" class="btn btn-danger">&times;</button>
                     </td>
                 </tr>
-           </c:forEach>
+            </c:forEach>
         </table>
     </div>
 </section>

@@ -4,8 +4,8 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Devicecategory;
-import com.husony.service.CategoryService;
+import com.husony.pojo.Maintenancetype;
+import com.husony.service.MaintenanceTypeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,18 +25,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiCategoryController {
+public class ApiMaintenanceTypeController {
     @Autowired
-    private CategoryService cateService;
+    private MaintenanceTypeService maintenService;
     
-    @DeleteMapping("/category/delete/{categoryId}")
+    @DeleteMapping("/maintenancetype/delete/{maintenancetypeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "categoryId") int id) {
-        this.cateService.deleteCate(id);
+    public void delete(@PathVariable(value = "maintenancetypeId") int id) {
+        this.maintenService.deleteMaintenanceType(id);
     }
     
-    @GetMapping("/categories")
-    public ResponseEntity<List<Devicecategory>> list() {
-        return new ResponseEntity<>(this.cateService.getCates(), HttpStatus.OK);
+    @GetMapping("/maintenancetypes")
+    public ResponseEntity<List<Maintenancetype>> list() {
+        return new ResponseEntity<>(this.maintenService.getMaintenanceType(), HttpStatus.OK);
     }
 }

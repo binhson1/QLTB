@@ -4,14 +4,14 @@
  */
 package com.husony.repository.impl;
 
-import com.husony.pojo.Devicecategory;
-import com.husony.repository.CategoryRepository;
+import com.husony.pojo.Repairtype;
+import com.husony.repository.RepairTypeRepository;
 import java.util.List;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -23,44 +23,43 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class CategoryRepositoryImpl implements CategoryRepository{
+public class RepairTypeRepositoryImpl implements RepairTypeRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Override
-    
-    public List<Devicecategory> getCates() {
+    public List<Repairtype> getRepairType() {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Devicecategory> q = b.createQuery(Devicecategory.class);
-        Root root = q.from(Devicecategory.class);
+        CriteriaQuery<Repairtype> q = b.createQuery(Repairtype.class);
+        Root root = q.from(Repairtype.class);
         q.select(root);
         Query query = s.createQuery(q);
         return query.getResultList();
     }
 
     @Override
-    public void addOrUpdateCate(Devicecategory c) {
+    public Repairtype getRepairTypeById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        if(c.getId() != null){
-            s.update(c);
+        return s.get(Repairtype.class, id);
+    }
+
+    @Override
+    public void addOrUpdateRepairType(Repairtype r) {
+        Session s = this.factory.getObject().getCurrentSession();        
+        if(r.getId() != null)
+        {
+            s.update(r);
         }
         else{
-            s.save(c);
+            s.save(r);
         }
     }
 
     @Override
-    public Devicecategory getCateById(long id) {
+    public void deleteRepairType(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Devicecategory.class, id);
-    }
-
-    @Override
-    public void deleteCate(long id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        Devicecategory c = this.getCateById(id);
-        s.delete(c);
+        s.remove(this.getRepairTypeById(id));
     }
     
 }

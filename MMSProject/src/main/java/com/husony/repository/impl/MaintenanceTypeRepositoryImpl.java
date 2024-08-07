@@ -4,14 +4,14 @@
  */
 package com.husony.repository.impl;
 
-import com.husony.pojo.Devicecategory;
-import com.husony.repository.CategoryRepository;
+import com.husony.pojo.Maintenancetype;
+import com.husony.repository.MaintenanceTypeRepository;
 import java.util.List;
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -23,44 +23,45 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class CategoryRepositoryImpl implements CategoryRepository{
+public class MaintenanceTypeRepositoryImpl implements MaintenanceTypeRepository{
+
     @Autowired
     private LocalSessionFactoryBean factory;
     
     @Override
-    
-    public List<Devicecategory> getCates() {
+    public List<Maintenancetype> getMaintenanceType() {
         Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Devicecategory> q = b.createQuery(Devicecategory.class);
-        Root root = q.from(Devicecategory.class);
+        CriteriaQuery<Maintenancetype> q = b.createQuery(Maintenancetype.class);
+        Root root = q.from(Maintenancetype.class);
         q.select(root);
         Query query = s.createQuery(q);
         return query.getResultList();
     }
 
     @Override
-    public void addOrUpdateCate(Devicecategory c) {
+    public Maintenancetype getMaintenanceTypeById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        if(c.getId() != null){
-            s.update(c);
+        return s.get(Maintenancetype.class, id);
+    }
+
+    @Override
+    public void addOrUpdateMaintenanceType(Maintenancetype m) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if(m.getId() != null)
+        {
+            s.update(m);
         }
-        else{
-            s.save(c);
+        else
+        {
+            s.save(m);
         }
     }
 
     @Override
-    public Devicecategory getCateById(long id) {
+    public void deleteMaintenanceType(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Devicecategory.class, id);
-    }
-
-    @Override
-    public void deleteCate(long id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        Devicecategory c = this.getCateById(id);
-        s.delete(c);
+        s.delete(this.getMaintenanceTypeById(id));
     }
     
 }

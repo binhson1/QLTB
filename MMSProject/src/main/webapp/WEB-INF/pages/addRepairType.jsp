@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addManufacturer
-    Created on : Aug 5, 2024, 5:34:29 PM
+    Document   : addRepairType
+    Created on : Aug 6, 2024, 3:57:23 PM
     Author     : ACER
 --%>
 
@@ -9,20 +9,19 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <section class="container">
     <div class="col-10 container-fluid">
-        <h1 class="text-center text-primary mt-1">THÊM NHÀ CUNG CẤP</h1>
-        <%--<c:url value="" var="action" />--%>
+        <h1 class="text-center text-primary mt-1">THÊM LOẠI SỬA CHỮA</h1>
+        <%--<c:url value="/repair" var="action" />--%>
         <c:if test="${errMsg != null}">
             <div class="alert alert-danger">
                 ${errMsg}
             </div>
         </c:if>
 
-        <form:form method="post" enctype="multipart/form-data"  modelAttribute="manufacturer">
+        <form:form method="post" enctype="multipart/form-data" modelAttribute="repairtype">
             <div class="mb-3 mt-3">
-                <label for="name" class="form-label">Tên nhà cung cấp:</label>
-                <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên nhà cung cấp..." name="name" />        
+                <label for="name" class="form-label">Tên loại sửa chữa:</label>
+                <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên loại sửa chữa..." name="name" />        
             </div>
-
             <button class="btn btn-success" type="submit">
                 Thêm 
             </button>

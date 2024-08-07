@@ -31,12 +31,12 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public Devicecategory getCateById(int id) {
+    public Devicecategory getCateById(long id) {
         return this.cateRepo.getCateById(id);
     }
 
     @Override
-    public void deleteCate(int id) {
+    public void deleteCate(long id) {
         this.cateRepo.deleteCate(id);
     }
     

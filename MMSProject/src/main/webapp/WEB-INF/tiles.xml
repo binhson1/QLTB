@@ -14,6 +14,11 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
+    <definition name="location" extends="baseLayout">
+        <put-attribute name="title" value="Location" />
+        <put-attribute name="content" value="/WEB-INF/pages/location.jsp" />
+    </definition>
+    
     <definition name="category" extends="baseLayout">
         <put-attribute name="title" value="Trang quản lý danh mục" />
         <put-attribute name="content" value="/WEB-INF/pages/category.jsp" />
@@ -25,6 +30,10 @@
         <definition name="addDevice" extends="baseLayout">
         <put-attribute name="title" value="Qu?n ly thiets b?" />
         <put-attribute name="content" value="/WEB-INF/pages/addDevice.jsp" />
+    </definition>
+    <definition name="addLocation" extends="baseLayout">
+        <put-attribute name="title" value="Location" />
+        <put-attribute name="content" value="/WEB-INF/pages/addLocation.jsp" />
     </definition>
     <!--
     <definition name="products" extends="baseLayout">

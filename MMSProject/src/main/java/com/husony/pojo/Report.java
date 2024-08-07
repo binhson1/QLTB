@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -59,6 +60,7 @@ public class Report implements Serializable {
     @NotNull
     @Column(name = "occurrence_date")
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date occurrenceDate;
     @Basic(optional = false)
     @NotNull

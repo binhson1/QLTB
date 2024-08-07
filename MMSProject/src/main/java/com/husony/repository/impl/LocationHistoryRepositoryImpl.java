@@ -7,6 +7,7 @@ package com.husony.repository.impl;
 import com.husony.pojo.Device;
 import com.husony.pojo.Locationhistory;
 import com.husony.repository.LocationHistoryRepository;
+import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,11 +37,28 @@ public class LocationHistoryRepositoryImpl implements LocationHistoryRepository 
         CriteriaQuery<Locationhistory> q = b.createQuery(Locationhistory.class);
         Root root = q.from(Locationhistory.class);
         q.select(root);
-        Predicate p1 = b.equal(root.get("deviceId").as(Device.class), d);
-        Predicate p2 = b.equal(root.get("active").as(Boolean.class), true);
+        Predicate p1 = b.equal(root.get("deviceId"), d);
+        Predicate p2 = b.equal(root.get("active"), true);
         q = q.where(b.and(p1, p2));
         Query query = s.createQuery(q);
-        return s.get(Locationhistory.class, query.getFirstResult());
+        List<Locationhistory> resultList = query.getResultList();
+        if (!resultList.isEmpty()) {
+            return resultList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void createLocationDevice(Locationhistory l) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(l);
+    }
+
+    @Override
+    public void updateLocationDevice(Locationhistory l) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.update(l);
     }
 
 }

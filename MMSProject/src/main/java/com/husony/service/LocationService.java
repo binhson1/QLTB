@@ -4,15 +4,15 @@
  */
 package com.husony.service;
 
-import com.husony.pojo.Device;
+import com.husony.pojo.Location;
 import java.util.List;
 
 /**
  *
  * @author Do Gia Huy
  */
-public interface DeviceService {
-    List<Device> getDevices();
-    void addOrUpdate(Device d);
-    Device getDeviceById(long id);
+public interface LocationService {
+    List<Location> getLocations();
+    void addOrUpdate(Location l);
+    Location getLocationById(long id);
 }

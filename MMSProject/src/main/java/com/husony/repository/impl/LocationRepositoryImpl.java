@@ -4,8 +4,8 @@
  */
 package com.husony.repository.impl;
 
-import com.husony.pojo.Device;
-import com.husony.repository.DeviceRepository;
+import com.husony.pojo.Location;
+import com.husony.repository.LocationRepository;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,35 +23,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class DeviceRepositoryImpl implements DeviceRepository {
+public class LocationRepositoryImpl implements LocationRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Device> getDevices() {
+    public List<Location> getLocations() {
         Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Device> q = b.createQuery(Device.class);
-        Root root = q.from(Device.class);
-        q.select(root);
-        Query query = s.createQuery(q);
-        return query.getResultList();
+        Query q = s.createQuery("From Location");
+        return q.getResultList();
     }
 
     @Override
-    public void addOrUpdate(Device d) {
+    public void addOrUpdate(Location l) {
         Session s = this.factory.getObject().getCurrentSession();
-        if (d.getId() != null) {
-            s.update(d);
+        if (l.getId() != null) {
+            s.update(l);
         } else {
-            s.save(d);
+            s.save(l);
         }
     }
 
     @Override
-    public Device getDeviceById(long id) {
+    public Location getLocationById(long l) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Device.class, id);
+        return s.get(Location.class, l);
     }
     
 }

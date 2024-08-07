@@ -13,4 +13,6 @@ import com.husony.pojo.Locationhistory;
  */
 public interface LocationHistoryRepository {
     Locationhistory getLocationByDevice(Device d);
+    void createLocationDevice(Locationhistory l);
+    void updateLocationDevice(Locationhistory l);
 }

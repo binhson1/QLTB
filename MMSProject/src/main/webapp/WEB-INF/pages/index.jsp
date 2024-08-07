@@ -32,7 +32,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
         <td>${d.manufacturerId.name}</td>
         <th>${d.status}</th>
         <td>
-          <c:url value="/products/${p.id}" var="u" />
+          <c:url value="/device/${d.id}" var="u" />
           <a href="${u}" class="btn btn-success">&orarr;</a>
 
           <c:url value="/api/products/${p.id}" var="uD" />

@@ -14,7 +14,10 @@
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
     </definition>
-    
+    <definition name="location" extends="baseLayout">
+        <put-attribute name="title" value="Location" />
+        <put-attribute name="content" value="/WEB-INF/pages/location.jsp" />
+    </definition>
     
     <definition name="category" extends="baseLayout">
         <put-attribute name="title" value="Trang quản lý danh mục" />
@@ -40,8 +43,11 @@
         <put-attribute name="title" value="Qu?n ly thiets b?" />
         <put-attribute name="content" value="/WEB-INF/pages/addDevice.jsp" />
     </definition>
-    
-    <definition name="repairType" extends="baseLayout">
+    <definition name="addLocation" extends="baseLayout">
+        <put-attribute name="title" value="Location" />
+        <put-attribute name="content" value="/WEB-INF/pages/addLocation.jsp" />
+    </definition>
+     <definition name="repairType" extends="baseLayout">
         <put-attribute name="title" value="Quản lý loại sửa chữa" />
         <put-attribute name="content" value="/WEB-INF/pages/repairType.jsp" />
     </definition>
@@ -67,7 +73,6 @@
         <put-attribute name="title" value="Thêm nhân viên" />
         <put-attribute name="content" value="/WEB-INF/pages/addEmployee.jsp" />
     </definition>
-    
     <!--
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản trị sản phẩm" />

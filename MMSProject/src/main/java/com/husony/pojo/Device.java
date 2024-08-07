@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -47,6 +48,20 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Device.findByStatus", query = "SELECT d FROM Device d WHERE d.status = :status")})
 public class Device implements Serializable {
 
+    /**
+     * @return the location
+     */
+    public Location getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,9 +74,6 @@ public class Device implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
     @Column(name = "image")
     private String image;
     @Basic(optional = false)
@@ -74,6 +86,7 @@ public class Device implements Serializable {
     @NotNull
     @Column(name = "bought_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date boughtDate;
     @Column(name = "status")
     private Integer status;
@@ -84,6 +97,7 @@ public class Device implements Serializable {
     @JsonIgnore
     private Set<Report> reportSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Locationhistory> locationhistorySet;
     @JoinColumn(name = "device_category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

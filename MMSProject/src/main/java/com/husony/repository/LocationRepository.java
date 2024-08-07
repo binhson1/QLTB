@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.husony.service;
+package com.husony.repository;
 
-import com.husony.pojo.Device;
+import com.husony.pojo.Location;
 import java.util.List;
 
 /**
  *
  * @author Do Gia Huy
  */
-public interface DeviceService {
-    List<Device> getDevices();
-    void addOrUpdate(Device d);
-    Device getDeviceById(long id);
+public interface LocationRepository {
+    List<Location> getLocations();
+    void addOrUpdate(Location l);
+    Location getLocationById(long id);
 }

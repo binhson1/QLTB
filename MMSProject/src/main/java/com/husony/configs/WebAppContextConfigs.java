@@ -4,6 +4,11 @@
  */
 package com.husony.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.husony.formatters.CategoryFormatter;
+import com.husony.formatters.LocationFormatter;
+import com.husony.formatters.ManufacturerFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -61,15 +66,28 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         return bean;
     }
     
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dluxogrmn",
+                        "api_key", "958699327246893",
+                        "api_secret", "sL64XQ_2Djr4kg8Gi2vZyR-f5MA",
+                        "secure", true));
+        return cloudinary;
+    }
+    
     @Override
     public Validator getValidator() {
         return validator();
     }
     
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addFormatter(new CategoryFormatter());
-//    }
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new CategoryFormatter());
+        registry.addFormatter(new LocationFormatter());
+        registry.addFormatter(new ManufacturerFormatter());
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

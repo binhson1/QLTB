@@ -73,7 +73,15 @@
         <put-attribute name="title" value="Thêm nhân viên" />
         <put-attribute name="content" value="/WEB-INF/pages/addEmployee.jsp" />
     </definition>
-    
+    <definition name="report" extends="baseLayout">
+        <put-attribute name="title" value="Report Manage" />
+        <put-attribute name="content" value="/WEB-INF/pages/report.jsp" />
+    </definition>
+     <definition name="addReport" extends="baseLayout">
+        <put-attribute name="title" value="Report Manage" />
+        <put-attribute name="content" value="/WEB-INF/pages/addReport.jsp" />
+    </definition>
+
     <definition name="stats" extends="baseLayout">
         <put-attribute name="title" value="THỐNG KÊ BÁO CÁO" />
         <put-attribute name="content" value="/WEB-INF/pages/stats.jsp" />

@@ -4,6 +4,7 @@
     Author     : Do Gia Huy
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="container-fluid col-2">
     <div class="row flex-nowrap">
@@ -12,55 +13,90 @@
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Menu</span>
                 </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Device</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-                        <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1 </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+                    <li class="border-bottom border-white w-100">
+                        <a href="#deviceMenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline text-white">Device</span> </a>
+                        <ul class="collapse nav flex-column ms-1 border-bottom ms-3" id="deviceMenu" data-bs-parent="#menu">
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/" var="d1" />
+                                <a href="${d1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List devices</span> </a>
+                            </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/device/add" var="d2" />
+                                <a href="${d2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add device</span> </a>
+                            </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/category" var="c1" />
+                                <a href="${c1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List category</span> </a>
+                            </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/category/add" var="c2" />
+                                <a href="${c2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add category</span> </a>
+                            </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/manufacturer" var="m1" />
+                                <a href="${m1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List manufacturer</span> </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2 </a>
+                                <c:url value="/manufacturer/add" var="m2" />
+                                <a href="${m2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add manufacturer</span> </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders</span></a>
-                    </li>
-                    <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
+                    <li class="border-bottom border-white w-100">
+                        <a href="#locationMenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white ">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Location</span> </a>
+                        <ul class="collapse nav flex-column ms-3" id="locationMenu" data-bs-parent="#menu">
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/location" var="l1" />
+                                <a href="${l1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List location</span> </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
+                                <c:url value="/location/add" var="l2" />
+                                <a href="${l2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add location</span> </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span> </a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                            <li class="w-100">
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
+                    <li class="border-bottom border-white w-100">
+                        <a href="#employeeMenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white ">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Employee</span> </a>
+                        <ul class="collapse nav flex-column ms-3" id="employeeMenu" data-bs-parent="#menu">
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/employee" var="e1" />
+                                <a href="${e1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List employee</span> </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
+                                <c:url value="/employee/add" var="e2" />
+                                <a href="${e2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add employee</span> </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="border-bottom border-white w-100">
+                        <a href="#maintenanceMenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white ">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Maintenance</span> </a>
+                        <ul class="collapse nav flex-column ms-3" id="maintenanceMenu" data-bs-parent="#menu">
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/maintenancetype" var="e1" />
+                                <a href="${e1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List types</span> </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
+                                <c:url value="/maintenancetype/add" var="e2" />
+                                <a href="${e2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add type</span> </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="border-bottom border-white w-100">
+                        <a href="#repairMenu" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white ">
+                            <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Repair</span> </a>
+                        <ul class="collapse nav flex-column ms-3" id="repairMenu" data-bs-parent="#menu">
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/repairtype" var="r1" />
+                                <a href="${r1}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List types</span> </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
+                                <c:url value="/repairtype/add" var="r2" />
+                                <a href="${r2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add type</span> </a>
                             </li>
                         </ul>
                     </li>

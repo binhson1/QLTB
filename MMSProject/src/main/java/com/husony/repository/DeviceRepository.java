@@ -15,4 +15,5 @@ public interface DeviceRepository {
     List<Device> getDevices();
     void addOrUpdate(Device d);
     Device getDeviceById(long id);
+    void deleteDevice(long id);
 }

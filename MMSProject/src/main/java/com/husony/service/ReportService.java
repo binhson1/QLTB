@@ -4,16 +4,16 @@
  */
 package com.husony.service;
 
-import com.husony.pojo.Device;
+import com.husony.pojo.Report;
 import java.util.List;
 
 /**
  *
  * @author Do Gia Huy
  */
-public interface DeviceService {
-    List<Device> getDevices();
-    void addOrUpdate(Device d);
-    Device getDeviceById(long id);
-    void deleteDevice(long id);
+public interface ReportService {
+    List<Report> getReports();
+    void addOrUpdate(Report r);
+    Report getReportById(long id);
+    void deleteReport(long id);
 }

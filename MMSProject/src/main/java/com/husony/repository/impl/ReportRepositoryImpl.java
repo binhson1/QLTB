@@ -4,14 +4,11 @@
  */
 package com.husony.repository.impl;
 
-import com.husony.pojo.Device;
-import com.husony.repository.DeviceRepository;
+import com.husony.pojo.Report;
+import com.husony.repository.ReportRepository;
 import java.util.List;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -23,42 +20,38 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class DeviceRepositoryImpl implements DeviceRepository {
+public class ReportRepositoryImpl implements ReportRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Device> getDevices() {
+    public List<Report> getReports() {
         Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Device> q = b.createQuery(Device.class);
-        Root root = q.from(Device.class);
-        q.select(root);
-        Query query = s.createQuery(q);
-        return query.getResultList();
+        Query q = s.createQuery("From Report");
+        return q.getResultList();
     }
 
     @Override
-    public void addOrUpdate(Device d) {
+    public void addOrUpdate(Report r) {
         Session s = this.factory.getObject().getCurrentSession();
-        if (d.getId() != null) {
-            s.update(d);
+        if (r.getId() != null) {
+            s.update(r);
         } else {
-            s.save(d);
+            s.save(r);
         }
     }
 
     @Override
-    public Device getDeviceById(long id) {
+    public Report getReportById(long id) {
         Session s = this.factory.getObject().getCurrentSession();
-        return s.get(Device.class, id);
+        return s.get(Report.class, id);
     }
 
     @Override
-    public void deleteDevice(long id) {
+    public void deleteReport(long id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Device d = this.getDeviceById(id);
-        s.delete(d);
+        Report r = this.getReportById(id);
+        s.delete(r);
     }
     
 }

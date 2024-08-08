@@ -16,7 +16,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
       <th></th>
     </tr>
     <c:forEach items="${devices}" var="d">
-      <tr id="product${d.id}">
+      <tr id="device${d.id}">
         <td>
           <img src="${d.image}" width="120" />
         </td>
@@ -35,9 +35,9 @@ contentType="text/html" pageEncoding="UTF-8"%>
           <c:url value="/device/${d.id}" var="u" />
           <a href="${u}" class="btn btn-success">&orarr;</a>
 
-          <c:url value="/api/products/${p.id}" var="uD" />
+          <c:url value="/api/devices/delete/${d.id}" var="uD" />
           <button
-            onclick="deleteProduct('${uD}', ${p.id})"
+            onclick="deletes('${uD}', ${d.id}, 'device')"
             class="btn btn-danger"
           >
             &times;

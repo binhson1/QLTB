@@ -53,5 +53,10 @@ public class DeviceServiceImpl implements DeviceService {
     public Device getDeviceById(long id) {
         return this.deviceRepo.getDeviceById(id);
     }
+
+    @Override
+    public void deleteDevice(long l) {
+        this.deviceRepo.deleteDevice(l);
+    }
     
 }

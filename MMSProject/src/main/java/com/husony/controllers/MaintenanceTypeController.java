@@ -48,7 +48,7 @@ public class MaintenanceTypeController {
         try {
             this.maintenTypeService.addOrUpdateMaintenanceType(m);
             
-            return "redirect:/maintenanceType";            
+            return "redirect:/maintenancetype";            
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }

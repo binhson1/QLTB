@@ -49,7 +49,7 @@ public class RepairTypeController {
         try {
             this.repairTypeService.addOrUpdateRepairType(m);
             
-            return "redirect:/repairType";            
+            return "redirect:/repairtype";            
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }

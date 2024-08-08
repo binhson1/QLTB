@@ -22,11 +22,12 @@
                     <td>
                         <c:url value="/maintenancetype/${m.id}" var="u" />
                         <a href="${u}" class="btn btn-success">&orarr;</a>
-                        <c:url value="#" var="uD" />
-                        <button onclick="deleteProduct('${uD}', ${m.id})" class="btn btn-danger">&times;</button>
+                        <c:url value="/api/maintenancetype/delete/${m.id}" var="uD" />
+                        <button onclick="deletes('${uD}', ${m.id},'maintenancetyp')" class="btn btn-danger">&times;</button>
                     </td>
                 </tr>
             </c:forEach>
         </table>
     </div>
 </section>
+<script src="<c:url value="/js/delete.js" />"></script>        

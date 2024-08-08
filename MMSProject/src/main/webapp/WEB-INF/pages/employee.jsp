@@ -27,9 +27,9 @@
                         <c:url value="/employee/${c.id}" var="u" />
                         <a href="${u}" class="btn btn-success">&orarr;</a>
 
-                        <c:url value="/api/products/${p.id}" var="uD" />
+                        <c:url value="/api/employee/delete/${c.id}" var="uD" />
                         <button
-                            onclick="deleteProduct('${uD}', ${p.id})"
+                            onclick="deletes('${uD}', ${c.id}, 'employee')"
                             class="btn btn-danger"
                             >
                             &times;
@@ -40,3 +40,4 @@
         </table>
     </div>
 </section>
+<script src="<c:url value="/js/delete.js" />"></script>

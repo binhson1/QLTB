@@ -4,8 +4,7 @@
  */
 package com.husony.configs;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
+
 import com.husony.formatters.CategoryFormatter;
 import com.husony.formatters.LocationFormatter;
 import com.husony.formatters.ManufacturerFormatter;

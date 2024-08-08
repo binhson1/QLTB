@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface RepairTypeService {
     List<Repairtype> getRepairType();
-    Repairtype getRepairTypeById(int id);
+    Repairtype getRepairTypeById(long id);
     void addOrUpdateRepairType(Repairtype r);
-    void deleteRepairType(int id);
+    void deleteRepairType(long id);
 }

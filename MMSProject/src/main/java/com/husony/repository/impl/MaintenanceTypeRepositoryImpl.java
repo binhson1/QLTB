@@ -40,7 +40,7 @@ public class MaintenanceTypeRepositoryImpl implements MaintenanceTypeRepository{
     }
 
     @Override
-    public Maintenancetype getMaintenanceTypeById(int id) {
+    public Maintenancetype getMaintenanceTypeById(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Maintenancetype.class, id);
     }
@@ -59,7 +59,7 @@ public class MaintenanceTypeRepositoryImpl implements MaintenanceTypeRepository{
     }
 
     @Override
-    public void deleteMaintenanceType(int id) {
+    public void deleteMaintenanceType(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         s.delete(this.getMaintenanceTypeById(id));
     }

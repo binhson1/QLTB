@@ -32,12 +32,12 @@ public class ManufacturerServiceImpl implements ManufacturerService{
     }
 
     @Override
-    public void deleteManu(int id) {
+    public void deleteManu(long id) {
         this.manuRepo.deleteManu(id);
     }
 
     @Override
-    public Manufacturer getManuById(int id) {
+    public Manufacturer getManuById(long id) {
         return this.manuRepo.getManuById(id);
     }
 }

@@ -27,7 +27,7 @@ public class RepairTypeServiceImpl implements RepairTypeService{
     }
 
     @Override
-    public Repairtype getRepairTypeById(int id) {
+    public Repairtype getRepairTypeById(long id) {
         return this.repairTypeRepo.getRepairTypeById(id);
     }
 
@@ -37,7 +37,7 @@ public class RepairTypeServiceImpl implements RepairTypeService{
     }
 
     @Override
-    public void deleteRepairType(int id) {
+    public void deleteRepairType(long id) {
         this.repairTypeRepo.deleteRepairType(id);
     }
     

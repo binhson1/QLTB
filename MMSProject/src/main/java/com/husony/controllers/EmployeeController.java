@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,40 +23,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class EmployeeController {
-    
+
     @Autowired
     private EmployeeService employeeService;
-    
+
     @RequestMapping("/employee")
-    public String employee(Model model){
-        
+    public String employee(Model model) {
+
         model.addAttribute("employee", this.employeeService.getEmployee());
         return "employee";
     }
-    
+
     @GetMapping("/employee/add")
     public String createView(Model model) {
-        
+
         model.addAttribute("employee", new Employee());
         return "addEmployee";
     }
-    
-    @PostMapping("/employee/add")
-    public String createView(Model model, 
+
+    @PostMapping("/employee/addOrUpdate")
+    public String createView(Model model,
             @ModelAttribute(value = "employee") @Valid Employee c,
             BindingResult rs) {
-        if (rs.hasErrors())
+        if (rs.hasErrors()) {
             return "addEmployee";
-        
+        }
+
         try {
             this.employeeService.addOrUpdateEmployee(c);
-            
+
             return "redirect:/employee";
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }
-        
+
         return "addEmployee";
     }
-}
 
+    @GetMapping("/employee/{employeeId}")
+    public String updateView(Model model, @PathVariable(value = "employeeId") long id) {
+        model.addAttribute("employee", this.employeeService.getEmployeeById(id));
+        return "addEmployee";
+    }
+
+}

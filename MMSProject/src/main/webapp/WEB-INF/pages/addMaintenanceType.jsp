@@ -10,21 +10,26 @@
 <section class="container">
     <div class="col-10 container-fluid">
         <h1 class="text-center text-primary mt-1">THÊM LOẠI BẢO TRÌ</h1>
-        <%--<c:url value="/manufacturer" var="action" />--%>
+        <c:url value="/maintenancetype/addOrUpdate" var="action" />
         <c:if test="${errMsg != null}">
             <div class="alert alert-danger">
                 ${errMsg}
             </div>
         </c:if>
 
-        <form:form method="post" enctype="multipart/form-data"  modelAttribute="maintenancetype">
+        <form:form method="post" enctype="multipart/form-data" action="${action}" modelAttribute="maintenancetype">
             <div class="mb-3 mt-3">
                 <label for="name" class="form-label">Tên loại bảo trì:</label>
                 <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên loại bảo trì..." name="name" />        
             </div>
-
+            <form:hidden path="id" />
             <button class="btn btn-success" type="submit">
-                Thêm 
+                <c:choose>
+                    <c:when test="${maintenancetype.id != null}"> Cập nhật </c:when>                   
+                    <c:otherwise>
+                        Thêm
+                    </c:otherwise>
+                </c:choose>
             </button>
         </form:form>
 

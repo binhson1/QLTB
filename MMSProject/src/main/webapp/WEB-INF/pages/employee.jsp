@@ -24,7 +24,7 @@
                     <td>${c.cccd}</td>
                     <td>${c.phone}</td>
                     <td>
-                        <c:url value="/products/${p.id}" var="u" />
+                        <c:url value="/employee/${c.id}" var="u" />
                         <a href="${u}" class="btn btn-success">&orarr;</a>
 
                         <c:url value="/api/products/${p.id}" var="uD" />

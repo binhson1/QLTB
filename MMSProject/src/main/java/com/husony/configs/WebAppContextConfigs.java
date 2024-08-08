@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.annotation.Order;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
@@ -34,8 +35,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.husony.controllers",
     "com.husony.repository",
-    "com.husony.service"
+    "com.husony.service",
+    "com.husony.components"
 })
+@Order(1)
 public class WebAppContextConfigs implements WebMvcConfigurer {
 
     @Override
@@ -66,16 +69,16 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         return bean;
     }
     
-    @Bean
-    public Cloudinary cloudinary() {
-        Cloudinary cloudinary
-                = new Cloudinary(ObjectUtils.asMap(
-                        "cloud_name", "dluxogrmn",
-                        "api_key", "958699327246893",
-                        "api_secret", "sL64XQ_2Djr4kg8Gi2vZyR-f5MA",
-                        "secure", true));
-        return cloudinary;
-    }
+//    @Bean
+//    public Cloudinary cloudinary() {
+//        Cloudinary cloudinary
+//                = new Cloudinary(ObjectUtils.asMap(
+//                        "cloud_name", "dluxogrmn",
+//                        "api_key", "958699327246893",
+//                        "api_secret", "sL64XQ_2Djr4kg8Gi2vZyR-f5MA",
+//                        "secure", true));
+//        return cloudinary;
+//    }
     
     @Override
     public Validator getValidator() {

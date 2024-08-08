@@ -11,17 +11,17 @@
         <div class="col-md-10 col-12">
             <table class="table table-striped">
                 <tr>
-                    <th></th>
                     <th>Id</th>
-                    <th>Tên</th>            
+                    <th>Tên</th>      
+                    <th></th>
                 </tr>
             <c:forEach items="${maintenancetyp}" var="m">
                 <tr id="maintenancetyp${m.id}">                
                     <td>${m.id}</td>
                     <td>${m.name}</td>                
                     <td>
-                        <c:url value="#" var="u" />
-                        <a href="#" class="btn btn-success">&orarr;</a>
+                        <c:url value="/maintenancetype/${m.id}" var="u" />
+                        <a href="${u}" class="btn btn-success">&orarr;</a>
                         <c:url value="#" var="uD" />
                         <button onclick="deleteProduct('${uD}', ${m.id})" class="btn btn-danger">&times;</button>
                     </td>

@@ -20,8 +20,8 @@
                     <td>${m.id}</td>
                     <td>${m.name}</td>                
                     <td>
-                        <c:url value="#" var="u" />
-                        <a href="#" class="btn btn-success">&orarr;</a>
+                        <c:url value="/manufacturer/${m.id}" var="u" />
+                        <a href="${u}" class="btn btn-success">&orarr;</a>
                         <c:url value="#" var="uD" />
                         <button onclick="deleteProduct('${uD}', ${m.id})" class="btn btn-danger">&times;</button>
                     </td>

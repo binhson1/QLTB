@@ -39,7 +39,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
+    public Employee getEmployeeById(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Employee.class, id);
     }
@@ -59,7 +59,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
 
     @Override
-    public void deleteEmployee(int id) {
+    public void deleteEmployee(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         s.delete(this.getEmployeeById(id));
     }

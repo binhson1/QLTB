@@ -51,13 +51,13 @@ public class ManufacturerRepositoryImpl implements ManufacturerRepository{
     }
 
     @Override
-    public Manufacturer getManuById(int id) {
+    public Manufacturer getManuById(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Manufacturer.class, id);
     }
     
     @Override
-    public void deleteManu(int id) {
+    public void deleteManu(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         Manufacturer m = this.getManuById(id);
         s.delete(m);

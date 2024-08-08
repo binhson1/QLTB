@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -37,7 +38,7 @@ public class MaintenanceTypeController {
         model.addAttribute("maintenancetype", new Maintenancetype());
         return "addMaintenanceType";
     }
-    @PostMapping("/maintenancetype/add")
+    @PostMapping("/maintenancetype/addOrUpdate")
     public String createView(Model model, 
             @ModelAttribute(value = "maintenancetype") @Valid Maintenancetype m, 
             BindingResult rs){
@@ -55,4 +56,9 @@ public class MaintenanceTypeController {
         return "addMaintenanceType";
     }
     
+    @GetMapping("/maintenancetype/{mId}")
+    public String updateView(Model model, @PathVariable(value = "mId")long id){
+        model.addAttribute("maintenancetype", this.maintenTypeService.getMaintenanceTypeById(id));
+        return "addMaintenanceType";
+    }
 }

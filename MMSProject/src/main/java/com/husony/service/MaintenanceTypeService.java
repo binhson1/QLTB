@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface MaintenanceTypeService {
      List<Maintenancetype> getMaintenanceType();
-    Maintenancetype getMaintenanceTypeById(int id);
+    Maintenancetype getMaintenanceTypeById(long id);
     void addOrUpdateMaintenanceType(Maintenancetype m);
-    void deleteMaintenanceType(int id);
+    void deleteMaintenanceType(long id);
 }

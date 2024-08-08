@@ -14,6 +14,6 @@ import java.util.List;
 public interface ManufacturerService {
     List<Manufacturer> getManufac();
     void addOrUpdateManu(Manufacturer m);
-    void deleteManu(int id);
-    Manufacturer getManuById(int id);
+    void deleteManu(long id);
+    Manufacturer getManuById(long id);
 }

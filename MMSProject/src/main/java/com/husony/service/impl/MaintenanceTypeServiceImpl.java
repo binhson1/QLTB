@@ -27,7 +27,7 @@ public class MaintenanceTypeServiceImpl implements MaintenanceTypeService{
     }
 
     @Override
-    public Maintenancetype getMaintenanceTypeById(int id) {
+    public Maintenancetype getMaintenanceTypeById(long id) {
         return this.maintenanceTypeRepo.getMaintenanceTypeById(id);
     }
 
@@ -37,7 +37,7 @@ public class MaintenanceTypeServiceImpl implements MaintenanceTypeService{
     }
 
     @Override
-    public void deleteMaintenanceType(int id) {
+    public void deleteMaintenanceType(long id) {
         this.maintenanceTypeRepo.deleteMaintenanceType(id);
     }
     

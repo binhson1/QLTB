@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,7 +33,7 @@ public class ManufacturerController {
         return "addManu";
     }
     
-    @PostMapping("/manufacturer/add")
+    @PostMapping("/manufacturer/addOrUpdate")
     public String createView(Model model, 
             @ModelAttribute(value = "manufacturer") @Valid Manufacturer m,
             BindingResult rs) {
@@ -47,6 +48,12 @@ public class ManufacturerController {
             model.addAttribute("errMsg", ex.getMessage());
         }
         
+        return "addManu";
+    }
+    
+    @GetMapping("/manufacturer/{mId}")
+    public String updateView(Model model, @PathVariable("mId") long id){
+        model.addAttribute("manufacturer", this.manuService.getManuById(id));
         return "addManu";
     }
     

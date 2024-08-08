@@ -39,7 +39,7 @@ public class RepairTypeRepositoryImpl implements RepairTypeRepository{
     }
 
     @Override
-    public Repairtype getRepairTypeById(int id) {
+    public Repairtype getRepairTypeById(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Repairtype.class, id);
     }
@@ -57,7 +57,7 @@ public class RepairTypeRepositoryImpl implements RepairTypeRepository{
     }
 
     @Override
-    public void deleteRepairType(int id) {
+    public void deleteRepairType(long id) {
         Session s = this.factory.getObject().getCurrentSession();
         s.remove(this.getRepairTypeById(id));
     }

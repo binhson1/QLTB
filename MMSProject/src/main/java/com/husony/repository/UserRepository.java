@@ -4,16 +4,17 @@
  */
 package com.husony.repository;
 
-import com.husony.pojo.Repairtype;
-import java.util.List;
+import com.husony.pojo.User;
 
 /**
  *
  * @author ACER
  */
-public interface RepairTypeRepository {
-    List<Repairtype> getRepairType();
-    Repairtype getRepairTypeById(long id);
-    void addOrUpdateRepairType(Repairtype r);
-    void deleteRepairType(long id);
+public interface UserRepository {
+
+    User getUserByUsername(String username);
+
+    boolean authUser(String username, String password);
+
+    User addUser(User user);
 }

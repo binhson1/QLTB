@@ -70,6 +70,8 @@ public class ScheduleRepairController {
     @GetMapping("/schedulerepair/{rId}")
     public String updateView(Model model, @PathVariable(value = "rId") long id) {
         model.addAttribute("schedulerepair", this.scheduleRepairService.getScheduleRepairById(id));
+        model.addAttribute("repairtype", this.repairTypeService.getRepairType());
+        model.addAttribute("report", this.reportService.getReports());
         return "addScheduleRepair";
     }
     

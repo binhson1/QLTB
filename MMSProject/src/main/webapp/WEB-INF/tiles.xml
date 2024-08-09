@@ -86,6 +86,16 @@
         <put-attribute name="title" value="THỐNG KÊ BÁO CÁO" />
         <put-attribute name="content" value="/WEB-INF/pages/stats.jsp" />
     </definition>
+    
+    <definition name="schedulerepair" extends="baseLayout">
+        <put-attribute name="title" value="Scheduling Repair Management" />
+        <put-attribute name="content" value="/WEB-INF/pages/scheduleRepair.jsp" />
+    </definition>
+     <definition name="addScheduleRepair" extends="baseLayout">
+        <put-attribute name="title" value="Scheduling Repair Add" />
+        <put-attribute name="content" value="/WEB-INF/pages/addScheduleRepair.jsp" />
+    </definition>
+    
     <!--
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản trị sản phẩm" />

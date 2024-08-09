@@ -6,16 +6,16 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<section class="container">
-    <a href="<c:url value="/employee/add"></c:url>"class="btn btn-success m-1">Thêm</a>    
+<div class="col-10 container-fluid">
+      <h1 class="text-center">EMPLOYEE MANAGE</h1>
+    <a href="<c:url value="/employee/add"></c:url>"class="btn btn-success m-1">ADD</a>    
         <div class="col-md-10 col-12">
             <table class="table table-striped">
                 <tr>                
                     <th>Id</th>
-                    <th>Tên</th>
+                    <th>Name</th>
                     <th>CCCD</th>
-                    <th>Điện thoại</th>
-                    <th>Điều chỉnh</th>
+                    <th>Phone</th>                    
                 </tr>
             <c:forEach items="${employee}" var="c">
                 <tr id="employee${c.id}">
@@ -39,5 +39,5 @@
             </c:forEach>
         </table>
     </div>
-</section>
+</div>
 <script src="<c:url value="/js/delete.js" />"></script>

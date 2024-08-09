@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -49,6 +50,7 @@ public class Schedulerepair implements Serializable {
     @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date date;
     @Basic(optional = false)
     @NotNull

@@ -8,12 +8,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
     <div class="col-md-10 col-12">
-        <a href="<c:url value="/manufacturer/add"></c:url>"class="btn btn-success m-1">Thêm</a>        
-            <table class="table table-striped">
+        <h1 class="text-center">MANUFACTURER MANAGE</h1>
+        <a href="<c:url value="/manufacturer/add"></c:url>"class="btn btn-success m-1">ADD</a>        
+            <table class="table table-striped mt-3">
                 <tr>                
                     <th>Id</th>
-                    <th>Tên</th>            
-                    <th>Sửa</th>
+                    <th>Name</th>                              
                 </tr>
             <c:forEach items="${manu}" var="m">
                 <tr id="manu${m.id}">                

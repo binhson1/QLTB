@@ -34,7 +34,7 @@ public class RepairTypeController {
     }
     
     @GetMapping("/repairtype/add")
-    public String createView(Model model) {
+    public String createView(Model model) {        
         model.addAttribute("repairtype", new Repairtype());
         return "addRepairType";
     }

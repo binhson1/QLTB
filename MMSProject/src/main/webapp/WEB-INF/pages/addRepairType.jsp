@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<section class="container">
+<div class="col-10 container-fluid">
     <div class="col-10 container-fluid">
         <h1 class="text-center text-primary mt-1">THÊM LOẠI SỬA CHỮA</h1>
         <c:url value="/repairtype/addOrUpdate" var="action" />
@@ -32,6 +32,5 @@
                 </c:choose>
             </button>
         </form:form>
-
     </div>
-</section>
+</div>

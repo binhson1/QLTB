@@ -31,13 +31,13 @@ public class ApiDeviceController {
     @Autowired
     private DeviceService deviceService;
     
-    @GetMapping("/devices")
+    @GetMapping("/device")
     public ResponseEntity<List<Device>> list(@RequestParam Map<String, String> params){
         List<Device> devices = this.deviceService.getDevices();
         
         return new ResponseEntity<>(devices, HttpStatus.OK);
     }
-    @DeleteMapping("/devices/delete/{deviceId}")
+    @DeleteMapping("/device/delete/{deviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "deviceId") long id) {
         this.deviceService.deleteDevice(id);

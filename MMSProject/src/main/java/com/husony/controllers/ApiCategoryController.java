@@ -31,7 +31,7 @@ public class ApiCategoryController {
     
     @DeleteMapping("/category/delete/{categoryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "categoryId") int id) {
+    public void delete(@PathVariable(value = "categoryId") long id) {
         this.cateService.deleteCate(id);
     }
     

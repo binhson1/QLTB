@@ -4,8 +4,8 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Manufacturer;
-import com.husony.service.ManufacturerService;
+import com.husony.pojo.Report;
+import com.husony.service.ReportService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,24 +20,23 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
- * @author ACER
+ * @author Do Gia Huy
  */
 @Controller
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiManufactureController {
-    
+public class ApiReportController {
     @Autowired
-    private ManufacturerService manuService;
+    private ReportService reportService;
     
-    @DeleteMapping("/manufacturer/delete/{manufacturerId}")
+    @DeleteMapping("/report/delete/{reportId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "manufacturerId") long id){
-        this.manuService.deleteManu(id);
+    public void delete(@PathVariable(value = "reportId") long id){
+        this.reportService.deleteReport(id);
     }
     
-    @GetMapping("/manufacturers")
-    public ResponseEntity<List<Manufacturer>> list(){
-        return new ResponseEntity<>(this.manuService.getManufac(), HttpStatus.OK);
+    @GetMapping("/report")
+    public ResponseEntity<List<Report>> list(){
+        return new ResponseEntity<>(this.reportService.getReports(), HttpStatus.OK);
     }
 }

@@ -4,59 +4,53 @@
  */
 package com.husony.repository.impl;
 
-import com.husony.pojo.User;
-import com.husony.repository.UserRepository;
+import com.husony.pojo.Schedulemaintenance;
+import com.husony.repository.MaintenanceRepository;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author ACER
+ * @author Do Gia Huy
  */
 @Repository
 @Transactional
-public class UserRepositoryImpl implements UserRepository {
-
+public class MaintenanceRepositoryImpl implements MaintenanceRepository{
     @Autowired
     private LocalSessionFactoryBean factory;
-    @Autowired
-    private BCryptPasswordEncoder passEncoder;
-
+    
     @Override
-    public User getUserByUsername(String username) {
+    public List<Schedulemaintenance> getMaintenance() {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createNamedQuery("User.findByUsername");
-        q.setParameter("username", username);
-
-        return (User) q.getSingleResult();
-
-    }
-
-    @Override
-    public boolean authUser(String username, String password) {
-        User u = this.getUserByUsername(username);
-
-        return this.passEncoder.matches(password, u.getPassword());
-    }
-
-    @Override
-    public User addUser(User u) {
-        Session s = this.factory.getObject().getCurrentSession();
-        s.save(u);
-
-        return u;
-    }
-
-    @Override
-    public List<User> getUsers() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From User");
+        Query q = s.createQuery("From Schedulemaintenance");
         return q.getResultList();
     }
+
+    @Override
+    public void addOrUpdate(Schedulemaintenance d) {
+        Session s = this.factory.getObject().getCurrentSession();
+        if (d.getId() != null) {
+            s.update(d);
+        } else {
+            s.save(d);
+        }
+    }
+
+    @Override
+    public Schedulemaintenance getMaintenanceById(long id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Schedulemaintenance.class, id);
+    }
+
+    @Override
+    public void deleteMaintenance(long id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.delete(this.getMaintenanceById(id));
+    }
+    
 }

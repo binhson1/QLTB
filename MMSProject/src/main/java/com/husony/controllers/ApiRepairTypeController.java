@@ -32,7 +32,7 @@ public class ApiRepairTypeController {
     
     @DeleteMapping("/repairtype/delete/{repairtypeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "repairtypeId") int id){
+    public void delete(@PathVariable(value = "repairtypeId") long id){
         this.repairTypeService.deleteRepairType(id);
     }
     

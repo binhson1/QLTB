@@ -4,20 +4,16 @@
  */
 package com.husony.repository;
 
-import com.husony.pojo.User;
+import com.husony.pojo.Job;
 import java.util.List;
 
 /**
  *
- * @author ACER
+ * @author Do Gia Huy
  */
-public interface UserRepository {
-
-    User getUserByUsername(String username);
-
-    boolean authUser(String username, String password);
-
-    User addUser(User user);
-    
-    List<User> getUsers();
+public interface JobRepository {
+    List<Job> getJob();
+    Job getJobById(long id);
+    void deleteJob(long id);
+    void addOrUpdate(Job j);
 }

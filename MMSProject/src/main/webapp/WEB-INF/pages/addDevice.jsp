@@ -102,7 +102,12 @@
             <form:hidden path="id" />
             <form:hidden path="image" />
             <button class="btn btn-success" type="submit">
-                Thêm sản phẩm
+                <c:choose>
+                    <c:when test="${device.id != null}"> UPDATE </c:when>                   
+                    <c:otherwise>
+                        ADD
+                    </c:otherwise>
+                </c:choose>
             </button>
         </div>
     </form:form>

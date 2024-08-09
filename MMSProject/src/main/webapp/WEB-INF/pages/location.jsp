@@ -24,9 +24,9 @@
           <c:url value="/location/${l.id}" var="u" />
           <a href="${u}" class="btn btn-success">&orarr;</a>
 
-          <c:url value="/api/products/${p.id}" var="uD" />
+          <c:url value="/api/location/delete/${l.id}" var="uD" />
           <button
-            onclick="deleteProduct('${uD}', ${p.id})"
+            onclick="deletes('${uD}', ${l.id}, 'location')"
             class="btn btn-danger"
           >
             &times;

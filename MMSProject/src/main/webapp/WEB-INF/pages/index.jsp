@@ -35,7 +35,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
           <c:url value="/device/${d.id}" var="u" />
           <a href="${u}" class="btn btn-success">&orarr;</a>
 
-          <c:url value="/api/devices/delete/${d.id}" var="uD" />
+          <c:url value="/api/device/delete/${d.id}" var="uD" />
           <button
             onclick="deletes('${uD}', ${d.id}, 'device')"
             class="btn btn-danger"

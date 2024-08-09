@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="col-10 container-fluid">
-  <h1 class="text-center">LOCATION MANAGE</h1>
+  <h1 class="text-center">REPORT MANAGE</h1>
   <table class="table table-striped mt-3">
     <tr>
       <th>Id</th>
@@ -16,6 +16,7 @@
       <th>Severity</th>
       <th>Device</th>
       <<th>User</th>
+      <th>Status</th>
       <th></th>
     </tr>
     <c:forEach items="${reports}" var="r">
@@ -26,13 +27,14 @@
         <td>${r.severity}</td>
         <td>${r.deviceId.name}</td>
         <td>${r.userId.username}</td>
+        <td>${r.status}</td>
         <td>
-          <c:url value="/location/${r.id}" var="u" />
+          <c:url value="/report/${r.id}" var="u" />
           <a href="${u}" class="btn btn-success">&orarr;</a>
 
-          <c:url value="/api/products/${r.id}" var="uD" />
+          <c:url value="/api/report/delete/${r.id}" var="uD" />
           <button
-            onclick="deleteProduct('${uD}', ${r.id})"
+            onclick="deletes('${uD}', ${r.id}, 'report')"
             class="btn btn-danger"
           >
             &times;

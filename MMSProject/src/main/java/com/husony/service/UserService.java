@@ -4,6 +4,7 @@
  */
 package com.husony.service;
 
+import java.util.List;
 import com.husony.pojo.User;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,4 +18,5 @@ public interface UserService extends UserDetailsService  {
     User getUserByUsername(String username);
     boolean authUser(String username, String password);
     User addUser(Map<String, String> params, MultipartFile avatar);
+    List<User> getUsers();
 }

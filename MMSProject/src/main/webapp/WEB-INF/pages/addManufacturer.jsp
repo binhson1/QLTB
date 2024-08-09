@@ -9,7 +9,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <section class="container">
     <div class="col-10 container-fluid">
-        <h1 class="text-center text-primary mt-1">THÊM NHÀ CUNG CẤP</h1>
+        <h1 class="text-center text-primary mt-1">ADD MANUFACTURER</h1>
         <c:url value="/manufacturer/addOrUpdate" var="action" />
         <c:if test="${errMsg != null}">
             <div class="alert alert-danger">
@@ -19,15 +19,15 @@
 
         <form:form method="post" enctype="multipart/form-data" action="${action}" modelAttribute="manufacturer">
             <div class="mb-3 mt-3">
-                <label for="name" class="form-label">Tên nhà cung cấp:</label>
-                <form:input path="name" type="text" class="form-control" id="name" placeholder="Tên nhà cung cấp..." name="name" />        
+                <label for="name" class="form-label">Manufacturer name:</label>
+                <form:input path="name" type="text" class="form-control" id="name" placeholder="Manufacturer name..." name="name" />        
             </div>
             <form:hidden path="id" />
             <button class="btn btn-success" type="submit">
                 <c:choose>
-                    <c:when test="${manufacturer.id != null}"> Cập nhật </c:when>                   
+                    <c:when test="${manufacturer.id != null}"> UPDATE </c:when>                   
                     <c:otherwise>
-                        Thêm
+                        ADD
                     </c:otherwise>
                 </c:choose>
             </button>

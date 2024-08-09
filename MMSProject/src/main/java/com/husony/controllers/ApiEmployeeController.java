@@ -30,7 +30,7 @@ public class ApiEmployeeController {
     
     @DeleteMapping("/employee/delete/{employeeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "employeeId") int id){
+    public void delete(@PathVariable(value = "employeeId") long id){
         this.employeeService.deleteEmployee(id);
     }
     

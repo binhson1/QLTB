@@ -20,9 +20,9 @@ public class ManufacturerFormatter implements Formatter<Manufacturer> {
     }
 
     @Override
-    public Manufacturer parse(String manuId, Locale locale) throws ParseException {
+    public Manufacturer parse(String manufacturerId, Locale locale) throws ParseException {
         Manufacturer m = new Manufacturer();
-        m.setId(Long.parseLong(manuId));
+        m.setId(Long.parseLong(manufacturerId));
         
         return m;
     }

@@ -47,21 +47,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Device.findByBoughtDate", query = "SELECT d FROM Device d WHERE d.boughtDate = :boughtDate"),
     @NamedQuery(name = "Device.findByStatus", query = "SELECT d FROM Device d WHERE d.status = :status")})
 public class Device implements Serializable {
-
-    /**
-     * @return the location
-     */
-    public Location getLocation() {
-        return location;
-    }
-
-    /**
-     * @param location the location to set
-     */
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -240,6 +225,20 @@ public class Device implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Device[ id=" + id + " ]";
+    }
+    
+    /**
+     * @return the location
+     */
+    public Location getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     /**

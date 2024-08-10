@@ -58,7 +58,7 @@
             <form:select class="form-select" path="location" >
                 <c:forEach items="${locations}" var="l">
                     <c:choose>
-                        <c:when test="${l.id == deviceLocation.id}">
+                        <c:when test="${l.id == device.location.id}">
                             <option value="${l.id}" selected>${l.name}</option>
                         </c:when>
                         <c:otherwise>

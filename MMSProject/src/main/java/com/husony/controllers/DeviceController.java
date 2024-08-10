@@ -13,7 +13,6 @@ import com.husony.service.LocationHistoryService;
 import com.husony.service.LocationService;
 import com.husony.service.ManufacturerService;
 import java.util.Date;
-import java.util.Map;
 import java.util.Objects;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -74,7 +71,6 @@ public class DeviceController {
             Boolean isValid = false;
             if (d.getId() != null) {
                 isValid = true;
-                System.out.println("Helloowoenowneo");
                 Device previousDevice = this.deviceService.getDeviceById(d.getId());
                 Locationhistory l = this.locationHistoryService.getLocationByDevice(previousDevice);
                 Locationhistory location = this.locationHistoryService.getLocationByDevice(d);
@@ -85,7 +81,6 @@ public class DeviceController {
                     this.locationHistoryService.updateLocationDevice(location);
                 }
             }
-            System.out.println("Okkkk");
             this.deviceService.addOrUpdate(d);
             if ((isUpdateLocation == true && isValid == true) || isValid == false) {
                 Locationhistory new_location = new Locationhistory();
@@ -111,9 +106,6 @@ public class DeviceController {
         model.addAttribute("manus", this.manuService.getManufac());
         DeviceStatus[] statuses = DeviceStatus.values();
         model.addAttribute("status", statuses);
-        Device d = this.deviceService.getDeviceById(id);
-        Locationhistory l = this.locationHistoryService.getLocationByDevice(d);
-        model.addAttribute("deviceLocation", l.getLocationId());
         return "addDevice";
     }
 }

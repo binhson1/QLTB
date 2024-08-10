@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
-      @Autowired
+     @Autowired
     private JwtService jwtService;
     @Autowired
     private UserService userService;

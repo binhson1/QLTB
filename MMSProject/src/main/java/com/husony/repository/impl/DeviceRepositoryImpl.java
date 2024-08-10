@@ -30,12 +30,8 @@ public class DeviceRepositoryImpl implements DeviceRepository {
     @Override
     public List<Device> getDevices() {
         Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder b = s.getCriteriaBuilder();
-        CriteriaQuery<Device> q = b.createQuery(Device.class);
-        Root root = q.from(Device.class);
-        q.select(root);
-        Query query = s.createQuery(q);
-        return query.getResultList();
+        Query q = s.createQuery("From Device");
+        return q.getResultList();
     }
 
     @Override

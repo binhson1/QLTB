@@ -7,13 +7,16 @@ package com.husony.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.husony.pojo.Device;
+import com.husony.pojo.Locationhistory;
 import com.husony.repository.DeviceRepository;
 import com.husony.service.DeviceService;
+import com.husony.service.LocationHistoryService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +30,24 @@ public class DeviceServiceImpl implements DeviceService {
     private DeviceRepository deviceRepo;
     
     @Autowired
+    private LocationHistoryService locationHistoryService;
+    
+    @Autowired
     private Cloudinary cloudinary;
 
     @Override
-    public List<Device> getDevices() {
-        return this.deviceRepo.getDevices();
-    }
+public List<Device> getDevices() {
+    List<Device> devices = this.deviceRepo.getDevices();
+    devices = devices.stream()
+                     .map(device -> {
+                         Locationhistory location = this.locationHistoryService.getLocationByDevice(device);
+                         device.setLocation(location.getLocationId());
+                         return device; 
+                     })
+                     .collect(Collectors.toList());
+    
+    return devices; 
+}
 
     @Override
     public void addOrUpdate(Device d) {
@@ -51,7 +66,10 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Device getDeviceById(long id) {
-        return this.deviceRepo.getDeviceById(id);
+        Device device = this.deviceRepo.getDeviceById(id);
+        Locationhistory location = this.locationHistoryService.getLocationByDevice(device);
+        device.setLocation(location.getLocationId());
+        return device;
     }
 
     @Override

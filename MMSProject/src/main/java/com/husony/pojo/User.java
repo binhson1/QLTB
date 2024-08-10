@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -60,6 +61,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
+    @JsonIgnore
     @Column(name = "password")
     private String password;
     @Column(name = "last_login")
@@ -122,6 +124,7 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
     private Set<Report> reportSet;
 
     public User() {

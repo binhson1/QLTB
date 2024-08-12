@@ -46,7 +46,7 @@ const Header = () => {
 
             <NavDropdown title="Danh mục" id="basic-nav-dropdown"></NavDropdown>
 
-            {user !== null ? (
+            {user === null ? (
               <>
                 <Link className="nav-link text-success" to="/login">
                   &#129489; Đăng nhập
@@ -61,7 +61,12 @@ const Header = () => {
                   <Image src="" width="25" roundedCircle />
                   Chào !
                 </Link>
-                <Button variant="danger">Đăng xuất</Button>
+                <Button
+                  variant="danger"
+                  onClick={() => dispatch({ type: "logout" })}
+                >
+                  Đăng xuất
+                </Button>
               </>
             )}
             <Link className="nav-link text-danger" to="/cart">
@@ -69,21 +74,6 @@ const Header = () => {
             </Link>
           </Nav>
         </Navbar.Collapse>
-
-        <Form inline onSubmit={null}>
-          <Row>
-            <Col xs="auto">
-              <Form.Control
-                type="text"
-                placeholder="Tìm sản phẩm..."
-                className=" mr-sm-2"
-              />
-            </Col>
-            <Col xs="auto">
-              <Button type="submit">Tìm</Button>
-            </Col>
-          </Row>
-        </Form>
       </Container>
     </Navbar>
   );

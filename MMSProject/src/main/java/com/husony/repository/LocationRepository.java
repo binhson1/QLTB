@@ -14,5 +14,6 @@ import java.util.List;
 public interface LocationRepository {
     List<Location> getLocations();
     void addOrUpdate(Location l);
+    void deleteLocation(long id);
     Location getLocationById(long id);
 }

@@ -20,6 +20,8 @@ const Login = () => {
         password: password,
       });
 
+      console.info(res.data);
+
       cookie.save("access-token", res.data);
 
       let user = await authAPIs().get(endpoints["current-user"]);

@@ -49,5 +49,11 @@ public class LocationRepositoryImpl implements LocationRepository {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Location.class, l);
     }
+
+    @Override
+    public void deleteLocation(long id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.remove(this.getLocationById(id));
+    }
     
 }

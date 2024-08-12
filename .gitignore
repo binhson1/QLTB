@@ -1,4 +1,5 @@
 /MMSProject/target/
+/MMSProject/.idea
 django/.idea
 .vscode
 devicedb.sql

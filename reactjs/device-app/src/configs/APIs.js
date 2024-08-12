@@ -1,12 +1,17 @@
 import axios from "axios";
 import cookie from "react-cookies";
+import Maintenance from "../components/Maintenance";
 
 const BASE_URL = "http://localhost:8080/MMSApp/api/";
 
 export const endpoints = {
   categories: "/categories",
-  products: "/products",
+  maintenances: "/maintenances",
+  manufacturer: "/manufacturers",
+  location: "/locations",
+  report: "/report",
   login: "/login",
+  device: "/device",
   "current-user": "/current-user",
   register: "/users",
 };

@@ -46,7 +46,7 @@ public class ReportController {
     @GetMapping("/report/add")
     public String createView(Model model) {
         model.addAttribute("report", new Report());
-        model.addAttribute("devices", this.deviceService.getDevices());
+        model.addAttribute("devices", this.deviceService.getDevices(null));
         model.addAttribute("users", this.userService.getUsers());
         ReportStatus[] statuses = ReportStatus.values();
         model.addAttribute("status", statuses);
@@ -74,7 +74,7 @@ public class ReportController {
     @GetMapping("/report/{reportId}")
     public String updateView(Model model, @PathVariable(value = "reportId") long id) {
         model.addAttribute("report", this.reportService.getReportById(id));
-        model.addAttribute("devices", this.deviceService.getDevices());
+        model.addAttribute("devices", this.deviceService.getDevices(null));
         model.addAttribute("users", this.userService.getUsers());
         ReportStatus[] statuses = ReportStatus.values();
         model.addAttribute("status", statuses);

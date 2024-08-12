@@ -108,4 +108,10 @@ public class DeviceController {
         model.addAttribute("status", statuses);
         return "addDevice";
     }
+    
+    @GetMapping("/device/{deviceId}/location_history")
+    public String locationdevices(Model model, @PathVariable(value="deviceId") long id) {
+        model.addAttribute("locationHistory", this.locationHistoryService.getLocationHistoryByDevice(id));
+        return "locationHistory";
+    }
 }

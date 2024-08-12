@@ -5,6 +5,7 @@
 package com.husony.controllers;
 
 import com.husony.pojo.Location;
+import com.husony.service.LocationHistoryService;
 import com.husony.service.LocationService;
 import java.util.Map;
 import javax.validation.Valid;
@@ -27,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LocationController {
     @Autowired
     private LocationService locationService;
+    
+    @Autowired
+    private LocationHistoryService locationHistoryService;
     
     @RequestMapping("/location")
     public String location(Model model, @RequestParam Map<String, String> params) {
@@ -63,5 +67,11 @@ public class LocationController {
     public String detailsLocationView(Model model, @PathVariable(value = "locationId") long id) {
         model.addAttribute("location", this.locationService.getLocationById(id));
         return "addLocation";
+    }
+    
+    @GetMapping("/location/{locationId}/device")
+    public String locationdevices(Model model, @PathVariable(value="locationId") long id) {
+        model.addAttribute("devices", this.locationHistoryService.getDevicesByLocation(id));
+        return "home";
     }
 }

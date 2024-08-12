@@ -6,6 +6,7 @@ package com.husony.repository;
 
 import com.husony.pojo.Device;
 import com.husony.pojo.Locationhistory;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface LocationHistoryRepository {
     Locationhistory getLocationByDevice(Device d);
     void createLocationDevice(Locationhistory l);
     void updateLocationDevice(Locationhistory l);
+    List<Locationhistory> getDevicesByLocation(long id);
+    List<Locationhistory> getLocationHistoryByDevice(long id);
 }

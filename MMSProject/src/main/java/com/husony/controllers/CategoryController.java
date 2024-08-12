@@ -6,6 +6,9 @@ package com.husony.controllers;
 
 import com.husony.pojo.Devicecategory;
 import com.husony.service.CategoryService;
+import com.husony.service.DeviceService;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,9 @@ public class CategoryController {
     
     @Autowired
     private CategoryService cateService;
+    
+    @Autowired
+    private DeviceService deviceService;
     
     @RequestMapping("/category")
     public String cate(Model model){
@@ -64,5 +70,11 @@ public class CategoryController {
         return "addCate";
     }
     
-    
+    @GetMapping("/categories/{categoryId}/device")
+    public String deviceOfCategory(Model model, @PathVariable(value = "categoryId") long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("cateId", String.valueOf(id));
+        model.addAttribute("devices", this.deviceService.getDevices(params));
+        return "home";
+    }
 }

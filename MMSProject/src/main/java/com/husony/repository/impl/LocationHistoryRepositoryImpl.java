@@ -61,4 +61,33 @@ public class LocationHistoryRepositoryImpl implements LocationHistoryRepository 
         s.update(l);
     }
 
+    @Override
+    public List<Locationhistory> getDevicesByLocation(long id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Locationhistory> q = b.createQuery(Locationhistory.class);
+        Root root = q.from(Locationhistory.class);
+        q.select(root);
+        Predicate p1 = b.equal(root.get("locationId").get("id"), id);
+        Predicate p2 = b.equal(root.get("active"), true);
+        q = q.where(b.and(p1, p2));
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Locationhistory> getLocationHistoryByDevice(long id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Locationhistory> q = b.createQuery(Locationhistory.class);
+        Root root = q.from(Locationhistory.class);
+        q.select(root);
+        Predicate p1 = b.equal(root.get("deviceId").get("id"), id);
+        q = q.where(p1);
+        q.orderBy(b.desc(root.get("beginDate"))); 
+        Query query = s.createQuery(q);
+        return query.getResultList();
+    }
+    
+    
 }

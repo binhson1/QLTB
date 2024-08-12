@@ -11,24 +11,29 @@
         <put-attribute name="content" value="..." />
     </definition>
     <definition name="home" extends="baseLayout">
-        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="title" value="Home" />
         <put-attribute name="content" value="/WEB-INF/pages/index.jsp" />
+    </definition>
+    <definition name="addDevice" extends="baseLayout">
+        <put-attribute name="title" value="Add device" />
+        <put-attribute name="content" value="/WEB-INF/pages/addDevice.jsp" />
     </definition>
     <definition name="location" extends="baseLayout">
         <put-attribute name="title" value="Location" />
         <put-attribute name="content" value="/WEB-INF/pages/location.jsp" />
     </definition>
-    
+    <definition name="addLocation" extends="baseLayout">
+        <put-attribute name="title" value="Add location" />
+        <put-attribute name="content" value="/WEB-INF/pages/addLocation.jsp" />
+    </definition>
     <definition name="category" extends="baseLayout">
-        <put-attribute name="title" value="Trang quản lý danh mục" />
+        <put-attribute name="title" value="Device category" />
         <put-attribute name="content" value="/WEB-INF/pages/category.jsp" />
     </definition>
     <definition name="addCate" extends="baseLayout">
-        <put-attribute name="title" value="Thêm danh mục" />
+        <put-attribute name="title" value="Add device category" />
         <put-attribute name="content" value="/WEB-INF/pages/addCategory.jsp" />
     </definition>
-    
-    
     <definition name="manufacturer" extends="baseLayout">
         <put-attribute name="title" value="Trang quản lý nhà cung cấp" />
         <put-attribute name="content" value="/WEB-INF/pages/manufacturer.jsp" />
@@ -37,48 +42,38 @@
         <put-attribute name="title" value="Thêm nhà cung cấp" />
         <put-attribute name="content" value="/WEB-INF/pages/addManufacturer.jsp" />
     </definition>
-    
-    
-    <definition name="addDevice" extends="baseLayout">
-        <put-attribute name="title" value="Qu?n ly thiets b?" />
-        <put-attribute name="content" value="/WEB-INF/pages/addDevice.jsp" />
-    </definition>
-    <definition name="addLocation" extends="baseLayout">
-        <put-attribute name="title" value="Location" />
-        <put-attribute name="content" value="/WEB-INF/pages/addLocation.jsp" />
-    </definition>
-     <definition name="repairType" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý loại sửa chữa" />
+    <definition name="repairType" extends="baseLayout">
+        <put-attribute name="title" value="Repair type" />
         <put-attribute name="content" value="/WEB-INF/pages/repairType.jsp" />
     </definition>
     <definition name="addRepairType" extends="baseLayout">
-        <put-attribute name="title" value="Thêm loại sửa chữa" />
+        <put-attribute name="title" value="Add repair type" />
         <put-attribute name="content" value="/WEB-INF/pages/addRepairType.jsp" />
     </definition>
     
     <definition name="maintenanceType" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý loại bảo trì" />
+        <put-attribute name="title" value="Maintenance type" />
         <put-attribute name="content" value="/WEB-INF/pages/maintenanceType.jsp" />
     </definition>
     <definition name="addMaintenanceType" extends="baseLayout">
-        <put-attribute name="title" value="Thêm loại bảo trì" />
+        <put-attribute name="title" value="Add maintenance type" />
         <put-attribute name="content" value="/WEB-INF/pages/addMaintenanceType.jsp" />
     </definition>
     
-     <definition name="employee" extends="baseLayout">
-        <put-attribute name="title" value="Quản lý nhân viên" />
+    <definition name="employee" extends="baseLayout">
+        <put-attribute name="title" value="Employee" />
         <put-attribute name="content" value="/WEB-INF/pages/employee.jsp" />
     </definition>
     <definition name="addEmployee" extends="baseLayout">
-        <put-attribute name="title" value="Thêm nhân viên" />
+        <put-attribute name="title" value="Add employee" />
         <put-attribute name="content" value="/WEB-INF/pages/addEmployee.jsp" />
     </definition>
     <definition name="report" extends="baseLayout">
-        <put-attribute name="title" value="Report Manage" />
+        <put-attribute name="title" value="Report" />
         <put-attribute name="content" value="/WEB-INF/pages/report.jsp" />
     </definition>
-     <definition name="addReport" extends="baseLayout">
-        <put-attribute name="title" value="Report Manage" />
+    <definition name="addReport" extends="baseLayout">
+        <put-attribute name="title" value="Add report" />
         <put-attribute name="content" value="/WEB-INF/pages/addReport.jsp" />
     </definition>
     <definition name="job" extends="baseLayout">
@@ -90,7 +85,7 @@
         <put-attribute name="content" value="/WEB-INF/pages/addJob.jsp" />
     </definition>
     <definition name="stats" extends="baseLayout">
-        <put-attribute name="title" value="THỐNG KÊ BÁO CÁO" />
+        <put-attribute name="title" value="Stats" />
         <put-attribute name="content" value="/WEB-INF/pages/stats.jsp" />
     </definition>
     
@@ -98,11 +93,14 @@
         <put-attribute name="title" value="Scheduling Repair Management" />
         <put-attribute name="content" value="/WEB-INF/pages/scheduleRepair.jsp" />
     </definition>
-     <definition name="addScheduleRepair" extends="baseLayout">
+    <definition name="addScheduleRepair" extends="baseLayout">
         <put-attribute name="title" value="Scheduling Repair Add" />
         <put-attribute name="content" value="/WEB-INF/pages/addScheduleRepair.jsp" />
     </definition>
-    
+    <definition name="locationHistory" extends="baseLayout">
+        <put-attribute name="title" value="Scheduling Location history" />
+        <put-attribute name="content" value="/WEB-INF/pages/locationHistory.jsp" />
+    </definition>
     <!--
     <definition name="products" extends="baseLayout">
         <put-attribute name="title" value="Quản trị sản phẩm" />

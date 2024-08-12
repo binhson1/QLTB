@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,36 +27,37 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DeviceServiceImpl implements DeviceService {
+
     @Autowired
     private DeviceRepository deviceRepo;
-    
+
     @Autowired
     private LocationHistoryService locationHistoryService;
-    
+
     @Autowired
     private Cloudinary cloudinary;
 
     @Override
-public List<Device> getDevices() {
-    List<Device> devices = this.deviceRepo.getDevices();
-    devices = devices.stream()
-                     .map(device -> {
-                         Locationhistory location = this.locationHistoryService.getLocationByDevice(device);
-                         device.setLocation(location.getLocationId());
-                         return device; 
-                     })
-                     .collect(Collectors.toList());
-    
-    return devices; 
-}
+    public List<Device> getDevices(Map<String, String> params) {
+        List<Device> devices = this.deviceRepo.getDevices(params);
+        devices = devices.stream()
+                .map(device -> {
+                    Locationhistory location = this.locationHistoryService.getLocationByDevice(device);
+                    device.setLocation(location.getLocationId());
+                    return device;
+                })
+                .collect(Collectors.toList());
+
+        return devices;
+    }
 
     @Override
     public void addOrUpdate(Device d) {
-         if (!d.getFile().isEmpty()) {
+        if (!d.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
-                            ObjectUtils.asMap("resource_type", "auto"));
-                
+                        ObjectUtils.asMap("resource_type", "auto"));
+
                 d.setImage(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,5 +78,10 @@ public List<Device> getDevices() {
     public void deleteDevice(long l) {
         this.deviceRepo.deleteDevice(l);
     }
-    
+
+//    @Scheduled(fixedDelay = 1000)
+//    public void scheduleFixedDelayTask() {
+//        System.out.println(
+//                "Fixed delay task - " + System.currentTimeMillis() / 1000);
+//    }
 }

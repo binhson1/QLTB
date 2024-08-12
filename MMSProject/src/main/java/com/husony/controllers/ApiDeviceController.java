@@ -56,7 +56,7 @@ public class ApiDeviceController {
 
     @GetMapping("/device")
     public ResponseEntity<List<Device>> list(@RequestParam Map<String, String> params) {
-        List<Device> devices = this.deviceService.getDevices();
+        List<Device> devices = this.deviceService.getDevices(params);
 
         return new ResponseEntity<>(devices, HttpStatus.OK);
     }

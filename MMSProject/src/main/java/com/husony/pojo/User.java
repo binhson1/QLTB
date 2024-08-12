@@ -63,7 +63,6 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     @JsonIgnore
     @Column(name = "password")
-    @JsonIgnore
     private String password;
     @Column(name = "last_login")
     @Temporal(TemporalType.TIMESTAMP)

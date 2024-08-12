@@ -15,6 +15,8 @@
                     <td>${c.id}</td>
                     <td>${c.name}</td>
                     <td>
+                        <c:url value="/categories/${c.id}/device" var="cD" />
+                        <a href="${cD}" class="btn btn-info">i</a>
                         <c:url value="/categories/${c.id}" var="u" />
                         <a href="${u}" class="btn btn-success">&orarr;</a>
 

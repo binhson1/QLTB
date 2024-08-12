@@ -5,7 +5,10 @@
 package com.husony.controllers;
 
 import com.husony.pojo.Manufacturer;
+import com.husony.service.DeviceService;
 import com.husony.service.ManufacturerService;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,9 @@ public class ManufacturerController {
     
     @Autowired
     private ManufacturerService manuService;
+    
+    @Autowired
+    private DeviceService deviceService;
     
     @GetMapping("/manufacturer/add")
     public String createView(Model model) {
@@ -63,5 +69,13 @@ public class ManufacturerController {
         model.addAttribute("manu", this.manuService.getManufac());
         
         return "manufacturer";
+    }
+    
+    @GetMapping("/manufacturer/{mId}/device")
+    public String deviceOfManufacturer(Model model, @PathVariable("mId") long id){
+        Map<String, String> params = new HashMap<>();
+        params.put("manuId", String.valueOf(id));
+        model.addAttribute("devices", this.deviceService.getDevices(params));
+        return "home";
     }
 }

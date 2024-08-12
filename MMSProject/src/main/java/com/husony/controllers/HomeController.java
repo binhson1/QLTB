@@ -23,8 +23,7 @@ public class HomeController {
     
     @RequestMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("devices", this.deviceService.getDevices());
-        
+        model.addAttribute("devices", this.deviceService.getDevices(params));
         return "home";
     }
 }

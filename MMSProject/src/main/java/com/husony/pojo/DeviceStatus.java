@@ -9,17 +9,7 @@ package com.husony.pojo;
  * @author Do Gia Huy
  */
 public enum DeviceStatus {
-    ACTIVE(1),
-    MAINTENANCE(2),
-    REPAIR(3);
-    
-    private final int value;
-
-    private DeviceStatus(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
+    ACTIVE,
+    MAINTENANCE,
+    REPAIR
 }

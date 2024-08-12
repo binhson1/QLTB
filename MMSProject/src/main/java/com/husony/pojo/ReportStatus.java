@@ -9,16 +9,7 @@ package com.husony.pojo;
  * @author Do Gia Huy
  */
 public enum ReportStatus {
-    PENDING(1),
-    REPAIRED(2);
-    
-    private final int value;
-
-    private ReportStatus(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
+    PENDING,
+    PROCESS,
+    REPAIRED
 }

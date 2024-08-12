@@ -88,11 +88,11 @@
             <form:select class="form-select" path="status" >
                 <c:forEach items="${status}" var="s">
                     <c:choose>
-                        <c:when test="${device.status == s.value}">
-                            <option value="${s.value}" selected>${s}</option>
+                        <c:when test="${device.status == s}">
+                            <option value="${s}" selected>${s}</option>
                         </c:when>
                         <c:otherwise>
-                            <option value="${s.value}">${s}</option>
+                            <option value="${s}">${s}</option>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

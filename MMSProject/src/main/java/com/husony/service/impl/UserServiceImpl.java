@@ -71,18 +71,11 @@ public class UserServiceImpl implements UserService{
         User u = new User();
         u.setFirstName(params.get("firstName"));
         u.setLastName(params.get("lastName"));        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        try {
-            u.setDateJoined(dateFormat.parse(params.get("dateJoined")));
-        } catch (ParseException ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
         u.setPhone(params.getOrDefault("phone", "9999999999"));
         u.setEmail(params.getOrDefault("email", "a@gmail.com"));
         u.setUsername(params.get("username"));
         u.setPassword(this.passEncoder.encode(params.get("password")));
-        u.setUserRole("ROLE_ADMIN");
+        u.setUserRole(params.get("user_role"));
         if (!avatar.isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(avatar.getBytes(), 

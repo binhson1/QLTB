@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <div class="col-10 container-fluid">
     <h1 class="text-center text-primary mt-1">ADD JOB</h1>
     <c:url value="/job/addOrUpdate" var="action" />
@@ -19,11 +20,11 @@
     <form:form method="post" enctype="multipart/form-data" action="${action}" modelAttribute="job">
         <div class="mb-3 mt-3">
             <label for="name" class="form-label">Start date</label>
-            <form:input path="startDate" type="text" class="form-control" id="name" placeholder="Start date..." name="name" />        
+            <form:input path="startDate" type="datetime-local" class="form-control" id="startDate" placeholder="Start date..." name="startDate" value="${job.startDate}"  />        
         </div>
         <div class="mb-3 mt-3">
             <label for="Cccd" class="form-label">End date</label>
-            <form:input path="endDate" type="text" class="form-control" id="Cccd" placeholder="End date..." name="name" />        
+            <form:input path="endDate" type="datetime-local" class="form-control" id="endDate" placeholder="End date..." name="endDate" value="${job.endDate}" />        
         </div>
         <div class="mb-3 mt-3">
             <label for="browser" class="form-label">Status: </label>
@@ -77,7 +78,7 @@
             <label for="browser" class="form-label">Repair</label>
             <form:select class="form-select" path="repairId" >
                 <option></option>
-                <c:forEach items="${reports}" var="r">
+                <c:forEach items="${scheduleRepair}" var="r">
                     <c:choose>
                         <c:when test="${r.id == job.repairId.id}">
                             <option value="${r.id}" selected>${r.id}</option>

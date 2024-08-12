@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -23,9 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,8 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Schedulemaintenance.findAll", query = "SELECT s FROM Schedulemaintenance s"),
     @NamedQuery(name = "Schedulemaintenance.findById", query = "SELECT s FROM Schedulemaintenance s WHERE s.id = :id"),
-    @NamedQuery(name = "Schedulemaintenance.findByDate", query = "SELECT s FROM Schedulemaintenance s WHERE s.date = :date"),
-    @NamedQuery(name = "Schedulemaintenance.findByFrequency", query = "SELECT s FROM Schedulemaintenance s WHERE s.frequency = :frequency")})
+    @NamedQuery(name = "Schedulemaintenance.findByLastMaintenanceDate", query = "SELECT s FROM Schedulemaintenance s WHERE s.lastMaintenanceDate = :lastMaintenanceDate"),
+    @NamedQuery(name = "Schedulemaintenance.findByNextMaintenanceDate", query = "SELECT s FROM Schedulemaintenance s WHERE s.nextMaintenanceDate = :nextMaintenanceDate"),
+    @NamedQuery(name = "Schedulemaintenance.findByIntervalMonth", query = "SELECT s FROM Schedulemaintenance s WHERE s.intervalMonth = :intervalMonth")})
 public class Schedulemaintenance implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,17 +49,23 @@ public class Schedulemaintenance implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "date")
+    @Column(name = "last_maintenance_date")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date lastMaintenanceDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "frequency")
-    private String frequency;
+    @Column(name = "next_maintenance_date")
+    @Temporal(TemporalType.DATE)
+    private Date nextMaintenanceDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "interval_month")
+    private int intervalMonth;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "scheduleMaintenanceId")
+    @JsonIgnore
     private Set<DeviceMaintenance> deviceMaintenanceSet;
     @OneToMany(mappedBy = "maintenanceId")
+    @JsonIgnore
     private Set<Job> jobSet;
     @JoinColumn(name = "maintenance_type_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -72,10 +78,11 @@ public class Schedulemaintenance implements Serializable {
         this.id = id;
     }
 
-    public Schedulemaintenance(Long id, Date date, String frequency) {
+    public Schedulemaintenance(Long id, Date lastMaintenanceDate, Date nextMaintenanceDate, int intervalMonth) {
         this.id = id;
-        this.date = date;
-        this.frequency = frequency;
+        this.lastMaintenanceDate = lastMaintenanceDate;
+        this.nextMaintenanceDate = nextMaintenanceDate;
+        this.intervalMonth = intervalMonth;
     }
 
     public Long getId() {
@@ -86,38 +93,28 @@ public class Schedulemaintenance implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getLastMaintenanceDate() {
+        return lastMaintenanceDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLastMaintenanceDate(Date lastMaintenanceDate) {
+        this.lastMaintenanceDate = lastMaintenanceDate;
     }
 
-    public String getFrequency() {
-        return frequency;
+    public Date getNextMaintenanceDate() {
+        return nextMaintenanceDate;
     }
 
-    public void setFrequency(String frequency) {
-        this.frequency = frequency;
+    public void setNextMaintenanceDate(Date nextMaintenanceDate) {
+        this.nextMaintenanceDate = nextMaintenanceDate;
     }
 
-    @XmlTransient
-    public Set<DeviceMaintenance> getDeviceMaintenanceSet() {
-        return deviceMaintenanceSet;
+    public int getIntervalMonth() {
+        return intervalMonth;
     }
 
-    public void setDeviceMaintenanceSet(Set<DeviceMaintenance> deviceMaintenanceSet) {
-        this.deviceMaintenanceSet = deviceMaintenanceSet;
-    }
-
-    @XmlTransient
-    public Set<Job> getJobSet() {
-        return jobSet;
-    }
-
-    public void setJobSet(Set<Job> jobSet) {
-        this.jobSet = jobSet;
+    public void setIntervalMonth(int intervalMonth) {
+        this.intervalMonth = intervalMonth;
     }
 
     public Maintenancetype getMaintenanceTypeId() {

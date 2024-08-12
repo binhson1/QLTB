@@ -7,10 +7,14 @@ package com.husony.configs;
 
 import com.husony.formatters.CategoryFormatter;
 import com.husony.formatters.DeviceFormatter;
+import com.husony.formatters.EmployeeFormatter;
 import com.husony.formatters.LocationFormatter;
+import com.husony.formatters.MaintenanceFormatter;
 import com.husony.formatters.ManufacturerFormatter;
+import com.husony.formatters.RepairFormatter;
 import com.husony.formatters.RepairTypeFormatter;
 import com.husony.formatters.ReportFormatter;
+import com.husony.formatters.StringToLocalDateTimeConverter;
 import com.husony.formatters.UserFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -99,7 +103,10 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         registry.addFormatter(new UserFormatter());
         registry.addFormatter(new ReportFormatter());
         registry.addFormatter(new RepairTypeFormatter());
-
+        registry.addFormatter(new EmployeeFormatter());
+        registry.addFormatter(new MaintenanceFormatter());
+        registry.addFormatter(new RepairFormatter());
+        registry.addConverter(new StringToLocalDateTimeConverter());
     }
 
     @Override

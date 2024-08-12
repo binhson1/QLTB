@@ -51,13 +51,7 @@ class Device(models.Model):
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE)
     device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE)
     location_history = models.ManyToManyField("Location", through="LocationHistory")
-
-    class StatusChoice(models.IntegerChoices):
-        ACTIVE = 1
-        MAINTENANCE = 2
-        REPAIR = 3
-
-    status = models.IntegerField(choices=StatusChoice.choices, null=True)
+    status = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'Device'
@@ -74,8 +68,9 @@ class ScheduleRepair(models.Model):
 
 
 class ScheduleMaintenance(models.Model):
-    date = models.DateField()
-    frequency = models.CharField(max_length=50)
+    last_maintenance_date = models.DateField()
+    next_maintenance_date = models.DateField()
+    interval_month = models.IntegerField()
     maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
     device = models.ManyToManyField("Device", through="Device_Maintenance")
 
@@ -86,8 +81,10 @@ class ScheduleMaintenance(models.Model):
 class Device_Maintenance(models.Model):
     device = models.ForeignKey("Device", on_delete=models.CASCADE)
     schedule_maintenance = models.ForeignKey("ScheduleMaintenance", on_delete=models.CASCADE)
+
     class Meta:
         db_table = 'Device_Maintenance'
+
 
 class Job(models.Model):
     employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
@@ -95,14 +92,7 @@ class Job(models.Model):
     repair = models.ForeignKey('ScheduleRepair', on_delete=models.CASCADE, blank=True, null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField(null=True)
-
-    class JobStatusChoice(models.IntegerChoices):
-        PENDING = 1
-        PROCESSED = 2
-        RESOLVED = 3
-
-    status = models.IntegerField(choices=JobStatusChoice.choices, null=True)
-
+    status = models.CharField(max_length=50)
     updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:

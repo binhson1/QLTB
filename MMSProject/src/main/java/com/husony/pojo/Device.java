@@ -47,6 +47,7 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Device.findByBoughtDate", query = "SELECT d FROM Device d WHERE d.boughtDate = :boughtDate"),
     @NamedQuery(name = "Device.findByStatus", query = "SELECT d FROM Device d WHERE d.status = :status")})
 public class Device implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,10 +72,13 @@ public class Device implements Serializable {
     @NotNull
     @Column(name = "bought_date")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date boughtDate;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "status")
-    private Integer status;
+    private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deviceId")
     @JsonIgnore
     private Set<DeviceMaintenance> deviceMaintenanceSet;
@@ -90,7 +94,7 @@ public class Device implements Serializable {
     @JoinColumn(name = "manufacturer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
-    
+
     @Transient
     private Location location;
     @Transient
@@ -149,14 +153,6 @@ public class Device implements Serializable {
 
     public void setBoughtDate(Date boughtDate) {
         this.boughtDate = boughtDate;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     @XmlTransient
@@ -226,7 +222,7 @@ public class Device implements Serializable {
     public String toString() {
         return "com.husony.pojo.Device[ id=" + id + " ]";
     }
-    
+
     /**
      * @return the location
      */
@@ -253,6 +249,20 @@ public class Device implements Serializable {
      */
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

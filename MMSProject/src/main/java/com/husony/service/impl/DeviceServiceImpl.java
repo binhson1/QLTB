@@ -79,7 +79,7 @@ public class DeviceServiceImpl implements DeviceService {
         this.deviceRepo.deleteDevice(l);
     }
 
-//    @Scheduled(fixedDelay = 1000)
+//    @Scheduled(cron = ngay)
 //    public void scheduleFixedDelayTask() {
 //        System.out.println(
 //                "Fixed delay task - " + System.currentTimeMillis() / 1000);

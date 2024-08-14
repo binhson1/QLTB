@@ -58,7 +58,13 @@ public class DeviceRepositoryImpl implements DeviceRepository {
                 Predicate p3 = b.equal(root.get("deviceCategoryId").get("id"), Long.parseLong(cateId));
                 predicates.add(p3);
             }
-
+            
+            String status = params.get("status");
+            if (status != null && !status.isEmpty()) {
+                Predicate p4 = b.equal(root.get("status"),status);
+                predicates.add(p4);
+            }
+            
             q.where(predicates.toArray(Predicate[]::new));
         }
 

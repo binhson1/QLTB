@@ -10,6 +10,7 @@ package com.husony.pojo;
  */
 public enum DeviceStatus {
     ACTIVE,
+    PENDING,
     MAINTENANCE,
-    REPAIR
+    REPAIR    
 }

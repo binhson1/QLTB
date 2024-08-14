@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
-import { MyUserContext } from "../App";
+import { useContext, useEffect, useState } from "react";
+import { MyUserContext } from "../../App";
 import { Link, Navigate } from "react-router-dom";
-import APIs, { endpoints } from "../configs/APIs";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
+import cookie from "react-cookies";
 
 const Maintenance = () => {
   const user = useContext(MyUserContext);
@@ -9,12 +10,19 @@ const Maintenance = () => {
 
   const loadMaintenances = async () => {
     try {
-      let res = await APIs.get(endpoints["maintenances"]);
+      let res = await authAPIs(cookie.load("access_token")).get(
+        endpoints["maintenances"]
+      );
       setMaintenances(res.data);
     } catch (ex) {
       console.error(ex);
     }
   };
+
+  useEffect(() => {
+    loadMaintenances();
+  }, []);
+
   if (user === null) return <Navigate to="/login"></Navigate>;
   return (
     <div classNameName="col-10 container-fluid">
@@ -32,12 +40,7 @@ const Maintenance = () => {
               <td>
                 <Link className="btn btn-info">i</Link>
                 <Link className="btn btn-success">&orarr;</Link>
-                <button
-                  onclick="deletes('${uD}', ${c.id}, 'cates')"
-                  className="btn btn-danger"
-                >
-                  &times;
-                </button>
+                <button className="btn btn-danger">&times;</button>
               </td>
             </tr>
           ))}

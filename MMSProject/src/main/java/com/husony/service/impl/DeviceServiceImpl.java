@@ -53,14 +53,16 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public void addOrUpdate(Device d) {
-        if (!d.getFile().isEmpty()) {
-            try {
-                Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
+        if (d.getFile() != null) {
+            if (!d.getFile().isEmpty()) {
+                try {
+                    Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
 
-                d.setImage(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    d.setImage(res.get("secure_url").toString());
+                } catch (IOException ex) {
+                    Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         this.deviceRepo.addOrUpdate(d);

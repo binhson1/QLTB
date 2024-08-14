@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { MyUserContext } from "../App";
-import APIs, { endpoints } from "../configs/APIs";
+import { MyUserContext } from "../../App";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Navigate } from "react-router";
 import { Link } from "react-router-dom";
+import cookie from "react-cookies";
+import { Button } from "react-bootstrap";
 
 const Manufacturer = () => {
   const user = useContext(MyUserContext);
@@ -10,7 +12,9 @@ const Manufacturer = () => {
 
   const loadManufacturer = async () => {
     try {
-      let res = await APIs.get(endpoints["manufacturer"]);
+      let res = await authAPIs(cookie.load("access_token")).get(
+        endpoints["manufacturer"]
+      );
       setManufacturer(res.data);
     } catch (ex) {
       console.error(ex);
@@ -21,7 +25,13 @@ const Manufacturer = () => {
     loadManufacturer();
   }, []);
 
-  if (user === null) return <Navigate to="/login" />;
+  const deleteManufacturer = () => {
+    try {
+      let res = APIs.delete(endpoints);
+    } catch (ex) {}
+  };
+
+  // if (user === null) return <Navigate to="/login" />;
 
   return (
     <div className="col-10 container-fluid">
@@ -40,14 +50,9 @@ const Manufacturer = () => {
               <td>{m.name}</td>
               <td>
                 <Link className="btn btn-info">i</Link>
-                <Link className="btn btn-success">&orarr;</Link>
+                <Link className="btn btn-success">&#x2197;</Link>
 
-                <button
-                  onClick="deletes('${uD}', ${m.id}, 'manu')"
-                  className="btn btn-danger"
-                >
-                  &times;
-                </button>
+                <Button variant="outline-danger">&times;</Button>
               </td>
             </tr>
           ))}

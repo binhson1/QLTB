@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -78,9 +79,8 @@ public class Report implements Serializable {
     @ManyToOne(optional = false)
     private Device deviceId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false)     
     private User userId;
-
     public Report() {
     }
 

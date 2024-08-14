@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import cookie from "react-cookies";
 import { Navigate } from "react-router";
-import { MyDispatchContext, MyUserContext } from "../App";
-import APIs, { authAPIs, endpoints } from "../configs/APIs";
+import { MyDispatchContext, MyUserContext } from "../../App";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 
 const Login = () => {
   const [username, setUsername] = useState();

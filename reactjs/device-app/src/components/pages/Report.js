@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { MyUserContext } from "../App";
+import { MyUserContext } from "../../App";
 import { Navigate } from "react-router";
-import APIs, { endpoints } from "../configs/APIs";
+import APIs, { endpoints } from "../../configs/APIs";
+import { Link } from "react-router-dom";
 
 const Report = () => {
   const user = useContext(MyUserContext);
@@ -19,6 +20,13 @@ const Report = () => {
   useEffect(() => {
     loadReport();
   }, []);
+
+  const deleteReport = async () => {
+    try {
+    } catch (ex) {
+      console.error(ex);
+    }
+  };
 
   if (user === null) return <Navigate to="/login" />;
   return (
@@ -50,10 +58,7 @@ const Report = () => {
                   &orarr;
                 </a>
 
-                <button
-                  onclick="deletes('${uD}', ${r.id}, 'report')"
-                  className="btn btn-danger"
-                >
+                <button onClick={deleteReport} className="btn btn-danger">
                   &times;
                 </button>
               </td>

@@ -10,6 +10,7 @@ import com.husony.formatters.DeviceFormatter;
 import com.husony.formatters.EmployeeFormatter;
 import com.husony.formatters.LocationFormatter;
 import com.husony.formatters.MaintenanceFormatter;
+import com.husony.formatters.MaintenanceTypeFormatter;
 import com.husony.formatters.ManufacturerFormatter;
 import com.husony.formatters.RepairFormatter;
 import com.husony.formatters.RepairTypeFormatter;
@@ -107,10 +108,13 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         registry.addFormatter(new MaintenanceFormatter());
         registry.addFormatter(new RepairFormatter());
         registry.addConverter(new StringToLocalDateTimeConverter());
+        registry.addFormatter(new MaintenanceTypeFormatter());
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
     }
+    
+    
 }

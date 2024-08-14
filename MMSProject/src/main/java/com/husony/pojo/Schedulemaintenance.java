@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,7 +25,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -49,13 +52,19 @@ public class Schedulemaintenance implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "name")
+    private String name;
     @Column(name = "last_maintenance_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date lastMaintenanceDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "next_maintenance_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private Date nextMaintenanceDate;
     @Basic(optional = false)
     @NotNull
@@ -148,6 +157,20 @@ public class Schedulemaintenance implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Schedulemaintenance[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
     
 }

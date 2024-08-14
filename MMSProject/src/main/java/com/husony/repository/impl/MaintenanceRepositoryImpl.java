@@ -4,9 +4,19 @@
  */
 package com.husony.repository.impl;
 
+import com.husony.pojo.Device;
 import com.husony.pojo.Schedulemaintenance;
 import com.husony.repository.MaintenanceRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +30,53 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class MaintenanceRepositoryImpl implements MaintenanceRepository{
+public class MaintenanceRepositoryImpl implements MaintenanceRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
-    
+
     @Override
-    public List<Schedulemaintenance> getMaintenance() {
+    public List<Schedulemaintenance> getMaintenance(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Schedulemaintenance");
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Schedulemaintenance> q = b.createQuery(Schedulemaintenance.class);
+        Root root = q.from(Schedulemaintenance.class);
+        q.select(root);
+
+        if (params != null) {
+            try {
+                List<Predicate> predicates = new ArrayList<>();
+                String nextMaintenanceDate = params.get("nextMaintenanceDate");
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date next_maintenance_date = formatter.parse(nextMaintenanceDate);
+                if (nextMaintenanceDate != null && !nextMaintenanceDate.isEmpty()) {
+                    Predicate p1 = b.equal(root.get("nextMaintenanceDate").as(Date.class), next_maintenance_date);
+                    predicates.add(p1);
+                }
+
+                String maintenanceTypeId = params.get("maintenanceTypeId");
+                if (maintenanceTypeId != null && !maintenanceTypeId.isEmpty()) {
+                    Predicate p2 = b.equal(root.get("maintenanceTypeId").get("id"), Long.parseLong(maintenanceTypeId));
+                    predicates.add(p2);
+                }
+
+                String kw = params.get("q");
+                if (kw != null && !kw.isEmpty()) {
+                    Predicate p3 = b.like(root.get("name"), String.format("%%%s%%", kw));
+                    predicates.add(p3);
+                }
+
+                q.where(predicates.toArray(Predicate[]::new));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Query query = s.createQuery(q);
+
+        return query.getResultList();
     }
 
     @Override
@@ -52,5 +100,5 @@ public class MaintenanceRepositoryImpl implements MaintenanceRepository{
         Session s = this.factory.getObject().getCurrentSession();
         s.delete(this.getMaintenanceById(id));
     }
-    
+
 }

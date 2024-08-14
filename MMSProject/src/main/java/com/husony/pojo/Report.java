@@ -74,6 +74,7 @@ public class Report implements Serializable {
     @Column(name = "status")
     private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reportId")
+    @JsonIgnore
     private Set<Schedulerepair> schedulerepairSet;
     @JoinColumn(name = "device_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

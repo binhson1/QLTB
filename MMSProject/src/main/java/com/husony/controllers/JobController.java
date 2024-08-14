@@ -4,8 +4,16 @@
  */
 package com.husony.controllers;
 
+import com.husony.pojo.Device;
+import com.husony.pojo.DeviceMaintenance;
+import com.husony.pojo.DeviceStatus;
 import com.husony.pojo.Job;
 import com.husony.pojo.JobStatus;
+import com.husony.pojo.Report;
+import com.husony.pojo.Schedulemaintenance;
+import com.husony.pojo.Schedulerepair;
+import com.husony.service.DeviceService;
+import com.husony.service.Device_MaintenanceService;
 import com.husony.service.EmployeeService;
 import com.husony.service.JobService;
 import com.husony.service.MaintenanceService;
@@ -19,8 +27,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.enterprise.inject.Instance;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +59,15 @@ public class JobController {
 
     @Autowired
     private MaintenanceService maintenanceService;
-    
+
     @Autowired
     private ScheduleRepairService repairService;
-    
+
+    @Autowired
+    private DeviceService deviceService;
+
+    @Autowired
+    private Device_MaintenanceService deviceMaintenanceService;
 
     @RequestMapping("/job")
     public String index(Model model, @RequestParam Map<String, String> params) {
@@ -65,7 +80,7 @@ public class JobController {
         model.addAttribute("job", new Job());
         model.addAttribute("employees", this.employeeService.getEmployee());
         model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair());
-        model.addAttribute("maintenances", this.maintenanceService.getMaintenance());
+        model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();
         model.addAttribute("status", statuses);
         return "addJob";
@@ -88,27 +103,61 @@ public class JobController {
                 LocalDateTime date = LocalDateTime.now();
                 LocalDateTime truncatedNow = date.truncatedTo(ChronoUnit.MINUTES);
                 j.setUpdatedDate(truncatedNow);
+
+                if (!j.getStatus().equals(JobStatus.PENDING.toString())) {
+                    if (j.getMaintenanceId() != null) {
+                        System.out.println("1111");
+                        Schedulemaintenance maintenance = maintenanceService.getMaintenanceById(j.getMaintenanceId().getId());
+                        Map<String, String> params = new HashMap<>();
+                        params.put("scheduleMaintenanceId", String.valueOf(maintenance.getId()));
+                        List<Device> devices = this.deviceMaintenanceService.getDeviceMaintenance(params).stream()
+                                .map(m -> m.getDeviceId())
+                                .collect(Collectors.toList());
+                        devices.stream().forEach(d -> {
+                            if (j.getStatus().equals(JobStatus.DONE.toString())) {
+                                d.setStatus(DeviceStatus.ACTIVE.toString());
+                            } else if (j.getStatus().equals(JobStatus.PROCCESSED.toString())) {
+                                d.setStatus(DeviceStatus.MAINTENANCE.toString());
+                            }
+                            d.setFile(null);
+                            this.deviceService.addOrUpdate(d);
+                        });
+                    } else if (j.getRepairId() != null) {
+                        System.out.println("2222");
+                        Schedulerepair repair = this.repairService.getScheduleRepairById(j.getRepairId().getId());
+                        Report report = repair.getReportId();
+                        Device d = report.getDeviceId();
+                        if (j.getStatus().equals(JobStatus.DONE.toString())) {
+                            d.setStatus(DeviceStatus.ACTIVE.toString());
+                        } else if (j.getStatus().equals(JobStatus.PROCCESSED.toString())) {
+                            d.setStatus(DeviceStatus.REPAIR.toString());
+                        }
+                        d.setFile(null);
+                        this.deviceService.addOrUpdate(d);
+                    }
+                }
+
                 this.jobService.addOrUpdate(j);
-            }
-            else{
+            } else {
                 model.addAttribute("errMsg", "Invalid");
                 return "addJob";
             }
             return "redirect:/job";
         } catch (Exception ex) {
-            System.err.println("Loi vai lzzzz");
+            System.out.println(ex);
+            System.err.println("Loi vai 2222");
             model.addAttribute("errMsg", ex.getMessage());
         }
 
         return "addJob";
     }
-    
+
     @GetMapping("/job/{jobId}")
     public String updateView(Model model, @PathVariable(value = "jobId") long id) {
         model.addAttribute("job", this.jobService.getJobById(id));
         model.addAttribute("employees", this.employeeService.getEmployee());
         model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair());
-        model.addAttribute("maintenances", this.maintenanceService.getMaintenance());
+        model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();
         model.addAttribute("status", statuses);
         return "addJob";

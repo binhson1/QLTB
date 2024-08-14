@@ -19,6 +19,10 @@
 
     <form:form method="post" enctype="multipart/form-data" action="${action}" modelAttribute="job">
         <div class="mb-3 mt-3">
+            <label for="name" class="form-label">Job name:</label>
+            <form:input path="name" type="text" class="form-control" id="name" placeholder="Job name..." name="name" />
+        </div>
+        <div class="mb-3 mt-3">
             <label for="name" class="form-label">Start date</label>
             <form:input path="startDate" type="datetime-local" class="form-control" id="startDate" placeholder="Start date..." name="startDate" value="${job.startDate}"  />        
         </div>

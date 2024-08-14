@@ -8,6 +8,7 @@ import com.husony.pojo.Schedulemaintenance;
 import com.husony.repository.MaintenanceRepository;
 import com.husony.service.MaintenanceService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     private MaintenanceRepository maintenanceRepo;
 
     @Override
-    public List<Schedulemaintenance> getMaintenance() {
-        return this.maintenanceRepo.getMaintenance();
+    public List<Schedulemaintenance> getMaintenance(Map<String, String> params) {
+        return this.maintenanceRepo.getMaintenance(params);
     }
 
     @Override
@@ -40,5 +41,6 @@ public class MaintenanceServiceImpl implements MaintenanceService {
     public void deleteMaintenance(long id) {
         this.maintenanceRepo.deleteMaintenance(id);
     }
+    
     
 }

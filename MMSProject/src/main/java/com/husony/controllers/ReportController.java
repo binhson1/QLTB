@@ -4,6 +4,8 @@
  */
 package com.husony.controllers;
 
+import com.husony.pojo.Device;
+import com.husony.pojo.DeviceStatus;
 import com.husony.pojo.Report;
 import com.husony.pojo.ReportStatus;
 import com.husony.service.DeviceService;
@@ -62,6 +64,10 @@ public class ReportController {
         }
         
         try {
+            Device d = r.getDeviceId();
+            d.setStatus(DeviceStatus.PENDING.toString());
+            d.setFile(null);
+            this.deviceService.addOrUpdate(d);
             this.reportService.addOrUpdate(r);
             
             return "redirect:/report";

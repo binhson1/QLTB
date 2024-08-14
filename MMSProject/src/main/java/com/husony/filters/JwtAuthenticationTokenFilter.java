@@ -47,6 +47,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
             System.out.println(username);
             User user = userService.getUserByUsername(username);
             if (user != null) {
+                System.out.println(user);
                 boolean enabled = true;
                 boolean accountNonExpired = true;
                 boolean credentialsNonExpired = true;

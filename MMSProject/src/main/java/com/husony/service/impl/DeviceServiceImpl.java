@@ -53,7 +53,8 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public void addOrUpdate(Device d) {
-        if (!d.getFile().isEmpty()) {
+        if (d.getFile() != null){
+            if (!d.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -62,6 +63,7 @@ public class DeviceServiceImpl implements DeviceService {
             } catch (IOException ex) {
                 Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         }
         this.deviceRepo.addOrUpdate(d);
     }
@@ -79,9 +81,5 @@ public class DeviceServiceImpl implements DeviceService {
         this.deviceRepo.deleteDevice(l);
     }
 
-//    @Scheduled(cron = ngay)
-//    public void scheduleFixedDelayTask() {
-//        System.out.println(
-//                "Fixed delay task - " + System.currentTimeMillis() / 1000);
-//    }
+
 }

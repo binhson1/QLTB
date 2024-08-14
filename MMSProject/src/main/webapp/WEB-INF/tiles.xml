@@ -98,8 +98,24 @@
         <put-attribute name="content" value="/WEB-INF/pages/addScheduleRepair.jsp" />
     </definition>
     <definition name="locationHistory" extends="baseLayout">
-        <put-attribute name="title" value="Scheduling Location history" />
+        <put-attribute name="title" value="Location history" />
         <put-attribute name="content" value="/WEB-INF/pages/locationHistory.jsp" />
+    </definition>
+    <definition name="maintenance" extends="baseLayout">
+        <put-attribute name="title" value="Scheduling Maintenance history" />
+        <put-attribute name="content" value="/WEB-INF/pages/scheduleMaintenance.jsp" />
+    </definition>
+    <definition name="addMaintenance" extends="baseLayout">
+        <put-attribute name="title" value="Scheduling Add maintenance history" />
+        <put-attribute name="content" value="/WEB-INF/pages/addScheduleMaintenance.jsp" />
+    </definition>
+    <definition name="device_maintenance" extends="baseLayout">
+        <put-attribute name="title" value="Device Maintenance" />
+        <put-attribute name="content" value="/WEB-INF/pages/device_maintenance.jsp" />
+    </definition>
+    <definition name="addDeviceMaintenance" extends="baseLayout">
+        <put-attribute name="title" value="Add Device Maintenance" />
+        <put-attribute name="content" value="/WEB-INF/pages/addDeviceMaintenance.jsp" />
     </definition>
     <!--
     <definition name="products" extends="baseLayout">

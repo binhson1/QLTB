@@ -18,7 +18,8 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
             HibernateConfigs.class,
             TilesConfigs.class,
             SpringSecurityConfigs.class,
-            JwtSecurityConfig.class
+            JwtSecurityConfig.class,
+            MailConfigs.class
         };
     }
 

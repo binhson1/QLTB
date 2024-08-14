@@ -6,13 +6,14 @@ package com.husony.repository;
 
 import com.husony.pojo.Schedulemaintenance;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Do Gia Huy
  */
 public interface MaintenanceRepository {
-    List<Schedulemaintenance> getMaintenance();
+    List<Schedulemaintenance> getMaintenance(Map<String, String> params);
     void addOrUpdate(Schedulemaintenance d);
     Schedulemaintenance getMaintenanceById(long id);
     void deleteMaintenance(long id);

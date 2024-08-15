@@ -19,6 +19,10 @@
 
     <form:form method="post" enctype="multipart/form-data" action="${action}" modelAttribute="schedulerepair">
         <div class="mb-3 mt-3">
+            <label for="name" class="form-label">Name:</label>
+            <form:input path="name" type="text" class="form-control" id="name" placeholder="Name..." name="name" />        
+        </div>
+        <div class="mb-3 mt-3">
             <label for="date" class="form-label">Date:</label>
             <form:input path="date" type="date" class="form-control" id="date" placeholder="Date..." name="name" />        
         </div>

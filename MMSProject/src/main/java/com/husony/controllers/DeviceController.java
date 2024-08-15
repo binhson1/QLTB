@@ -51,7 +51,7 @@ public class DeviceController {
         model.addAttribute("device", new Device());
         model.addAttribute("categories", this.cateService.getCates());
         model.addAttribute("locations", this.locationService.getLocations());
-        model.addAttribute("manus", this.manuService.getManufac());
+        model.addAttribute("manus", this.manuService.getManufac(null));
         DeviceStatus[] statuses = DeviceStatus.values();
         model.addAttribute("status", statuses);
         return "addDevice";
@@ -103,7 +103,7 @@ public class DeviceController {
         model.addAttribute("device", this.deviceService.getDeviceById(id));
         model.addAttribute("categories", this.cateService.getCates());
         model.addAttribute("locations", this.locationService.getLocations());
-        model.addAttribute("manus", this.manuService.getManufac());
+        model.addAttribute("manus", this.manuService.getManufac(null));
         DeviceStatus[] statuses = DeviceStatus.values();
         model.addAttribute("status", statuses);
         return "addDevice";

@@ -8,6 +8,7 @@ import com.husony.pojo.Manufacturer;
 import com.husony.repository.ManufacturerRepository;
 import com.husony.service.ManufacturerService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class ManufacturerServiceImpl implements ManufacturerService{
     private ManufacturerRepository manuRepo;
     
     @Override
-    public List<Manufacturer> getManufac() {
-        return this.manuRepo.getManufac();
+    public List<Manufacturer> getManufac(Map<String, String> params) {
+        return this.manuRepo.getManufac(params);
     }    
 
     @Override

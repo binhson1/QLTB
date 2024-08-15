@@ -64,9 +64,9 @@ public class ManufacturerController {
     }
     
     @RequestMapping("/manufacturer")
-    public String manu(Model model){        
+    public String manu(Model model, Map<String, String> params){        
         
-        model.addAttribute("manu", this.manuService.getManufac());
+        model.addAttribute("manu", this.manuService.getManufac(params));
         
         return "manufacturer";
     }

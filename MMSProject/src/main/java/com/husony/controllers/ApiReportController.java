@@ -62,7 +62,7 @@ public class ApiReportController {
         d.setStatus(DeviceStatus.PENDING.toString());
         d.setFile(null);
         System.out.println(d.getStatus());
-//        this.reportService.addOrUpdate(r);
+        this.reportService.addOrUpdate(r);
         this.deviceService.addOrUpdate(d);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

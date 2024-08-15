@@ -31,7 +31,7 @@ const Manufacturer = () => {
     } catch (ex) {}
   };
 
-  // if (user === null) return <Navigate to="/login" />;
+  if (user === null) return <Navigate to="/login" />;
 
   return (
     <div className="col-10 container-fluid">

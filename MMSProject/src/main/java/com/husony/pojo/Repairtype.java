@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -46,8 +47,9 @@ public class Repairtype implements Serializable {
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "name")
-    private String name;
+    private String name;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "repairTypeId")
+    @JsonIgnore
     private Set<Schedulerepair> schedulerepairSet;
 
     public Repairtype() {

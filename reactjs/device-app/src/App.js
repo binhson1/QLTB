@@ -15,6 +15,8 @@ import Device from "./components/pages/Device";
 import Maintenance from "./components/pages/Maintenance";
 import cookie from "react-cookies";
 import Register from "./components/pages/Register";
+import ScheduleRepair from "./components/pages/ScheduleRepair";
+import Report from "./components/pages/Report";
 
 export const MyUserContext = createContext();
 export const MyDispatchContext = createContext();
@@ -61,7 +63,12 @@ const App = () => {
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/device" element={<Device />} />
-                  <Route path="/report" element={<AddReport />} />
+                  <Route path="/report" element={<Report />} />
+                  <Route path="/addreport/:deviceId" element={<AddReport />} />
+                  <Route
+                    path="/device/:deviceId/schedulerepair"
+                    element={<ScheduleRepair />}
+                  />
                   <Route path="/maintenance" element={<Maintenance />} />
                   <Route path="/manufacturer" element={<Manufacturer />} />
                 </>

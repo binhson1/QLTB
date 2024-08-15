@@ -4,6 +4,7 @@
  */
 package com.husony.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -71,6 +72,7 @@ public class Schedulerepair implements Serializable {
     @ManyToOne(optional = false)
     private Report reportId;
     @OneToMany(mappedBy = "repairId")
+    @JsonIgnore
     private Set<Job> jobSet;
 
     public Schedulerepair() {

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../../App";
-import { Navigate } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { authAPIs, endpoints } from "../../configs/APIs";
 import cookie from "react-cookies";
 
 const AddReport = () => {
   const [device, setDevice] = useState([]);
-  const [deviceId, setDeviceId] = useState();
+  const { deviceId } = useParams();
   const [description, setDescription] = useState();
   const [severity, setSeverity] = useState();
   const [occurrenceDate, setOccurrenceDate] = useState();
@@ -40,7 +40,7 @@ const AddReport = () => {
           deviceId: deviceId,
         }
       );
-      console.info(res.status);
+      if (res.status === 201) <Navigate to="/device"></Navigate>;
     } catch (ex) {
       console.error(ex);
     }
@@ -79,28 +79,6 @@ const AddReport = () => {
             type="date"
             onChange={(e) => setOccurrenceDate(e.target.value)}
           ></input>
-        </div>
-        <div className="mb-3 mt-3">
-          <label htmlFor="deviceDropdown" className="form-label">
-            Device
-          </label>
-          <select
-            id="deviceDropdown"
-            className="form-control"
-            onChange={(e) => {
-              setDeviceId(e.target.value);
-            }}
-          >
-            <option value="" disabled selected>
-              Select a device
-            </option>
-            {device.length > 0 &&
-              device.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name} (ID: {d.id})
-                </option>
-              ))}
-          </select>
         </div>
         <button className="btn btn-success" type="submit">
           ADD

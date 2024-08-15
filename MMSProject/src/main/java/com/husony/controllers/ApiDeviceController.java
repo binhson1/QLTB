@@ -6,10 +6,12 @@ package com.husony.controllers;
 
 import com.husony.pojo.Device;
 import com.husony.pojo.Locationhistory;
+import com.husony.pojo.Schedulerepair;
 import com.husony.service.CategoryService;
 import com.husony.service.DeviceService;
 import com.husony.service.LocationHistoryService;
 import com.husony.service.LocationService;
+import com.husony.service.ScheduleRepairService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +56,9 @@ public class ApiDeviceController {
 
     @Autowired
     private LocationHistoryService locationHistoryService;
+
+    @Autowired
+    private ScheduleRepairService scheduleRepairService;
 
     @GetMapping("/device")
     public ResponseEntity<List<Device>> list(@RequestParam Map<String, String> params) {
@@ -117,5 +123,17 @@ public class ApiDeviceController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "deviceId") long id) {
         this.deviceService.deleteDevice(id);
+    }
+
+    @GetMapping("/device/{deviceId}/schedulerepair")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Schedulerepair>> list(@PathVariable(value = "deviceId") long id) {
+        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepairByDeviceId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/device/{deviceId}/location_history")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Locationhistory>> locationdevices(@PathVariable(value = "deviceId") long id) {
+        return new ResponseEntity<>(this.locationHistoryService.getLocationHistoryByDevice(id), HttpStatus.OK);        
     }
 }

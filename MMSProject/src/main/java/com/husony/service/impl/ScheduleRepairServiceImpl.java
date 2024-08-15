@@ -40,5 +40,10 @@ public class ScheduleRepairServiceImpl implements ScheduleRepairService{
     public void addOrUpdateScheduleRepair(Schedulerepair r) {
         this.schedulerepairRepo.addOrUpdateScheduleRepair(r);
     }
+
+    @Override
+    public List<Schedulerepair> getScheduleRepairByDeviceId(long id) {
+        return this.schedulerepairRepo.getScheduleRepairByDeviceId(id);
+    }
     
 }

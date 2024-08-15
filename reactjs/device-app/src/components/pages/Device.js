@@ -4,6 +4,7 @@ import { Navigate } from "react-router";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Link } from "react-router-dom";
 import cookie from "react-cookies";
+import { Button } from "react-bootstrap";
 
 const Device = () => {
   const user = useContext(MyUserContext);
@@ -54,15 +55,15 @@ const Device = () => {
               <td>{d.manufacturerId.name}</td>
               <th>{d.status}</th>
               <td>
-                <Link className="btn btn-info">i</Link>
-                <Link className="btn btn-success">&orarr;</Link>
-
-                <button
-                  onclick="deletes('${uD}', ${d.id}, 'device')"
-                  className="btn btn-danger"
+                <Link to={`/addReport/${d.id}/`} className="btn btn-danger">
+                  REPORT
+                </Link>
+                <Link
+                  to={`/device/${d.id}/schedulerepair`}
+                  className="btn btn-info"
                 >
-                  &times;
-                </button>
+                  Schedule Repair
+                </Link>
               </td>
             </tr>
           ))}

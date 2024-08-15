@@ -12,6 +12,7 @@ export const endpoints = {
   addReport: "/report/addOrUpdate",
   login: "/login",
   device: "/device",
+  schedulerepair: (deviceId) => `/device/${deviceId}/schedulerepair`,
   "current-user": "/current-user",
   register: "/users",
 };

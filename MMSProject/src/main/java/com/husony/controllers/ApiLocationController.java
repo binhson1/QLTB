@@ -5,12 +5,14 @@
 package com.husony.controllers;
 
 import com.husony.pojo.Location;
+import com.husony.service.LocationHistoryService;
 import com.husony.service.LocationService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,9 @@ public class ApiLocationController {
 
     @Autowired
     private LocationService locationService;
+    
+    @Autowired
+    private LocationHistoryService locationHistoryService;
 
     @DeleteMapping("/location/delete/{locationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -41,4 +46,5 @@ public class ApiLocationController {
     public ResponseEntity<List<Location>> list() {
         return new ResponseEntity<>(this.locationService.getLocations(), HttpStatus.OK);
     }
+    
 }

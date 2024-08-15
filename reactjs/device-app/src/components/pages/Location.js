@@ -24,7 +24,7 @@ const Location = () => {
     loadLocation();
   }, []);
 
-  // if (user === null) return <Navigate to="/login"></Navigate>;
+  if (user === null) return <Navigate to="/login"></Navigate>;
 
   return (
     <div className="col-10 container-fluid">
@@ -44,13 +44,9 @@ const Location = () => {
               <td>{l.address}</td>
               <td>
                 <Link className="btn btn-info">i</Link>
-                <Link className="btn btn-success">&orarr;</Link>
-                <button
-                  onclick="deletes('${uD}', ${l.id}, 'location')"
-                  className="btn btn-danger"
-                >
-                  &times;
-                </button>
+                <Link className="btn btn-success">&#x2197;</Link>
+
+                <Button variant="outline-danger">&times;</Button>
               </td>
             </tr>
           ))}

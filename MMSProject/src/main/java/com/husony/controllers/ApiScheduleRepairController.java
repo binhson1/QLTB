@@ -4,42 +4,49 @@
  */
 package com.husony.controllers;
 
-import com.husony.pojo.Manufacturer;
-import com.husony.service.ManufacturerService;
+
+import com.husony.pojo.Schedulerepair;
+import com.husony.service.ScheduleRepairService;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ACER
  */
-@Controller
+@RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiManufactureController {
-    
+public class ApiScheduleRepairController {
     @Autowired
-    private ManufacturerService manuService;
+    private ScheduleRepairService scheduleRepairService;
     
-    @DeleteMapping("/manufacturer/delete/{manufacturerId}")
+    @DeleteMapping("/schedulerepair/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "manufacturerId") long id){
-        this.manuService.deleteManu(id);
+    public void delete(@PathVariable(value = "") long id) {
+        this.scheduleRepairService.deleteScheduleRepair(id);
     }
+
     
-    @GetMapping("/manufacturers")
-    public ResponseEntity<List<Manufacturer>> list(@RequestParam Map<String, String> params){
-        return new ResponseEntity<>(this.manuService.getManufac(params), HttpStatus.OK);
+
+    @GetMapping("/schedulerepair")
+    public ResponseEntity<List<Schedulerepair>> list() {
+        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepair(), HttpStatus.OK);
     }
+        
+    
 }

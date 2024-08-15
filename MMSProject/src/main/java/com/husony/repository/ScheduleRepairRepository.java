@@ -16,4 +16,5 @@ public interface ScheduleRepairRepository {
     Schedulerepair getScheduleRepairById(long id);
     void deleteScheduleRepair(long id);
     void addOrUpdateScheduleRepair(Schedulerepair r);
+    List<Schedulerepair> getScheduleRepairByDeviceId(long id);
 }

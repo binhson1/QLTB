@@ -26,7 +26,7 @@ public class MailConfigs {
     private static final String SMTP_SOCKET_FACTORY_CLASS = "javax.net.ssl.SSLSocketFactory";
 
     private static final String USERNAME = "dohuy4547@gmail.com";  // Thay đổi thành email của bạn
-    private static final String PASSWORD = "your-email-password";   // Thay đổi thành mật khẩu ứng dụng của bạn
+    private static final String PASSWORD = "fmhu gltf mnrn vwrs";   // Thay đổi thành mật khẩu ứng dụng của bạn
 
     @Bean
     public Session mailSession() {

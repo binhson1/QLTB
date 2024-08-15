@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import APIs, { endpoints } from "../configs/APIs";
+import APIs, { endpoints } from "../../configs/APIs";
 import { Navigate } from "react-router";
-import { MyUserContext } from "../App";
+import { MyUserContext } from "../../App";
 
 const Home = () => {
   const user = useContext(MyUserContext);

@@ -80,9 +80,8 @@ public class Report implements Serializable {
     @ManyToOne(optional = false)
     private Device deviceId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false)     
     private User userId;
-
     public Report() {
     }
 

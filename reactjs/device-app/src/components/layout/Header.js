@@ -11,20 +11,20 @@ import {
   NavDropdown,
   Row,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import APIs, { endpoints } from "../configs/APIs";
-import { MyDispatchContext, MyUserContext } from "../App";
+import { Link, useNavigate } from "react-router-dom";
+import APIs, { endpoints } from "../../configs/APIs";
+import { MyDispatchContext, MyUserContext } from "../../App";
 
 const Header = () => {
   const user = useContext(MyUserContext);
   const [category, setCategory] = useState();
   const dispatch = useContext(MyDispatchContext);
+  const [kw, setKw] = useState("");
+  const nav = useNavigate();
   const loadCategory = async () => {
     try {
       let res = await APIs.get(`${endpoints["categories"]}`);
-      console.info(res.data);
       setCategory(res.data);
-      console.info(category);
     } catch (ex) {
       console.error(ex);
     }
@@ -33,6 +33,13 @@ const Header = () => {
   useEffect(() => {
     loadCategory();
   }, []);
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    nav(`/?kw=${kw}`);
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -58,8 +65,8 @@ const Header = () => {
             ) : (
               <>
                 <Link className="nav-link text-success" to="/login">
-                  <Image src="" width="25" roundedCircle />
-                  Chào !
+                  <Image src={user.avatar} width="25" roundedCircle />
+                  Chào {user.username}!
                 </Link>
                 <Button
                   variant="danger"
@@ -69,11 +76,24 @@ const Header = () => {
                 </Button>
               </>
             )}
-            <Link className="nav-link text-danger" to="/cart">
-              &#128722; <Badge bg="danger">{null}</Badge>
-            </Link>
           </Nav>
         </Navbar.Collapse>
+        <Form inline onSubmit={submit}>
+          <Row>
+            <Col xs="auto">
+              <Form.Control
+                type="text"
+                placeholder="Tìm sản phẩm..."
+                className=" mr-sm-2"
+                value={kw}
+                onChange={(e) => setKw(e.target.value)}
+              />
+            </Col>
+            <Col xs="auto">
+              <Button type="submit">Tìm</Button>
+            </Col>
+          </Row>
+        </Form>
       </Container>
     </Navbar>
   );

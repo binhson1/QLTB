@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { MyUserContext } from "../App";
+import { MyUserContext } from "../../App";
 import { Navigate } from "react-router";
-import APIs, { endpoints } from "../configs/APIs";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Link } from "react-router-dom";
+import cookie from "react-cookies";
 
 const Device = () => {
   const user = useContext(MyUserContext);
@@ -10,7 +11,9 @@ const Device = () => {
 
   const loadDevice = async () => {
     try {
-      let res = await APIs.get(endpoints["device"]);
+      let res = await authAPIs(cookie.load("access_token")).get(
+        endpoints["device"]
+      );
       setDevice(res.data);
     } catch (ex) {
       console.error(ex);
@@ -41,7 +44,7 @@ const Device = () => {
           device.map((d) => (
             <tr>
               <td>
-                <img src="${d.image}" width="120" />
+                <img src={d.image} width="120" />
               </td>
               <td>{d.id}</td>
               <td>{d.name}</td>

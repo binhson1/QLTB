@@ -12,5 +12,5 @@ public enum DeviceStatus {
     ACTIVE,
     PENDING,
     MAINTENANCE,
-    REPAIR
+    REPAIR    
 }

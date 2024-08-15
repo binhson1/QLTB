@@ -5,3 +5,4 @@ django/.idea
 devicedb.sql
 /django/deviceapp/devices/__pycache__
 devicedb.sql
+/.idea

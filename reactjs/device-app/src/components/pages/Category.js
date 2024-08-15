@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { MyUserContext } from "../App";
-import APIs, { endpoints } from "../configs/APIs";
+import { MyUserContext } from "../../App";
+import APIs, { endpoints } from "../../configs/APIs";
 import { Link } from "react-router-dom";
 
 const Category = () => {

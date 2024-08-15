@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { MyUserContext } from "../App";
+import { MyUserContext } from "../../App";
 import { Navigate } from "react-router";
-import APIs, { endpoints } from "../configs/APIs";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Link } from "react-router-dom";
+import cookie from "react-cookies";
 
 const Location = () => {
   const user = useContext(MyUserContext);
@@ -10,7 +11,9 @@ const Location = () => {
 
   const loadLocation = async () => {
     try {
-      let res = await APIs.get(endpoints["location"]);
+      let res = await authAPIs(cookie.load("access_token")).get(
+        endpoints["location"]
+      );
       setLocation(res.data);
     } catch (ex) {
       console.error(ex);
@@ -21,7 +24,7 @@ const Location = () => {
     loadLocation();
   }, []);
 
-  if (user === null) return <Navigate to="/login"></Navigate>;
+  // if (user === null) return <Navigate to="/login"></Navigate>;
 
   return (
     <div className="col-10 container-fluid">

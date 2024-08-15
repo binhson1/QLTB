@@ -10,6 +10,7 @@ import com.husony.pojo.DeviceStatus;
 import com.husony.pojo.Job;
 import com.husony.pojo.JobStatus;
 import com.husony.pojo.Report;
+import com.husony.pojo.ReportStatus;
 import com.husony.pojo.Schedulemaintenance;
 import com.husony.pojo.Schedulerepair;
 import com.husony.service.DeviceService;
@@ -69,6 +70,9 @@ public class JobController {
     @Autowired
     private Device_MaintenanceService deviceMaintenanceService;
 
+    @Autowired
+    private ReportService reportService;
+
     @RequestMapping("/job")
     public String index(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("job", this.jobService.getJob());
@@ -79,7 +83,7 @@ public class JobController {
     public String createView(Model model) {
         model.addAttribute("job", new Job());
         model.addAttribute("employees", this.employeeService.getEmployee());
-        model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair());
+        model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair(null));
         model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();
         model.addAttribute("status", statuses);
@@ -116,6 +120,10 @@ public class JobController {
                         devices.stream().forEach(d -> {
                             if (j.getStatus().equals(JobStatus.DONE.toString())) {
                                 d.setStatus(DeviceStatus.ACTIVE.toString());
+                                LocalDate today = LocalDate.now();
+                                Date last_date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                                maintenance.setLastMaintenanceDate(last_date);
+                                this.maintenanceService.addOrUpdate(maintenance);
                             } else if (j.getStatus().equals(JobStatus.PROCCESSED.toString())) {
                                 d.setStatus(DeviceStatus.MAINTENANCE.toString());
                             }
@@ -128,11 +136,14 @@ public class JobController {
                         Report report = repair.getReportId();
                         Device d = report.getDeviceId();
                         if (j.getStatus().equals(JobStatus.DONE.toString())) {
+                            report.setStatus(ReportStatus.REPAIRED.toString());
                             d.setStatus(DeviceStatus.ACTIVE.toString());
                         } else if (j.getStatus().equals(JobStatus.PROCCESSED.toString())) {
+                            report.setStatus(ReportStatus.PROCESS.toString());
                             d.setStatus(DeviceStatus.REPAIR.toString());
                         }
                         d.setFile(null);
+                        this.reportService.addOrUpdate(report);
                         this.deviceService.addOrUpdate(d);
                     }
                 }
@@ -156,7 +167,7 @@ public class JobController {
     public String updateView(Model model, @PathVariable(value = "jobId") long id) {
         model.addAttribute("job", this.jobService.getJobById(id));
         model.addAttribute("employees", this.employeeService.getEmployee());
-        model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair());
+        model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair(null));
         model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();
         model.addAttribute("status", statuses);

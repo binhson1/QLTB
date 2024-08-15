@@ -6,10 +6,20 @@ package com.husony.repository.impl;
 
 import com.husony.pojo.Manufacturer;
 import com.husony.pojo.Report;
+import com.husony.pojo.Device;
 import com.husony.pojo.Schedulerepair;
 import com.husony.repository.ScheduleRepairRepository;
 import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -33,10 +43,38 @@ public class ScheduleRepairRepositoryImpl implements ScheduleRepairRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Schedulerepair> getScheduleRepair() {
+    public List<Schedulerepair> getScheduleRepair(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Schedulerepair");
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Schedulerepair> q = b.createQuery(Schedulerepair.class);
+        Root root = q.from(Schedulerepair.class);
+        q.select(root);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String kw = params.get("q");
+            if (kw != null && !kw.isEmpty()) {
+                Predicate p1 = b.like(root.get("name"), String.format("%%%s%%", kw));
+                predicates.add(p1);
+            }
+
+            try {
+                String strDate = params.get("date");
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(strDate);
+                if (strDate != null && !strDate.isEmpty()) {
+                    Predicate p2 = b.equal(root.get("date"), date);
+                    predicates.add(p2);
+                }
+            } catch (ParseException ex) {
+                System.err.println(ex.getMessage());
+            }
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+        Query query = s.createQuery(q);
+
+        return query.getResultList();
     }
 
     @Override

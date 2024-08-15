@@ -16,6 +16,7 @@ import com.husony.service.MaintenanceService;
 import com.husony.service.MaintenanceTypeService;
 import com.husony.service.UserService;
 import com.husony.service.impl.EmailServiceImpl;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,7 +159,7 @@ public class MaintenanceController {
         return "addDeviceMaintenance";
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void scheduleNotifyEarly() {
         try {
             System.out.println("Start");
@@ -186,7 +189,6 @@ public class MaintenanceController {
                                                 && startDate.getYear() == tomorrow.getYear()
                                                 && startDate.getMonth() == tomorrow.getMonth();
                                     });
-                            System.out.println(b);
                             return b;
                         }
                         return false;
@@ -215,7 +217,11 @@ public class MaintenanceController {
                 System.out.println(Arrays.toString(to));
                 System.out.println(subject);
                 System.out.println(text);
-                emailService.sendSimpleMessage(to, subject, text);
+                try {
+                    emailService.sendSimpleMessage(to, subject, text);
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(ScheduleRepairController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -226,21 +232,26 @@ public class MaintenanceController {
     public void scheduleNotifyLate() {
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
+        Date date = Date.from(yesterday.atStartOfDay(ZoneId.systemDefault()).toInstant());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(yesterday);
+        String dateString = formatter.format(date);
         Map<String, String> params = new HashMap<>();
         params.put("nextMaintenanceDate", dateString);
         List<Schedulemaintenance> scheduleMaintenance = this.maintenanceService.getMaintenance(params);
-        List<Schedulemaintenance> notifyList = scheduleMaintenance.stream()
+        List<Schedulemaintenance> non_notifyList = scheduleMaintenance.stream()
                 .filter(maintenance -> {
-                    return jobService.getJob().stream()
+                    Boolean b = jobService.getJob().stream()
                             .anyMatch(job -> {
                                 LocalDateTime startDate = job.getStartDate();
                                 return Objects.equals(job.getMaintenanceId().getId(), maintenance.getId())
                                         && startDate.getYear() == yesterday.getYear()
-                                        && startDate.getMonth() != yesterday.getMonth();
+                                        && startDate.getMonth() == yesterday.getMonth();
                             });
+                    return b;
                 })
+                .collect(Collectors.toList());
+        List<Schedulemaintenance> notifyList = scheduleMaintenance.stream()
+                .filter(maintenance -> maintenance.getId() != null && !non_notifyList.contains(maintenance.getId()))
                 .collect(Collectors.toList());
         notifyList.stream().forEach(notify -> {
             List<User> receivers = this.userService
@@ -253,7 +264,11 @@ public class MaintenanceController {
                     .toArray(String[]::new);
             String subject = "REMINDER FOR " + notify.getName();
             String text = "You haven't set job for " + notify.getName() + " " + notify.getNextMaintenanceDate();
-            emailService.sendSimpleMessage(to, subject, text);
+            try {
+                emailService.sendSimpleMessage(to, subject, text);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(ScheduleRepairController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             LocalDate updatedDate = yesterday.plusMonths(notify.getIntervalMonth());
             notify.setNextMaintenanceDate(Date.from(updatedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             this.maintenanceService.addOrUpdate(notify);

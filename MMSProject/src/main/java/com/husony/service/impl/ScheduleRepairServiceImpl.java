@@ -8,6 +8,7 @@ import com.husony.pojo.Schedulerepair;
 import com.husony.repository.ScheduleRepairRepository;
 import com.husony.service.ScheduleRepairService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class ScheduleRepairServiceImpl implements ScheduleRepairService{
     private ScheduleRepairRepository schedulerepairRepo;
 
     @Override
-    public List<Schedulerepair> getScheduleRepair() {
-        return this.schedulerepairRepo.getScheduleRepair();
+    public List<Schedulerepair> getScheduleRepair(Map<String, String> params) {
+        return this.schedulerepairRepo.getScheduleRepair(params);
     }
 
     @Override

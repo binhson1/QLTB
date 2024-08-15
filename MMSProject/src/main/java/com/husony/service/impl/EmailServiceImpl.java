@@ -7,27 +7,29 @@ package com.husony.service.impl;
 import jakarta.mail.Address;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.internet.MimeUtility;
+import java.io.UnsupportedEncodingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Do Gia Huy
  */
-
-
-
-
 @Service
 public class EmailServiceImpl {
-    
+
     @Autowired
     private Session mailSession;
 
-    public void sendSimpleMessage(String[] to, String subject, String text) {
+    public void sendSimpleMessage(String[] to, String subject, String text) throws UnsupportedEncodingException {
         try {
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress("dohuy4547@gmail.com"));
@@ -39,9 +41,19 @@ public class EmailServiceImpl {
                     Message.RecipientType.TO,
                     recipients
             );
-            message.setSubject(subject);
-            message.setText(text);
+            // Mã hóa tiêu đề với UTF-8
+            String encodedSubject = MimeUtility.encodeText(subject, "UTF-8", "B");
+            message.setSubject(encodedSubject);
 
+            // Mã hóa nội dung email với UTF-8
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(text, "text/plain; charset=UTF-8");
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            message.setContent(multipart);
+            
             Transport.send(message);
 
             System.out.println("Email sent successfully!");
@@ -51,4 +63,3 @@ public class EmailServiceImpl {
         }
     }
 }
-

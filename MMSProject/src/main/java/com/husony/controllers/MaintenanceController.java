@@ -20,10 +20,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -154,58 +156,72 @@ public class MaintenanceController {
         return "addDeviceMaintenance";
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedDelay = 10000)
     public void scheduleNotifyEarly() {
-        LocalDate today = LocalDate.now();
-        LocalDate tomorrow = today.plusDays(1);
-//        Date date = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(tomorrow);
-        Map<String, String> params = new HashMap<>();
-        params.put("nextMaintenanceDate", dateString);
-        List<Schedulemaintenance> scheduleMaintenance = this.maintenanceService.getMaintenance(params);
-        List<Schedulemaintenance> notifyList = scheduleMaintenance.stream()
-                .filter(maintenance -> {
-                    return jobService.getJob().stream()
-                            .anyMatch(job -> {
-                                LocalDateTime startDate = job.getStartDate();
-                                return job.getMaintenanceId().getId() == maintenance.getId()
-                                        && startDate.getYear() == tomorrow.getYear()
-                                        && startDate.getMonth() != tomorrow.getMonth();
-                            });
-                })
-                .collect(Collectors.toList());
-        List<Schedulemaintenance> updateNextMaintenanceDateList = scheduleMaintenance.stream()
-                .filter(maintenance -> {
-                    return jobService.getJob().stream()
-                            .anyMatch(job -> {
-                                LocalDateTime startDate = job.getStartDate();
-                                return job.getMaintenanceId().getId() == maintenance.getId()
-                                        && startDate.getYear() == tomorrow.getYear()
-                                        && startDate.getMonth() == tomorrow.getMonth();
-                            });
-                })
-                .collect(Collectors.toList());
-        updateNextMaintenanceDateList.stream().forEach(maintenance -> {
-            LocalDate updatedDate = tomorrow.plusMonths(maintenance.getIntervalMonth());
-            maintenance.setNextMaintenanceDate(Date.from(updatedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-            this.maintenanceService.addOrUpdate(maintenance);
-        });
-        notifyList.stream().forEach(notify -> {
-            List<User> receivers = this.userService
-                    .getUsers().stream()
-                    .filter(user -> "ROLE_ADMIN".equals(user.getUserRole())
-                    || "ROLE_EMPLOYEE".equals(user.getUserRole()))
+        try {
+            System.out.println("Start");
+            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = today.plusDays(1);
+            Date date = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = formatter.format(date);
+            Map<String, String> params = new HashMap<>();
+            params.put("nextMaintenanceDate", dateString);
+            List<Schedulemaintenance> scheduleMaintenance = this.maintenanceService.getMaintenance(params);
+
+            List<Schedulemaintenance> updateNextMaintenanceDateList = scheduleMaintenance.stream()
+                    .filter(m -> {
+                        if (m == null || m.getId() == null) {
+                            System.out.println("Saiiii");
+                            return false;
+                        }
+                        if (jobService.getJob() != null) {
+                            Boolean b = jobService.getJob().stream()
+                                    .filter(job -> job != null && job.getStartDate() != null && job.getMaintenanceId() != null)
+                                    .anyMatch(job -> {
+                                        LocalDateTime startDate = job.getStartDate();
+                                        // Kiểm tra null cho job.getMaintenanceId() và job.getMaintenanceId().getId()
+                                        return job.getMaintenanceId().getId() != null
+                                                && job.getMaintenanceId().getId().equals(m.getId())
+                                                && startDate.getYear() == tomorrow.getYear()
+                                                && startDate.getMonth() == tomorrow.getMonth();
+                                    });
+                            System.out.println(b);
+                            return b;
+                        }
+                        return false;
+                    }).collect(Collectors.toList());
+            System.out.println(updateNextMaintenanceDateList);
+            List<Schedulemaintenance> notifyList = scheduleMaintenance.stream()
+                    .filter(maintenance -> maintenance.getId() != null && !updateNextMaintenanceDateList.contains(maintenance.getId()))
                     .collect(Collectors.toList());
-            String[] to = receivers.stream()
-                    .map(User::getEmail)
-                    .toArray(String[]::new);
-            String subject = "REMINDER FOR " + notify.getName();
-            String text = "You haven't set job for " + notify.getName() + " " + notify.getNextMaintenanceDate();
-            emailService.sendSimpleMessage(to, subject, text);
-        });
+            System.out.println(notifyList);
+            updateNextMaintenanceDateList.stream().forEach(maintenance -> {
+                LocalDate updatedDate = tomorrow.plusMonths(maintenance.getIntervalMonth());
+                maintenance.setNextMaintenanceDate(Date.from(updatedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                this.maintenanceService.addOrUpdate(maintenance);
+            });
+            notifyList.stream().forEach(notify -> {
+                List<User> receivers = this.userService
+                        .getUsers().stream()
+                        .filter(user -> "ROLE_ADMIN".equals(user.getUserRole())
+                        || "ROLE_EMPLOYEE".equals(user.getUserRole()))
+                        .collect(Collectors.toList());
+                String[] to = receivers.stream()
+                        .map(User::getEmail)
+                        .toArray(String[]::new);
+                String subject = "REMINDER FOR " + notify.getName();
+                String text = "You haven't set job for " + notify.getName() + " " + notify.getNextMaintenanceDate();
+                System.out.println(Arrays.toString(to));
+                System.out.println(subject);
+                System.out.println(text);
+                emailService.sendSimpleMessage(to, subject, text);
+            });
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-    
+
     @Scheduled(cron = "0 0 0 * * *")
     public void scheduleNotifyLate() {
         LocalDate today = LocalDate.now();
@@ -220,7 +236,7 @@ public class MaintenanceController {
                     return jobService.getJob().stream()
                             .anyMatch(job -> {
                                 LocalDateTime startDate = job.getStartDate();
-                                return job.getMaintenanceId().getId() == maintenance.getId()
+                                return Objects.equals(job.getMaintenanceId().getId(), maintenance.getId())
                                         && startDate.getYear() == yesterday.getYear()
                                         && startDate.getMonth() != yesterday.getMonth();
                             });

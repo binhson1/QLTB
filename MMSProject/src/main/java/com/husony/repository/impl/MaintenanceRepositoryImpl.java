@@ -48,9 +48,9 @@ public class MaintenanceRepositoryImpl implements MaintenanceRepository {
                 List<Predicate> predicates = new ArrayList<>();
                 String nextMaintenanceDate = params.get("nextMaintenanceDate");
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date next_maintenance_date = formatter.parse(nextMaintenanceDate);
                 if (nextMaintenanceDate != null && !nextMaintenanceDate.isEmpty()) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date next_maintenance_date = formatter.parse(nextMaintenanceDate);
                     Predicate p1 = b.equal(root.get("nextMaintenanceDate").as(Date.class), next_maintenance_date);
                     predicates.add(p1);
                 }

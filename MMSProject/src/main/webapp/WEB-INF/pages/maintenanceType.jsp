@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
     <h1 class="text-center">MAINTENANCE TYPE MANAGE</h1>
-    <a href="<c:url value="/maintenancetype/add"></c:url>"class="btn btn-success m-1">ADD</a>
+    <a href="<c:url value="/maintenancetype/add"></c:url>"class="btn btn-success m-1 form-control">ADD MAINTENANCE TYPE</a>
         <div class="col-md-10 col-12">
             <table class="table table-striped">
                 <tr>

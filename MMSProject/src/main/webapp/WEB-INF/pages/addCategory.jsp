@@ -23,7 +23,7 @@
             <form:input path="name" type="text" class="form-control" id="name" placeholder="Category name..." name="name" />        
         </div>
         <form:hidden path="id" />
-        <button class="btn btn-success" type="submit">
+        <button class="btn btn-success form-controlm" type="submit">
             <c:choose>
                 <c:when test="${category.id != null}"> UPDATE </c:when>                   
                 <c:otherwise>

@@ -24,7 +24,7 @@
             <label for="Address" class="form-label">Address:</label>
             <form:textarea path="address" type="text" class="form-control" id="Address" placeholder="Address..." name="Address" />
         </div>
-        <div class="mb-3 mt-3 text-center">
+        <div class="mb-3 mt-3 text-center form-control">
             <form:hidden path="id" />
             <button class="btn btn-success" type="submit">
                 Thêm sản phẩm

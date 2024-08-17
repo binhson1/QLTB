@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="col-10 container-fluid">
     <div class="col-md-10 col-12">
-        <a href="<c:url value="/repairtype/add"></c:url>"class="btn btn-success m-1">Thêm</a>
+        <a href="<c:url value="/repairtype/add"></c:url>"class="btn btn-success m-1 form-control">ADD REPAIR TYPE</a>
             <table class="table table-striped">
                 <tr>                
                     <th>Id</th>

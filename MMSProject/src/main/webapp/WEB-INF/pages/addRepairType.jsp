@@ -23,7 +23,7 @@
                 <form:input path="name" type="text" class="form-control" id="name" placeholder="Repair type..." name="name" />        
             </div>
             <form:hidden path="id" />
-            <button class="btn btn-success" type="submit">
+            <button class="btn btn-success form-control" type="submit">
                 <c:choose>
                     <c:when test="${repairtype.id != null}"> UPDATE </c:when>                   
                     <c:otherwise>

@@ -1,13 +1,12 @@
 <%-- 
-    Document   : addJob
-    Created on : Aug 9, 2024, 3:08:28 PM
+    Document   : addJobRepair
+    Created on : Aug 17, 2024, 3:58:42 PM
     Author     : Do Gia Huy
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
     <h1 class="text-center text-primary mt-1">ADD JOB</h1>
     <c:url value="/job/addOrUpdate" var="action" />
@@ -61,41 +60,11 @@
             </form:select>
         </div>
         <div class="mb-3 mt-3">
-            <label for="browser" class="form-label">Maintenance</label>
-            <form:select class="form-select" path="maintenanceId" >
-                <option></option>
-                <c:forEach items="${maintenances}" var="m">
-                    <c:choose>
-                        <c:when test="${m.id == job.maintenanceId.id}">
-                            <option value="${m.id}" selected>${m.id}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${m.id}">${m.id}</option>
-                        </c:otherwise>
-                    </c:choose>
-
-                </c:forEach>
-            </form:select>
-        </div>
-        <h3>OR</h3>
-        <div class="mb-3 mt-3">
             <label for="browser" class="form-label">Repair</label>
-            <form:select class="form-select" path="repairId" >
-                <option></option>
-                <c:forEach items="${scheduleRepair}" var="r">
-                    <c:choose>
-                        <c:when test="${r.id == job.repairId.id}">
-                            <option value="${r.id}" selected>${r.id}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${r.id}">${r.id}</option>
-                        </c:otherwise>
-                    </c:choose>
-
-                </c:forEach>
-            </form:select>
+            <form:input path="repairId" type="text" class="form-control" id="repairId"  name="repairId" value="${job.repairId.id}" readonly="true" />        
         </div>
         <form:hidden path="id" />
+        <form:hidden path="maintenanceId" />
         <button class="btn btn-success form-control" type="submit">
             <c:choose>
                 <c:when test="${job.id != null}"> UPDATE </c:when>                   

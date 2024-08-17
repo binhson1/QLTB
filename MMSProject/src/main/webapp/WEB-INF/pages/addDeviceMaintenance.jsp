@@ -40,13 +40,8 @@
             </form:select>
         </div>
         <form:hidden path="id" />
-        <button class="btn btn-success" type="submit">
-            <c:choose>
-                <c:when test="${category.id != null}"> UPDATE </c:when>                   
-                <c:otherwise>
-                    ADD
-                </c:otherwise>
-            </c:choose>
+        <button class="btn btn-success form-control" type="submit">
+            ADD DEVICE
         </button>
     </form:form>
 </div>

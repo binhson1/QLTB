@@ -30,21 +30,22 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class ReportController {
+
     @Autowired
     private DeviceService deviceService;
-    
+
     @Autowired
     private ReportService reportService;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @RequestMapping("/report")
     public String reportIndex(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("reports", this.reportService.getReports(params));
         return "report";
     }
-    
+
     @GetMapping("/report/add")
     public String createView(Model model) {
         model.addAttribute("report", new Report());
@@ -54,29 +55,33 @@ public class ReportController {
         model.addAttribute("status", statuses);
         return "addReport";
     }
+
     @PostMapping("/report/addOrUpdate")
-    public String createView(Model model, 
+    public String createView(Model model,
             @ModelAttribute(value = "report") @Valid Report r,
             BindingResult rs) {
-        if (rs.hasErrors()){
+        if (rs.hasErrors()) {
             System.out.println(rs);
             return "addReport";
         }
-        
+
         try {
-            Device d = r.getDeviceId();
-            d.setStatus(DeviceStatus.PENDING.toString());
-            d.setFile(null);
-            this.deviceService.addOrUpdate(d);
+            if (r.getStatus() == ReportStatus.PENDING.toString()) {
+                Device d = this.deviceService.getDeviceById(r.getDeviceId().getId());
+                d.setStatus(DeviceStatus.PENDING.toString());
+                d.setFile(null);
+                this.deviceService.addOrUpdate(d);
+            }
             this.reportService.addOrUpdate(r);
-            
+
             return "redirect:/report";
         } catch (Exception ex) {
             model.addAttribute("errMsg", ex.getMessage());
         }
-        
+
         return "addReport";
     }
+
     @GetMapping("/report/{reportId}")
     public String updateView(Model model, @PathVariable(value = "reportId") long id) {
         model.addAttribute("report", this.reportService.getReportById(id));

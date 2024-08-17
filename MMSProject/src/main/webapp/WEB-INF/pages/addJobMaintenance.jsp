@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addJob
-    Created on : Aug 9, 2024, 3:08:28 PM
+    Document   : addJobNoChoose
+    Created on : Aug 17, 2024, 3:38:55 PM
     Author     : Do Gia Huy
 --%>
 
@@ -62,40 +62,10 @@
         </div>
         <div class="mb-3 mt-3">
             <label for="browser" class="form-label">Maintenance</label>
-            <form:select class="form-select" path="maintenanceId" >
-                <option></option>
-                <c:forEach items="${maintenances}" var="m">
-                    <c:choose>
-                        <c:when test="${m.id == job.maintenanceId.id}">
-                            <option value="${m.id}" selected>${m.id}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${m.id}">${m.id}</option>
-                        </c:otherwise>
-                    </c:choose>
-
-                </c:forEach>
-            </form:select>
-        </div>
-        <h3>OR</h3>
-        <div class="mb-3 mt-3">
-            <label for="browser" class="form-label">Repair</label>
-            <form:select class="form-select" path="repairId" >
-                <option></option>
-                <c:forEach items="${scheduleRepair}" var="r">
-                    <c:choose>
-                        <c:when test="${r.id == job.repairId.id}">
-                            <option value="${r.id}" selected>${r.id}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${r.id}">${r.id}</option>
-                        </c:otherwise>
-                    </c:choose>
-
-                </c:forEach>
-            </form:select>
+            <form:input path="maintenanceId" type="text" class="form-control" id="maintenanceId"  name="maintenanceId" value="${job.maintenanceId.id}" readonly="true" />        
         </div>
         <form:hidden path="id" />
+        <form:hidden path="repairId" />
         <button class="btn btn-success form-control" type="submit">
             <c:choose>
                 <c:when test="${job.id != null}"> UPDATE </c:when>                   

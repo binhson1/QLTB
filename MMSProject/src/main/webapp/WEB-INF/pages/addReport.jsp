@@ -27,7 +27,7 @@
         </div>
         <div class="mb-3 mt-3">
             <label for="occurrenceDate" class="form-label">Occurrence date</label>
-            <form:input path="occurrenceDate" type="datetime-local" class="form-control" id="occurrenceDate" placeholder="Occurrence date..." name="occurrenceDate" />        
+            <form:input path="occurrenceDate" type="date" class="form-control" id="occurrenceDate" placeholder="Occurrence date..." name="occurrenceDate" />        
         </div>
         <div class="mb-3 mt-3">
             <label for="browser" class="form-label">Device </label>
@@ -75,7 +75,7 @@
             </form:select>
         </div>
         <form:hidden path="id" />
-        <button class="btn btn-success" type="submit">
+        <button class="btn btn-success form-control" type="submit">
             <c:choose>
                 <c:when test="${report.id != null}"> UPDATE </c:when>                   
                 <c:otherwise>

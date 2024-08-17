@@ -7,10 +7,13 @@ package com.husony.controllers;
 import com.husony.pojo.Device;
 import com.husony.pojo.DeviceMaintenance;
 import com.husony.pojo.DeviceStatus;
+import com.husony.pojo.Job;
+import com.husony.pojo.JobStatus;
 import com.husony.pojo.Schedulemaintenance;
 import com.husony.pojo.User;
 import com.husony.service.DeviceService;
 import com.husony.service.Device_MaintenanceService;
+import com.husony.service.EmployeeService;
 import com.husony.service.JobService;
 import com.husony.service.MaintenanceService;
 import com.husony.service.MaintenanceTypeService;
@@ -73,13 +76,12 @@ public class MaintenanceController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @RequestMapping("/maintenance")
     public String maintenance(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
-//        Device d = this.deviceService.getDeviceById(1);
-//        d.setStatus(DeviceStatus.PENDING.toString());
-//        d.setFile(null);
-//        this.deviceService.addOrUpdate(d);
+        model.addAttribute("maintenances", this.maintenanceService.getMaintenance(params));
         return "maintenance";
     }
 
@@ -117,6 +119,27 @@ public class MaintenanceController {
         model.addAttribute("device_maintenance", this.deviceMaintenanceService.getDeviceMaintenance(params));
         model.addAttribute("scheduleMaintenanceId", String.valueOf(id));
         return "device_maintenance";
+    }
+
+    @GetMapping("/maintenance/{maintenanceId}/job")
+    public String jobMaintenanceView(Model model, @PathVariable(value = "maintenanceId") long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("maintenanceId", String.valueOf(id));
+        model.addAttribute("job", this.jobService.getJob(params));
+        return "job";
+    }
+
+    @GetMapping("/maintenance/{maintenanceId}/job/add")
+    public String addJobMaintenanceView(Model model, @PathVariable(value = "maintenanceId") long id) {
+        Job job = new Job();
+        Schedulemaintenance m = this.maintenanceService.getMaintenanceById(id);
+        job.setMaintenanceId(m);
+        job.setRepairId(null);
+        model.addAttribute("job", job);
+        JobStatus[] statuses = JobStatus.values();
+        model.addAttribute("status", statuses);
+        model.addAttribute("employees", this.employeeService.getEmployee(null));
+        return "addJobMaintenance";
     }
 
     @GetMapping("/maintenance/{maintenanceId}/device/add")
@@ -159,7 +182,6 @@ public class MaintenanceController {
         return "addDeviceMaintenance";
     }
 
-//    @Scheduled(fixedDelay = 10000)
     @Scheduled(cron = "0 0 0 * * *")
     public void scheduleNotifyEarly() {
         try {

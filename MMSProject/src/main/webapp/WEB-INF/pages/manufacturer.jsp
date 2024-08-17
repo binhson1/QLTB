@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
     <h1 class="text-center">MANUFACTURER MANAGE</h1>
-    <a href="<c:url value="/manufacturer/add"></c:url>"class="btn btn-success m-1">ADD</a>        
+    <a href="<c:url value="/manufacturer/add"></c:url>"class="btn btn-success m-1 form-control">ADD MANUFACTURER</a>        
         <table class="table table-striped mt-3 text-center">
             <tr>                
                 <th>Id</th>

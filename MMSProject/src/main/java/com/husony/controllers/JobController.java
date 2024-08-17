@@ -75,14 +75,14 @@ public class JobController {
 
     @RequestMapping("/job")
     public String index(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("job", this.jobService.getJob());
+        model.addAttribute("job", this.jobService.getJob(params));
         return "job";
     }
 
     @GetMapping("/job/add")
     public String createView(Model model) {
         model.addAttribute("job", new Job());
-        model.addAttribute("employees", this.employeeService.getEmployee());
+        model.addAttribute("employees", this.employeeService.getEmployee(null));
         model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair(null));
         model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();
@@ -166,7 +166,7 @@ public class JobController {
     @GetMapping("/job/{jobId}")
     public String updateView(Model model, @PathVariable(value = "jobId") long id) {
         model.addAttribute("job", this.jobService.getJobById(id));
-        model.addAttribute("employees", this.employeeService.getEmployee());
+        model.addAttribute("employees", this.employeeService.getEmployee(null));
         model.addAttribute("scheduleRepair", this.repairService.getScheduleRepair(null));
         model.addAttribute("maintenances", this.maintenanceService.getMaintenance(null));
         JobStatus[] statuses = JobStatus.values();

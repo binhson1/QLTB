@@ -6,13 +6,14 @@ package com.husony.repository;
 
 import com.husony.pojo.Location;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Do Gia Huy
  */
 public interface LocationRepository {
-    List<Location> getLocations();
+    List<Location> getLocations(Map<String, String> params);
     void addOrUpdate(Location l);
     void deleteLocation(long id);
     Location getLocationById(long id);

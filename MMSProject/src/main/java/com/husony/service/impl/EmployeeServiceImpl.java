@@ -8,6 +8,7 @@ import com.husony.pojo.Employee;
 import com.husony.repository.EmployeeRepository;
 import com.husony.service.EmployeeService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     private EmployeeRepository employeeRepo;
     
     @Override
-    public List<Employee> getEmployee() {
-        return this.employeeRepo.getEmployee();
+    public List<Employee> getEmployee(Map<String, String> params) {
+        return this.employeeRepo.getEmployee(params);
     }
 
     @Override

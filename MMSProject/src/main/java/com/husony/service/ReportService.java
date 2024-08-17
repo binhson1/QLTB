@@ -6,13 +6,14 @@ package com.husony.service;
 
 import com.husony.pojo.Report;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Do Gia Huy
  */
 public interface ReportService {
-    List<Report> getReports();
+    List<Report> getReports(Map<String, String> params);
     void addOrUpdate(Report r);
     Report getReportById(long id);
     void deleteReport(long id);

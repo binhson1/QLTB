@@ -8,6 +8,7 @@ import com.husony.pojo.Report;
 import com.husony.repository.ReportRepository;
 import com.husony.service.ReportService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class ReportServiceImpl implements ReportService {
     private ReportRepository reportRepo;
 
     @Override
-    public List<Report> getReports() {
-        return this.reportRepo.getReports();
+    public List<Report> getReports(Map<String, String> params) {
+        return this.reportRepo.getReports(params);
     }
 
     @Override

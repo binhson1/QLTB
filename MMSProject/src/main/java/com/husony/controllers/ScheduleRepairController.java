@@ -74,7 +74,7 @@ public class ScheduleRepairController {
     public String createView(Model model) {
         model.addAttribute("schedulerepair", new Schedulerepair());
         model.addAttribute("repairtype", this.repairTypeService.getRepairType());
-        model.addAttribute("report", this.reportService.getReports());
+        model.addAttribute("report", this.reportService.getReports(null));
         return "addScheduleRepair";
     }
 
@@ -101,7 +101,7 @@ public class ScheduleRepairController {
     public String updateView(Model model, @PathVariable(value = "rId") long id) {
         model.addAttribute("schedulerepair", this.scheduleRepairService.getScheduleRepairById(id));
         model.addAttribute("repairtype", this.repairTypeService.getRepairType());
-        model.addAttribute("report", this.reportService.getReports());
+        model.addAttribute("report", this.reportService.getReports(null));
         return "addScheduleRepair";
     }
 
@@ -124,8 +124,8 @@ public class ScheduleRepairController {
                             System.out.println("Saiiii");
                             return false;
                         }
-                        if (jobService.getJob() != null) {
-                            Boolean b = jobService.getJob().stream()
+                        if (jobService.getJob(null) != null) {
+                            Boolean b = jobService.getJob(null).stream()
                                     .filter(job -> job != null && job.getStartDate() != null && job.getRepairId() != null)
                                     .anyMatch(job -> {
                                         LocalDateTime startDate = job.getStartDate();
@@ -180,7 +180,7 @@ public class ScheduleRepairController {
         List<Schedulerepair> scheduleRepair = this.scheduleRepairService.getScheduleRepair(params);
         List<Schedulerepair> non_notifyList = scheduleRepair.stream()
                 .filter(r -> {
-                    Boolean b = jobService.getJob().stream()
+                    Boolean b = jobService.getJob(null).stream()
                             .anyMatch(job -> {
                                 LocalDateTime startDate = job.getStartDate();
                                 return Objects.equals(job.getRepairId().getId(), r.getId())

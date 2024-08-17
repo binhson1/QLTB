@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from manage import main
+
 
 class User(AbstractUser):
     avatar = models.TextField()
@@ -62,6 +64,7 @@ class ScheduleRepair(models.Model):
     cost = models.FloatField(null=False)
     report = models.ForeignKey('Report', on_delete=models.CASCADE)
     repair_type = models.ForeignKey('RepairType', on_delete=models.CASCADE)
+    name = models.TextField()
 
     class Meta:
         db_table = 'ScheduleRepair'
@@ -73,6 +76,7 @@ class ScheduleMaintenance(models.Model):
     interval_month = models.IntegerField()
     maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
     device = models.ManyToManyField("Device", through="Device_Maintenance")
+    name = models.TextField()
 
     class Meta:
         db_table = 'ScheduleMaintenance'
@@ -94,6 +98,7 @@ class Job(models.Model):
     end_date = models.DateTimeField(null=True)
     status = models.CharField(max_length=50)
     updated_date = models.DateTimeField(auto_now=True)
+    name = models.TextField()
 
     class Meta:
         db_table = 'Job'
@@ -134,3 +139,10 @@ class RepairType(models.Model):
 
     class Meta:
         db_table = 'RepairType'
+
+
+class ReportRepairHistory(models.Model):
+    title = models.TextField()
+    content = models.TextField()
+    report = models.ForeignKey('Report', on_delete=models.CASCADE, blank=True, null=True)
+    device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE, blank=True, null=True)

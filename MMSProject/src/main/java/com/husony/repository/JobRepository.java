@@ -6,13 +6,14 @@ package com.husony.repository;
 
 import com.husony.pojo.Job;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Do Gia Huy
  */
 public interface JobRepository {
-    List<Job> getJob();
+    List<Job> getJob(Map<String, String> params);
     Job getJobById(long id);
     void deleteJob(long id);
     void addOrUpdate(Job j);

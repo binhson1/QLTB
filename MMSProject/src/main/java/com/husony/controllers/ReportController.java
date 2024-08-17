@@ -41,7 +41,7 @@ public class ReportController {
     
     @RequestMapping("/report")
     public String reportIndex(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("reports", this.reportService.getReports());
+        model.addAttribute("reports", this.reportService.getReports(params));
         return "report";
     }
     

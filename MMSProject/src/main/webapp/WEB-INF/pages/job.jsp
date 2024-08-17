@@ -8,6 +8,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
     <h1 class="text-center">JOB MANAGE</h1>
+    <c:url value="/job" var="action" />
+    <form action="${action}">
+        <div class="mb-3 mt-3">
+            <label for="kw" class="form-label">Keyword:</label>
+            <input type="text" class="form-control" id="kw" placeholder="Keyword..." name="q">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <button class="btn btn-info" type="submit">Find</button>
+        </div>
+    </form>
     <table class="table table-striped mt-3">
         <tr>
             <th>Id</th>

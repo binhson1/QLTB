@@ -8,6 +8,7 @@ import com.husony.pojo.Location;
 import com.husony.repository.LocationRepository;
 import com.husony.service.LocationService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class LocationServiceImpl implements LocationService {
     private LocationRepository locationRepo;
 
     @Override
-    public List<Location> getLocations() {
-        return this.locationRepo.getLocations();
+    public List<Location> getLocations(Map<String, String> params) {
+        return this.locationRepo.getLocations(params);
     }
 
     @Override

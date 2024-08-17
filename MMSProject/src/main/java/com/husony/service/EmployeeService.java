@@ -6,13 +6,14 @@ package com.husony.service;
 
 import com.husony.pojo.Employee;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author ACER
  */
 public interface EmployeeService {
-    List<Employee> getEmployee();
+    List<Employee> getEmployee(Map<String, String> params);
     Employee getEmployeeById(long id);
     void addOrUpdateEmployee(Employee e);
     void deleteEmployee(long id);

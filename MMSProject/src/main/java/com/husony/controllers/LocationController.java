@@ -34,7 +34,7 @@ public class LocationController {
     
     @RequestMapping("/location")
     public String location(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("location", this.locationService.getLocations());
+        model.addAttribute("location", this.locationService.getLocations(params));
         
         return "location";
     }

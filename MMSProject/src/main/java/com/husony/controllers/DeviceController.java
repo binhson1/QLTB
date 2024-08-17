@@ -50,7 +50,7 @@ public class DeviceController {
     public String createView(Model model) {
         model.addAttribute("device", new Device());
         model.addAttribute("categories", this.cateService.getCates());
-        model.addAttribute("locations", this.locationService.getLocations());
+        model.addAttribute("locations", this.locationService.getLocations(null));
         model.addAttribute("manus", this.manuService.getManufac(null));
         DeviceStatus[] statuses = DeviceStatus.values();
         model.addAttribute("status", statuses);
@@ -102,7 +102,7 @@ public class DeviceController {
     public String detailsView(Model model, @PathVariable(value = "deviceId") long id) {
         model.addAttribute("device", this.deviceService.getDeviceById(id));
         model.addAttribute("categories", this.cateService.getCates());
-        model.addAttribute("locations", this.locationService.getLocations());
+        model.addAttribute("locations", this.locationService.getLocations(null));
         model.addAttribute("manus", this.manuService.getManufac(null));
         DeviceStatus[] statuses = DeviceStatus.values();
         model.addAttribute("status", statuses);

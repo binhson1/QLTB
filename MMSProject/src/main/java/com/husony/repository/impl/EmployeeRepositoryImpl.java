@@ -5,10 +5,14 @@
 package com.husony.repository.impl;
 
 import com.husony.pojo.Employee;
+import com.husony.pojo.Location;
 import com.husony.repository.EmployeeRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -28,13 +32,25 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     private LocalSessionFactoryBean factory;
     
     @Override
-    public List<Employee> getEmployee() {
-        Session s = this.factory.getObject().getCurrentSession();
+    public List<Employee> getEmployee(Map<String, String> params) {
+       Session s = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Employee> q = b.createQuery(Employee.class);
         Root root = q.from(Employee.class);
         q.select(root);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String kw = params.get("q");
+            if (kw != null && !kw.isEmpty()) {
+                Predicate p1 = b.like(root.get("name"), String.format("%%%s%%", kw));
+                predicates.add(p1);
+            }
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
         Query query = s.createQuery(q);
+
         return query.getResultList();
     }
 

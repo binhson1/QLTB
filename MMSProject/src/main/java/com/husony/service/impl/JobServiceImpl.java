@@ -8,6 +8,7 @@ import com.husony.pojo.Job;
 import com.husony.repository.JobRepository;
 import com.husony.service.JobService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class JobServiceImpl implements JobService {
     private JobRepository jobRepo;
 
     @Override
-    public List<Job> getJob() {
-        return this.jobRepo.getJob();
+    public List<Job> getJob(Map<String, String> params) {
+        return this.jobRepo.getJob(params);
     }
 
     @Override

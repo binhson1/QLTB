@@ -5,8 +5,15 @@
 package com.husony.repository.impl;
 
 import com.husony.pojo.Job;
+import com.husony.pojo.Location;
 import com.husony.repository.JobRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +32,26 @@ public class JobRepositoryImpl implements JobRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Job> getJob() {
+    public List<Job> getJob(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("From Job");
-        return q.getResultList();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Job> q = b.createQuery(Job.class);
+        Root root = q.from(Job.class);
+        q.select(root);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            String kw = params.get("q");
+            if (kw != null && !kw.isEmpty()) {
+                Predicate p1 = b.like(root.get("name"), String.format("%%%s%%", kw));
+                predicates.add(p1);
+            }
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+        javax.persistence.Query query = s.createQuery(q);
+
+        return query.getResultList();
     }
 
     @Override

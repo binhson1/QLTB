@@ -12,7 +12,7 @@ import java.util.List;
  * @author ACER
  */
 public interface MaintenanceTypeService {
-     List<Maintenancetype> getMaintenanceType();
+    List<Maintenancetype> getMaintenanceType();
     Maintenancetype getMaintenanceTypeById(long id);
     void addOrUpdateMaintenanceType(Maintenancetype m);
     void deleteMaintenanceType(long id);

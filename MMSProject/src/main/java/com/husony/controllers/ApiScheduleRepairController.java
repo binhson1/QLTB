@@ -45,7 +45,7 @@ public class ApiScheduleRepairController {
 
     @GetMapping("/schedulerepair")
     public ResponseEntity<List<Schedulerepair>> list() {
-        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepair(), HttpStatus.OK);
+        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepair(null), HttpStatus.OK);
     }
         
     

@@ -159,10 +159,11 @@ public class MaintenanceController {
         return "addDeviceMaintenance";
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedDelay = 10000)
     public void scheduleNotifyEarly() {
         try {
             System.out.println("Start");
+            System.out.println("năng cực");
             LocalDate today = LocalDate.now();
             LocalDate tomorrow = today.plusDays(1);
             Date date = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -178,8 +179,8 @@ public class MaintenanceController {
                             System.out.println("Saiiii");
                             return false;
                         }
-                        if (jobService.getJob() != null) {
-                            Boolean b = jobService.getJob().stream()
+                        if (jobService.getJob(null) != null) {
+                            Boolean b = jobService.getJob(null).stream()
                                     .filter(job -> job != null && job.getStartDate() != null && job.getMaintenanceId() != null)
                                     .anyMatch(job -> {
                                         LocalDateTime startDate = job.getStartDate();
@@ -240,7 +241,7 @@ public class MaintenanceController {
         List<Schedulemaintenance> scheduleMaintenance = this.maintenanceService.getMaintenance(params);
         List<Schedulemaintenance> non_notifyList = scheduleMaintenance.stream()
                 .filter(maintenance -> {
-                    Boolean b = jobService.getJob().stream()
+                    Boolean b = jobService.getJob(null).stream()
                             .anyMatch(job -> {
                                 LocalDateTime startDate = job.getStartDate();
                                 return Objects.equals(job.getMaintenanceId().getId(), maintenance.getId())

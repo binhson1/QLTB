@@ -6,6 +6,7 @@ package com.husony.controllers;
 
 import com.husony.pojo.Employee;
 import com.husony.service.EmployeeService;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -28,9 +30,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @RequestMapping("/employee")
-    public String employee(Model model) {
+    public String employee(Model model, @RequestParam Map<String, String> params) {
 
-        model.addAttribute("employee", this.employeeService.getEmployee());
+        model.addAttribute("employee", this.employeeService.getEmployee(params));
         return "employee";
     }
 

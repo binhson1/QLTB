@@ -12,6 +12,7 @@ import com.husony.service.ReportService;
 import com.husony.service.UserService;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
@@ -68,7 +70,7 @@ public class ApiReportController {
     }
 
     @GetMapping("/report")
-    public ResponseEntity<List<Report>> list() {
-        return new ResponseEntity<>(this.reportService.getReports(), HttpStatus.OK);
+    public ResponseEntity<List<Report>> list(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.reportService.getReports(params), HttpStatus.OK);
     }
 }

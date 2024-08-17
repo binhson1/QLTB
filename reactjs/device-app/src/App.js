@@ -19,6 +19,8 @@ import ScheduleRepair from "./components/pages/ScheduleRepair";
 import Report from "./components/pages/Report";
 import Post from "./components/pages/Post";
 import Forum from "./components/pages/Forum";
+import Location from "./components/pages/Location";
+import DevicesInArea from "./components/pages/DevicesInArea";
 
 export const MyUserContext = createContext();
 export const MyDispatchContext = createContext();
@@ -64,6 +66,11 @@ const App = () => {
                   <Route path="/category" element={<Category />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
+                  <Route path="/location" element={<Location />} />
+                  <Route
+                    path="/location/:locationId"
+                    element={<DevicesInArea />}
+                  />
                   <Route path="/report" element={<Report />} />
                   <Route path="/addreport/:deviceId" element={<AddReport />} />
                   <Route

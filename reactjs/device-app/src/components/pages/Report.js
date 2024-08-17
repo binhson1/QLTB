@@ -35,36 +35,56 @@ const Report = () => {
   if (user === null) return <Navigate to="/login" />;
   return (
     <div className="col-10 container-fluid">
-      <h1 className="text-center">REPORT MANAGE</h1>
-      <Table className="mt-3" striped>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Description</th>
-            <th>Occurrence Date</th>
-            <th>Severity</th>
-            <th>Device</th>
-            <th>User</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {report !== undefined &&
-            report.map((r) => (
+      <h1 className="text-center my-4">REPORT MANAGE</h1>
+      <div className="card">
+        <div className="card-body">
+          <table className="table table-striped table-bordered table-hover">
+            <thead className="table-dark">
               <tr>
-                <td>{r.id}</td>
-                <td>{r.description}</td>
-                <td>{r.occurrenceDate}</td>
-                <td>{r.severity}</td>
-                <td>{r.deviceId.name}</td>
-                <td>{r.userId.username}</td>
-                <td>{r.status}</td>
-                <td></td>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Occurrence Date</th>
+                <th>Severity</th>
+                <th>Device</th>
+                <th>User</th>
+                <th>Status</th>
+                <th className="text-center">Actions</th>
               </tr>
-            ))}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {report !== undefined &&
+                report.map((r) => (
+                  <tr key={r.id}>
+                    <td>{r.id}</td>
+                    <td>{r.description}</td>
+                    <td>{new Date(r.occurrenceDate).toLocaleDateString()}</td>
+                    <td>{r.severity}</td>
+                    <td>{r.deviceId.name}</td>
+                    <td>{r.userId.username}</td>
+                    <td>{r.status}</td>
+                    <td className="text-center">
+                      <Link
+                        className="btn btn-info btn-sm me-2"
+                        to={`/report/${r.id}`}
+                      >
+                        View
+                      </Link>
+                      <Link
+                        className="btn btn-warning btn-sm me-2"
+                        to={`/report/edit/${r.id}`}
+                      >
+                        Edit
+                      </Link>
+                      <button className="btn btn-outline-danger btn-sm">
+                        &times;
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

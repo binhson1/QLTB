@@ -4,6 +4,7 @@
  */
 package com.husony.controllers;
 
+import com.husony.pojo.Device;
 import com.husony.pojo.Location;
 import com.husony.service.LocationHistoryService;
 import com.husony.service.LocationService;
@@ -33,20 +34,30 @@ public class ApiLocationController {
 
     @Autowired
     private LocationService locationService;
-    
+
     @Autowired
     private LocationHistoryService locationHistoryService;
 
     @DeleteMapping("/location/delete/{locationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "locationId") long id){
+    public void delete(@PathVariable(value = "locationId") long id) {
         this.locationService.deleteLocation(id);
     }
-    
-    
-    @GetMapping("/location")
+
+    @GetMapping("/locations")
     public ResponseEntity<List<Location>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.locationService.getLocations(params), HttpStatus.OK);
     }
+
+    @GetMapping("/location/{locationId}/device")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Device>> getDevicesByLocation(@PathVariable(value = "locationId") long id) {
+        return new ResponseEntity<>(this.locationHistoryService.getDevicesByLocation(id), HttpStatus.OK);
+    }
     
+    @GetMapping("/locations/{locationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Location> getLocationById(@PathVariable(value = "locationId") long id) {
+        return new ResponseEntity<>(this.locationService.getLocationById(id), HttpStatus.OK);
+    }
 }

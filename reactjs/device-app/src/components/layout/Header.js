@@ -41,34 +41,44 @@ const Header = () => {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">MMS Website</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+    <Navbar expand="lg" className="bg-dark navbar-dark shadow-sm">
+      <Container fluid>
+        <Navbar.Brand href="/" className="fw-bold">
+          MMS Website
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">
-            <Link className="nav-link" to="/">
+            <Link className="nav-link text-light" to="/">
               Trang chủ
             </Link>
 
-            <NavDropdown title="Danh mục" id="basic-nav-dropdown"></NavDropdown>
-
             {user === null ? (
               <>
-                <Link className="nav-link text-success" to="/login">
+                <Link className="nav-link text-light" to="/login">
                   &#129489; Đăng nhập
                 </Link>
-                <Link className="nav-link text-success" to="/register">
+                <Link className="nav-link text-light" to="/register">
                   &#129489; Đăng ký
                 </Link>
               </>
             ) : (
               <>
-                <Link className="nav-link text-success" to="/login">
-                  <Image src={user.avatar} width="25" roundedCircle />
+                <Link
+                  className="nav-link d-flex align-items-center text-light"
+                  to="/profile"
+                >
+                  <Image
+                    src={user.avatar}
+                    width="30"
+                    height="30"
+                    roundedCircle
+                    className="me-2"
+                  />
                   Chào {user.username}!
                 </Link>
                 <Button
+                  className="rounded-pill"
                   variant="danger"
                   onClick={() => dispatch({ type: "logout" })}
                 >
@@ -77,23 +87,25 @@ const Header = () => {
               </>
             )}
           </Nav>
+          <Form className="d-flex" onSubmit={submit}>
+            <Row className="align-items-center g-2">
+              <Col>
+                <Form.Control
+                  type="text"
+                  placeholder="Tìm thiết bị..."
+                  className="rounded-pill"
+                  value={kw}
+                  onChange={(e) => setKw(e.target.value)}
+                />
+              </Col>
+              <Col xs="auto">
+                <Button type="submit" className="rounded-pill">
+                  Tìm
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </Navbar.Collapse>
-        <Form inline onSubmit={submit}>
-          <Row>
-            <Col xs="auto">
-              <Form.Control
-                type="text"
-                placeholder="Tìm sản phẩm..."
-                className=" mr-sm-2"
-                value={kw}
-                onChange={(e) => setKw(e.target.value)}
-              />
-            </Col>
-            <Col xs="auto">
-              <Button type="submit">Tìm</Button>
-            </Col>
-          </Row>
-        </Form>
       </Container>
     </Navbar>
   );

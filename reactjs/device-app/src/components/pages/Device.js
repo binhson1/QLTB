@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../../App";
 import { Navigate } from "react-router";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import cookie from "react-cookies";
 import { Button } from "react-bootstrap";
 
@@ -11,22 +11,52 @@ const Device = () => {
 
   const [q] = useSearchParams();
 
-  const [device, setDevice] = useState([]);
+  const [devices, setDevices] = useState([]);
 
-  const loadDevice = async () => {
+  const [page, setPage] = useState(1);
+
+  const loadDevices = async () => {
     try {
-      let res = await authAPIs(cookie.load("access_token")).get(
-        endpoints["device"]
-      );
-      setDevice(res.data);
+      let url = `${endpoints["devices"]}?page=${page}`;
+
+      let cId = q.get("cateId");
+      if (cId !== null) {
+        setPage(1);
+        url = `${url}&cateId=${cId}`;
+      }
+
+      let manuId = q.get("manuId");
+      if (manuId !== null) {
+        setPage(1);
+        url = `${url}&manuId=${manuId}`;
+      }
+
+      let k = q.get("kw");
+      if (k !== null) {
+        setPage(1);
+        url = `${url}&q=${k}`;
+      }
+
+      let res = await authAPIs(cookie.load("access-token")).get(url);
+
+      console.info(res.data);
+
+      if (page === 1) setDevices(res.data);
+      else setDevices((current) => [...current, ...res.data]);
+
+      console.info(devices);
     } catch (ex) {
       console.error(ex);
     }
   };
 
   useEffect(() => {
-    loadDevice();
-  }, []);
+    loadDevices();
+  }, [page, q]);
+
+  const loadMore = () => {
+    setPage(page + 1);
+  };
 
   if (user === null) return <Navigate to="/login"></Navigate>;
   return (
@@ -41,19 +71,18 @@ const Device = () => {
           <th>Location</th>
           <th>Category</th>
           <th>Manufacturer</th>
-          <th>Status</th>
+          <th>Action</th>
           <th></th>
         </tr>
-        {device !== undefined &&
-          device.map((d) => (
+        {devices !== undefined &&
+          devices.map((d) => (
             <tr>
               <td>
                 <img src={d.image} width="120" />
               </td>
               <td>{d.id}</td>
               <td>{d.name}</td>
-              <td>{d.boughtDate}</td>
-              <td></td>
+              <td>{new Date(d.boughtDate).toLocaleDateString()}</td>
               <td>{d.deviceCategoryId.name}</td>
               <td>{d.manufacturerId.name}</td>
               <th>{d.status}</th>
@@ -71,6 +100,11 @@ const Device = () => {
             </tr>
           ))}
       </table>
+      <div className="mt-2 text-center mb-1">
+        <Button onClick={loadMore} variant="primary">
+          Xem thêm
+        </Button>
+      </div>
     </div>
   );
 };

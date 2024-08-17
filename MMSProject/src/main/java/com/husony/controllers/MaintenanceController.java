@@ -159,7 +159,8 @@ public class MaintenanceController {
         return "addDeviceMaintenance";
     }
 
-    @Scheduled(fixedDelay = 10000)
+//    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void scheduleNotifyEarly() {
         try {
             System.out.println("Start");

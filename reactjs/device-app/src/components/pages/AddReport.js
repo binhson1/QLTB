@@ -3,6 +3,7 @@ import { MyUserContext } from "../../App";
 import { Navigate, useParams } from "react-router";
 import { authAPIs, endpoints } from "../../configs/APIs";
 import cookie from "react-cookies";
+import { Button, Form } from "react-bootstrap";
 
 const AddReport = () => {
   const [device, setDevice] = useState([]);
@@ -50,40 +51,35 @@ const AddReport = () => {
 
   return (
     <div className="col-10 container-fluid">
-      <h1 className="text-center text-primary mt-1">ADD REPORT</h1>
-
-      <form onSubmit={add} method="post" modelAttribute="report">
-        <div className="mb-3 mt-3">
-          <label for="description" className="form-label">
-            Description
-          </label>
-          <input
+      <h1 className="text-center text-primary mt-3">ADD REPORT</h1>
+      <Form onSubmit={add}>
+        <Form.Group className="mb-3" controlId="description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
             type="text"
+            placeholder="Enter description"
             onChange={(e) => setDescription(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-3 mt-3">
-          <label for="severity" className="form-label">
-            Severity
-          </label>
-          <input
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="severity">
+          <Form.Label>Severity</Form.Label>
+          <Form.Control
             type="text"
+            placeholder="Enter severity"
             onChange={(e) => setSeverity(e.target.value)}
-          ></input>
-        </div>
-        <div className="mb-3 mt-3">
-          <label for="occurrenceDate" className="form-label">
-            Occurrence date
-          </label>
-          <input
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="occurrenceDate">
+          <Form.Label>Occurrence Date</Form.Label>
+          <Form.Control
             type="date"
             onChange={(e) => setOccurrenceDate(e.target.value)}
-          ></input>
-        </div>
-        <button className="btn btn-success" type="submit">
+          />
+        </Form.Group>
+        <Button variant="success" type="submit" className="w-100">
           ADD
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 };

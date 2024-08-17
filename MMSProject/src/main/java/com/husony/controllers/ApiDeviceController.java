@@ -136,4 +136,6 @@ public class ApiDeviceController {
     public ResponseEntity<List<Locationhistory>> locationdevices(@PathVariable(value = "deviceId") long id) {
         return new ResponseEntity<>(this.locationHistoryService.getLocationHistoryByDevice(id), HttpStatus.OK);        
     }
+    
+   
 }

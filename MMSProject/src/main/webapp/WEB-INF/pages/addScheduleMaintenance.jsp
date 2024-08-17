@@ -43,69 +43,14 @@
                 </c:forEach>
             </form:select>
         </div>
-        <div class="mb-3 mt-3 text-center">
+        <div class="mb-3 mt-3 text-center form-control">
             <form:hidden path="id" />
-            <button class="btn btn-success" type="submit">
-                ADD
-            </button>
+            <c:choose>
+                <c:when test="${maintenance.id != null}"> UPDATE </c:when>                   
+                <c:otherwise>
+                    ADD
+                </c:otherwise>
+            </c:choose>
         </div>
     </form:form>
 </div>
-<!--<script>
-    let deviceCount = 1;
-
-    async function addDevice() {
-        deviceCount++;
-        const selectElement = document.getElementById('deviceSelect1');
-        const device = selectElement.value; // Không cần await ở đây
-        console.log('Selected device value:', device); // Kiểm tra giá trị device
-
-        // Kiểm tra xem selectElement có giá trị hợp lệ không
-        if (!device) {
-            console.error('No device selected.');
-            return;
-        }
-            <div id="devicesContainer">
-            <div class="deviceSelect">
-                <label for="deviceSelect1">Device list:</label>
-                <select class="form-select" id="deviceSelect1" name="list" >
-                    
-                </select>
-            </div>
-            <button type="button" class="btn btn-success form-control mt-3" onclick="addDevice()">Add Another Device</button>
-        </div>
-        <br>
-        const container = document.getElementById('devicesContainer');
-
-        // Tạo phần tử div
-        const newDeviceRow = document.createElement('div');
-        newDeviceRow.className = 'deviceRow d-flex justify-content-around mt-3 p-2';
-
-        // Tạo phần tử input
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.className='input form-control';
-        input.readOnly = true;
-        input.name = 'devices[]';
-        input.value = device;
-        input.width = '90%';
-
-        // Tạo phần tử button
-        const button = document.createElement('button');
-        button.className = 'btn btn-danger';
-        button.textContent = 'X';
-        button.type = 'button'; // Ngăn chặn hành vi mặc định của button trong form
-        button.addEventListener('click', () => removeDevice(button));
-
-        // Thêm các phần tử vào newDeviceRow
-        newDeviceRow.appendChild(input);
-        newDeviceRow.appendChild(button);
-
-        // Thêm newDeviceRow vào container
-        container.appendChild(newDeviceRow);
-    }
-
-    function removeDevice(button) {
-        button.parentElement.remove();
-    }
-</script>-->

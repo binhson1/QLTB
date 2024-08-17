@@ -10,18 +10,16 @@
     <h1 class="text-center">JOB MANAGE</h1>
     <c:url value="/job" var="action" />
     <form action="${action}">
-        <div class="mb-3 mt-3">
+        <div class="mb-3 mt-3 d-flex justify-content-center align-items-center">
             <label for="kw" class="form-label">Keyword:</label>
-            <input type="text" class="form-control" id="kw" placeholder="Keyword..." name="q">
-        </div>
-
-        <div class="mb-3 mt-3">
-            <button class="btn btn-info" type="submit">Find</button>
+            <input type="text" class="form-control ms-3" style="width: 60%" id="kw" placeholder="Keyword..." name="q">
+            <button class="btn btn-info ms-3" type="submit">Find</button>
         </div>
     </form>
     <table class="table table-striped mt-3">
         <tr>
             <th>Id</th>
+            <th>Name</th>
             <th>Start date</th>
             <th>End date</th>
             <th>Update date</th>
@@ -29,13 +27,14 @@
             <th>Employee</th>
             <th>Maintenance</th>
             <th>Repair</th>
-            <<th></th>
+            <th></th>
         </tr>
         <c:forEach items="${job}" var="j">
             <tr id="job{
                     j.id
                 }">
                 <td>${j.id}</td>
+                <td>${j.name}</td>
                 <td>${j.startDate}</td>
                 <td>${j.endDate}</td>
                 <td>${j.updatedDate}</td>

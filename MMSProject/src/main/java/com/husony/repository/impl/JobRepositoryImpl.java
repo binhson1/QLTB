@@ -46,6 +46,18 @@ public class JobRepositoryImpl implements JobRepository {
                 Predicate p1 = b.like(root.get("name"), String.format("%%%s%%", kw));
                 predicates.add(p1);
             }
+            
+            String maintenanceId = params.get("maintenanceId");
+            if (maintenanceId != null && !maintenanceId.isEmpty()) {
+                Predicate p2 = b.equal(root.get("maintenanceId").get("id"), Long.parseLong(maintenanceId));
+                predicates.add(p2);
+            }
+            
+            String repairId = params.get("repairId");
+            if (repairId != null && !repairId.isEmpty()) {
+                Predicate p3 = b.equal(root.get("repairId").get("id"), Long.parseLong(repairId));
+                predicates.add(p3);
+            }
             q.where(predicates.toArray(Predicate[]::new));
         }
 

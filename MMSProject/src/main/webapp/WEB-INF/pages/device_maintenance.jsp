@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="col-10 container-fluid">
         <h1 class="text-center">DEVICE MAINTENANCE</h1>
-         <a href="<c:url value="/maintenance/${scheduleMaintenanceId}/device/add"></c:url>"class="btn btn-success m-1">ADD</a> 
+         <a href="<c:url value="/maintenance/${scheduleMaintenanceId}/device/add"></c:url>"class="btn btn-success m-1 form-control">ADD DEVICES</a> 
         <table class="table table-striped mt-3">
             <tr>
                 <th></th>

@@ -61,7 +61,7 @@ public class Report implements Serializable {
     @NotNull
     @Column(name = "occurrence_date")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date occurrenceDate;
     @Basic(optional = false)
     @NotNull

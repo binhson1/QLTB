@@ -4,9 +4,12 @@
  */
 package com.husony.controllers;
 
+import com.husony.pojo.Job;
+import com.husony.pojo.JobStatus;
 import com.husony.pojo.Schedulemaintenance;
 import com.husony.pojo.Schedulerepair;
 import com.husony.pojo.User;
+import com.husony.service.EmployeeService;
 import com.husony.service.JobService;
 import com.husony.service.RepairTypeService;
 import com.husony.service.ReportService;
@@ -38,6 +41,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -64,9 +68,12 @@ public class ScheduleRepairController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @RequestMapping("/schedulerepair")
-    public String index(Model model) {
-        model.addAttribute("schedulerepair", this.scheduleRepairService.getScheduleRepair(null));
+    public String index(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("schedulerepair", this.scheduleRepairService.getScheduleRepair(params));
         return "schedulerepair";
     }
 
@@ -103,6 +110,26 @@ public class ScheduleRepairController {
         model.addAttribute("repairtype", this.repairTypeService.getRepairType());
         model.addAttribute("report", this.reportService.getReports(null));
         return "addScheduleRepair";
+    }
+
+    @GetMapping("/schedulerepair/{rId}/job")
+    public String jobRepairView(Model model, @PathVariable(value = "rId") long id) {
+        Map<String, String> params = new HashMap<>();
+        params.put("repairId", String.valueOf(id));
+        model.addAttribute("job", this.jobService.getJob(params));
+        return "job";
+    }
+
+    @GetMapping("/schedulerepair/{rId}/job/add")
+    public String addJobRepairView(Model model, @PathVariable(value = "rId") long id) {
+        Job job = new Job();
+        job.setRepairId(this.scheduleRepairService.getScheduleRepairById(id));
+        job.setMaintenanceId(null);
+        model.addAttribute("job", job);
+        JobStatus[] statuses = JobStatus.values();
+        model.addAttribute("status", statuses);
+        model.addAttribute("employees", this.employeeService.getEmployee(null));
+        return "addJobRepair";
     }
 
     @Scheduled(cron = "0 0 0 * * *")

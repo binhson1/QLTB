@@ -28,7 +28,7 @@ uri="http://www.springframework.org/tags/form" %>
       />
     </div>
     <form:hidden path="id" />
-    <button class="btn btn-success" type="submit">
+    <button class="btn btn-success form-control" type="submit">
       <c:choose>
         <c:when test="${maintenancetype.id != null}"> UPDATE </c:when>
         <c:otherwise> ADD </c:otherwise>

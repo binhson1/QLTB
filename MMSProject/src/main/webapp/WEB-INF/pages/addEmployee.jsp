@@ -31,7 +31,7 @@
             <form:input path="phone" type="text" class="form-control" id="phone" placeholder="Phone numbers..." name="name" />        
         </div>
         <form:hidden path="id" />
-        <button class="btn btn-success" type="submit">
+        <button class="btn btn-success form-control" type="submit">
             <c:choose>
                 <c:when test="${employee.id != null}"> UPDATE </c:when>                   
                 <c:otherwise>

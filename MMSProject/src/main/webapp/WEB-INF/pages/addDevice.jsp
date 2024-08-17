@@ -101,7 +101,7 @@
         <div class="mb-3 mt-3 text-center">
             <form:hidden path="id" />
             <form:hidden path="image" />
-            <button class="btn btn-success" type="submit">
+            <button class="btn btn-success form-control" type="submit">
                 <c:choose>
                     <c:when test="${device.id != null}"> UPDATE </c:when>                   
                     <c:otherwise>

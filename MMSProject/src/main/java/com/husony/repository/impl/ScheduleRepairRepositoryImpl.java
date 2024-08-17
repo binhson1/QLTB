@@ -60,9 +60,9 @@ public class ScheduleRepairRepositoryImpl implements ScheduleRepairRepository {
 
             try {
                 String strDate = params.get("date");
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = formatter.parse(strDate);
                 if (strDate != null && !strDate.isEmpty()) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(strDate);
                     Predicate p2 = b.equal(root.get("date"), date);
                     predicates.add(p2);
                 }

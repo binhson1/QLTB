@@ -10,16 +10,14 @@
     <h1 class="text-center">EMPLOYEE MANAGE</h1>
     <c:url value="/employee" var="action" />
     <form action="${action}">
-        <div class="mb-3 mt-3">
+        <div class="mb-3 mt-3 d-flex justify-content-center align-items-center">
             <label for="kw" class="form-label">Keyword:</label>
-            <input type="text" class="form-control" id="kw" placeholder="Keyword..." name="q">
-        </div>
+            <input type="text" class="form-control ms-3" style="width: 60%" id="kw" placeholder="Keyword..." name="q">
+            <button class="btn btn-info ms-3" type="submit">Find</button>
+            <a href="<c:url value="/employee/add"></c:url>"class="btn btn-success ms-3">ADD EMPLOYEE</a>    
+            </div>
+        </form>
 
-        <div class="mb-3 mt-3">
-            <button class="btn btn-info" type="submit">Find</button>
-        </div>
-    </form>
-    <a href="<c:url value="/employee/add"></c:url>"class="btn btn-success m-1">ADD</a>    
 
         <table class="table table-striped">
             <tr>                

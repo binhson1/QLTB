@@ -17,6 +17,8 @@ import cookie from "react-cookies";
 import Register from "./components/pages/Register";
 import ScheduleRepair from "./components/pages/ScheduleRepair";
 import Report from "./components/pages/Report";
+import Post from "./components/pages/Post";
+import Forum from "./components/pages/Forum";
 
 export const MyUserContext = createContext();
 export const MyDispatchContext = createContext();
@@ -58,11 +60,10 @@ const App = () => {
             <Routes>
               {loading == false && (
                 <>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Device />} />
                   <Route path="/category" element={<Category />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  <Route path="/device" element={<Device />} />
                   <Route path="/report" element={<Report />} />
                   <Route path="/addreport/:deviceId" element={<AddReport />} />
                   <Route
@@ -71,6 +72,8 @@ const App = () => {
                   />
                   <Route path="/maintenance" element={<Maintenance />} />
                   <Route path="/manufacturer" element={<Manufacturer />} />
+                  <Route path="/forum/" element={<Forum />} />
+                  <Route path="/forum/:postId" element={<Post />} />
                 </>
               )}
             </Routes>

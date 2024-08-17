@@ -8,6 +8,9 @@ import { Button } from "react-bootstrap";
 
 const Device = () => {
   const user = useContext(MyUserContext);
+
+  const [q] = useSearchParams();
+
   const [device, setDevice] = useState([]);
 
   const loadDevice = async () => {

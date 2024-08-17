@@ -4,7 +4,6 @@
  */
 package com.husony.controllers;
 
-
 import com.husony.pojo.Schedulerepair;
 import com.husony.service.ScheduleRepairService;
 import java.text.ParseException;
@@ -32,21 +31,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @CrossOrigin
 public class ApiScheduleRepairController {
+
     @Autowired
     private ScheduleRepairService scheduleRepairService;
     
     @DeleteMapping("/schedulerepair/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "") long id) {
+    public void delete(@PathVariable(value = "id") long id) {
         this.scheduleRepairService.deleteScheduleRepair(id);
     }
-
     
-
+    @PostMapping("/schedulerepair/addOrUpdate/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> addOrUpdate(@RequestBody @Valid Schedulerepair r, BindingResult rs) throws ParseException {
+        if (rs.hasErrors()) {
+            System.out.println(rs);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();            
+        }
+        this.scheduleRepairService.addOrUpdateScheduleRepair(r);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+        
+    }
+    
     @GetMapping("/schedulerepair")
     public ResponseEntity<List<Schedulerepair>> list() {
-        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepair(), HttpStatus.OK);
+        return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepair(null), HttpStatus.OK);
     }
-        
     
 }

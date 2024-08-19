@@ -146,3 +146,13 @@ class ReportRepairHistory(models.Model):
     content = models.TextField()
     report = models.ForeignKey('Report', on_delete=models.CASCADE, blank=True, null=True)
     device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE, blank=True, null=True)
+
+
+class Post(models.Model):
+    title = models.TextField()
+    content = models.TextField()
+    create_date = models.DateField(auto_now=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Post'

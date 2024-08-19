@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Link, useSearchParams } from "react-router-dom";
 import cookie from "react-cookies";
-import { Button } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 
 const Device = () => {
   const user = useContext(MyUserContext);
@@ -58,48 +58,73 @@ const Device = () => {
     setPage(page + 1);
   };
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "ACTIVE":
+        return <Badge bg="success">Active</Badge>;
+      case "PENDING":
+        return <Badge bg="warning">Pending</Badge>;
+      case "MAINTENANCE":
+        return <Badge bg="info">Maintenance</Badge>;
+      case "REPAIR":
+        return <Badge bg="danger">Repair</Badge>;
+      default:
+        return <Badge bg="secondary">Unknown</Badge>;
+    }
+  };
+
   if (user === null) return <Navigate to="/login"></Navigate>;
   return (
     <div className="col-10 container-fluid">
       <h1 className="text-center">DEVICE MANAGE</h1>
-      <table className="table table-striped mt-3">
-        <tr>
-          <th></th>
-          <th>Id</th>
-          <th>Device name</th>
-          <th>Bought date</th>
-          <th>Location</th>
-          <th>Category</th>
-          <th>Manufacturer</th>
-          <th>Action</th>
-          <th></th>
-        </tr>
-        {devices !== undefined &&
-          devices.map((d) => (
-            <tr>
-              <td>
-                <img src={d.image} width="120" />
-              </td>
-              <td>{d.id}</td>
-              <td>{d.name}</td>
-              <td>{new Date(d.boughtDate).toLocaleDateString()}</td>
-              <td>{d.deviceCategoryId.name}</td>
-              <td>{d.manufacturerId.name}</td>
-              <th>{d.status}</th>
-              <td>
-                <Link to={`/addReport/${d.id}/`} className="btn btn-danger">
-                  REPORT
-                </Link>
-                <Link
-                  to={`/device/${d.id}/schedulerepair`}
-                  className="btn btn-info"
-                >
-                  Schedule Repair
-                </Link>
-              </td>
-            </tr>
-          ))}
-      </table>
+      <div className="card">
+        <div className="card-body">
+          <table className="table table-striped table-bordered table-hover">
+            <thead className="table-dark">
+              <tr className="text-center">
+                <th></th>
+                <th>Id</th>
+                <th>Device name</th>
+                <th>Bought date</th>
+                <th>Category</th>
+                <th>Manufacturer</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {devices !== undefined &&
+                devices.map((d) => (
+                  <tr className="text-center">
+                    <td>
+                      <img src={d.image} width="120" />
+                    </td>
+                    <td>{d.id}</td>
+                    <td>{d.name}</td>
+                    <td>{new Date(d.boughtDate).toLocaleDateString()}</td>
+                    <td>{d.deviceCategoryId.name}</td>
+                    <td>{d.manufacturerId.name}</td>
+                    <th>{getStatusBadge(d.status)}</th>
+                    <td>
+                      <Link
+                        to={`/addReport/${d.id}/`}
+                        className="btn btn-danger"
+                      >
+                        REPORT
+                      </Link>
+                      <Link
+                        to={`/device/${d.id}/schedulerepair`}
+                        className="btn btn-info"
+                      >
+                        Schedule Repair
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="mt-2 text-center mb-1">
         <Button onClick={loadMore} variant="primary">
           Xem thêm

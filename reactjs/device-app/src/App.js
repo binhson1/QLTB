@@ -21,6 +21,7 @@ import Post from "./components/pages/Post";
 import Forum from "./components/pages/Forum";
 import Location from "./components/pages/Location";
 import DevicesInArea from "./components/pages/DevicesInArea";
+import AddPost from "./components/pages/AddPost";
 
 export const MyUserContext = createContext();
 export const MyDispatchContext = createContext();
@@ -80,7 +81,8 @@ const App = () => {
                   <Route path="/maintenance" element={<Maintenance />} />
                   <Route path="/manufacturer" element={<Manufacturer />} />
                   <Route path="/forum/" element={<Forum />} />
-                  <Route path="/forum/:postId" element={<Post />} />
+                  <Route path="/addPost/" element={<AddPost />} />
+                  <Route path="/post/:postId/" element={<Post />} />
                 </>
               )}
             </Routes>

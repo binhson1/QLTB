@@ -23,6 +23,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -44,6 +45,10 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")})
 public class User implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<Post> postSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -239,6 +244,15 @@ public class User implements Serializable {
      */
     public void setReportSet(Set<Report> reportSet) {
         this.reportSet = reportSet;
+    }
+
+//    @XmlTransient
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
     }
 
 }

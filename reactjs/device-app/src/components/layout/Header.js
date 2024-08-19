@@ -79,6 +79,7 @@ const Header = () => {
                 </Link>
                 <Button
                   className="rounded-pill"
+                  size="md"
                   variant="danger"
                   onClick={() => dispatch({ type: "logout" })}
                 >

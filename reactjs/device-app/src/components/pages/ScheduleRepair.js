@@ -28,31 +28,35 @@ const ScheduleRepair = () => {
   return (
     <div className="col-10 container-fluid">
       <h1 className="text-center">Schedule Repair</h1>
-      <Table className=" mt-3" striped>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Cost</th>
-            <th>Repair Type</th>
-            <th>Report </th>
-          </tr>
-        </thead>
-        <tbody>
-          {scheduleRepair !== undefined &&
-            scheduleRepair.map((d) => (
+      <div className="card">
+        <div className="card-body">
+          <table className="table table-striped table-bordered table-hover">
+            <thead className="table-dark">
               <tr>
-                <td>{d.id}</td>
-                <td>{d.name}</td>
-                <td>{d.date}</td>
-                <td>{d.cost}</td>
-                <td>{d.repairTypeId.name}</td>
-                <th>{d.reportId.id}</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Cost</th>
+                <th>Repair Type</th>
+                <th>Report </th>
               </tr>
-            ))}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {scheduleRepair !== undefined &&
+                scheduleRepair.map((d) => (
+                  <tr>
+                    <td>{d.id}</td>
+                    <td>{d.name}</td>
+                    <td>{d.date}</td>
+                    <td>{d.cost}</td>
+                    <td>{d.repairTypeId.name}</td>
+                    <th>{d.reportId.id}</th>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

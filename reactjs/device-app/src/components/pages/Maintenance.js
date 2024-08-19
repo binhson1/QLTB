@@ -25,26 +25,38 @@ const Maintenance = () => {
 
   if (user === null) return <Navigate to="/login"></Navigate>;
   return (
-    <div classNameName="col-10 container-fluid">
-      <table className="table table-striped">
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Action</th>
-        </tr>
-        {maintenances !== undefined &&
-          maintenances.map((c) => (
-            <tr>
-              <td>{c.id}</td>
-              <td>{c.name}</td>
-              <td>
-                <Link className="btn btn-info">i</Link>
-                <Link className="btn btn-success">&orarr;</Link>
-                <button className="btn btn-danger">&times;</button>
-              </td>
-            </tr>
-          ))}
-      </table>
+    <div className="col-10 container-fluid">
+      <h1 className="text-center">MAINTENANCE MANAGE</h1>
+      <div className="card">
+        <div className="card-body">
+          <table className="table table-striped table-bordered table-hover">
+            <thead className="table-dark">
+              <tr className="text-center">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Next</th>
+                <th>Last Maintenance</th>
+                <th>Next Maintenance</th>
+                <th>Interval month</th>
+                <th>Maintenance type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {maintenances !== undefined &&
+                maintenances.map((c) => (
+                  <tr className="text-center">
+                    <td>{c.id}</td>
+                    <td>{c.name}</td>
+                    <td>{c.lastMaintenanceDate}</td>
+                    <td>{c.nextMaintenanceDate}</td>
+                    <td>{c.intervalMonth}</td>
+                    <td>{c.maintenanceTypeId.name}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

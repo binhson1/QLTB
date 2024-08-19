@@ -17,6 +17,7 @@ const AddPost = () => {
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
     setPostContent(data);
+    console.log(data);
   };
 
   const getCurrentDate = () => {
@@ -84,6 +85,11 @@ const AddPost = () => {
               editor={ClassicEditor}
               data={postContent}
               onChange={handleEditorChange}
+              config={{
+                ckfinder: {
+                  uploadUrl: "http://localhost:8080/MMSApp/api/upload",
+                },
+              }}
             />
           </div>
 

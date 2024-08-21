@@ -4,6 +4,8 @@ import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import cookie from "react-cookies";
 import { MyUserContext } from "../../App";
 import { Button, Card, Form, ListGroup } from "react-bootstrap";
+import moment from "moment";
+import 'moment/locale/vi';
 
 const Post = () => {
   const user = useContext(MyUserContext);
@@ -31,10 +33,12 @@ const Post = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const currentDate = Date.now();
     let newComment = {
       postId: postId,
       userId: user.id,
-      content: comment
+      content: comment,
+      createdDate: currentDate
     };
     let res = await authAPIs(cookie.load("access-token")).post(endpoints["addComment"], newComment);
     const url = `${endpoints["comments"]}?postId=${postId}`;
@@ -56,6 +60,7 @@ const Post = () => {
           <p className="text-muted">
             Posted on: {new Date(post.createDate).toLocaleDateString()}
           </p>
+          <p>Người đăng: <img className="rounded-circle ms-2" style={{ width: "50px", height: "50px" }} src={post.userId?.avatar}></img> {post.userId?.username}</p>
           <hr />
           <Card.Text>
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -100,7 +105,7 @@ const Post = () => {
                 <p className="m-0">{comment.content}</p>
               </div>
               <div className="ms-auto">
-                <p>Đã gửi 21112</p>
+                <p>{moment(comment.createdDate).fromNow()}</p>
               </div>
             </ListGroup.Item>
           </>

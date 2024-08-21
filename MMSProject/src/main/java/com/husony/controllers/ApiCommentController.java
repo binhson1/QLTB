@@ -50,6 +50,8 @@ public class ApiCommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> addOrUpdate(@RequestBody @Valid Comment c, BindingResult rs) throws ParseException {
         if (rs.hasErrors()) {
+            System.out.println("heelllo");
+            System.out.println(c);
             System.out.println(rs);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

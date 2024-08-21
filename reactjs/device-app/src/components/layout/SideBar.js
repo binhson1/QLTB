@@ -10,9 +10,8 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`container-fluid ${
-        isSidebarVisible ? "col-2" : "col-1"
-      } sidebar`}
+      className={`container-fluid ${isSidebarVisible ? "col-2" : "col-1"
+        } sidebar`}
     >
       <button
         className="btn btn-primary position-fixed bottom-0 start-0 mb-3 ms-3"
@@ -82,7 +81,7 @@ const Sidebar = () => {
               </li>
 
               <li>
-                <Link to="/forum" className="nav-link px-0 align-middle">
+                <Link to="/forum" className="nav-link px-0 align-middle text-white">
                   <i className="fs-4 bi-people"></i>{" "}
                   <span className="ms-1 d-none d-sm-inline">Forum</span>{" "}
                 </Link>

@@ -165,6 +165,7 @@ class Comment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     content = models.TextField()
+    created_date = models.DateTimeField()
 
     class Meta:
         db_table = 'Comment'

@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,9 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Autowired
     private Cloudinary cloudinary;
+    
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Override
     public List<Device> getDevices(Map<String, String> params) {
@@ -53,18 +57,19 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public void addOrUpdate(Device d) {
-        if (d.getFile() != null){
+        if (d.getFile() != null) {
             if (!d.getFile().isEmpty()) {
-            try {
-                Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
-                        ObjectUtils.asMap("resource_type", "auto"));
+                try {
+                    Map res = this.cloudinary.uploader().upload(d.getFile().getBytes(),
+                            ObjectUtils.asMap("resource_type", "auto"));
 
-                d.setImage(res.get("secure_url").toString());
-            } catch (IOException ex) {
-                Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    d.setImage(res.get("secure_url").toString());
+                } catch (IOException ex) {
+                    Logger.getLogger(DeviceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-        }
+       
         this.deviceRepo.addOrUpdate(d);
     }
 
@@ -80,6 +85,5 @@ public class DeviceServiceImpl implements DeviceService {
     public void deleteDevice(long l) {
         this.deviceRepo.deleteDevice(l);
     }
-
 
 }

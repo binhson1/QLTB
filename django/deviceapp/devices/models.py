@@ -147,6 +147,9 @@ class ReportRepairHistory(models.Model):
     report = models.ForeignKey('Report', on_delete=models.CASCADE, blank=True, null=True)
     device_category = models.ForeignKey('DeviceCategory', on_delete=models.CASCADE, blank=True, null=True)
 
+    class Meta:
+        db_table = 'ReportRepairHistory'
+
 
 class Post(models.Model):
     title = models.TextField()
@@ -156,3 +159,12 @@ class Post(models.Model):
 
     class Meta:
         db_table = 'Post'
+
+
+class Comment(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    content = models.TextField()
+
+    class Meta:
+        db_table = 'Comment'

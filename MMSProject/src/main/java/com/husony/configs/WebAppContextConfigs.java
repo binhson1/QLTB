@@ -12,6 +12,7 @@ import com.husony.formatters.LocationFormatter;
 import com.husony.formatters.MaintenanceFormatter;
 import com.husony.formatters.MaintenanceTypeFormatter;
 import com.husony.formatters.ManufacturerFormatter;
+import com.husony.formatters.PostFormatter;
 import com.husony.formatters.RepairFormatter;
 import com.husony.formatters.RepairTypeFormatter;
 import com.husony.formatters.ReportFormatter;
@@ -109,6 +110,7 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         registry.addFormatter(new RepairFormatter());
         registry.addConverter(new StringToLocalDateTimeConverter());
         registry.addFormatter(new MaintenanceTypeFormatter());
+        registry.addFormatter(new PostFormatter());
     }
 
     @Override

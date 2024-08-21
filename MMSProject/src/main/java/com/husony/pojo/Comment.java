@@ -6,12 +6,10 @@ package com.husony.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,32 +18,22 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author ACER
+ * @author Do Gia Huy
  */
 @Entity
-@Table(name = "post")
+@Table(name = "comment")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p"),
-    @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id"),
-    @NamedQuery(name = "Post.findByCreateDate", query = "SELECT p FROM Post p WHERE p.createDate = :createDate")})
-public class Post implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
-    @JsonIgnore
-    private Set<Comment> commentSet;
+    @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
+    @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id")})
+public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,36 +45,25 @@ public class Post implements Serializable {
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
-    @Column(name = "title")
-    private String title;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "create_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
 
-    public Post() {
+    public Comment() {
     }
 
-    public Post(Long id) {
+    public Comment(Long id) {
         this.id = id;
     }
 
-    public Post(Long id, String title, String content, Date createDate) {
+    public Comment(Long id, String content) {
         this.id = id;
-        this.title = title;
         this.content = content;
-        this.createDate = createDate;
     }
 
     public Long getId() {
@@ -97,14 +74,6 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getContent() {
         return content;
     }
@@ -113,12 +82,12 @@ public class Post implements Serializable {
         this.content = content;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Post getPostId() {
+        return postId;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setPostId(Post postId) {
+        this.postId = postId;
     }
 
     public User getUserId() {
@@ -139,10 +108,10 @@ public class Post implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Post)) {
+        if (!(object instanceof Comment)) {
             return false;
         }
-        Post other = (Post) object;
+        Comment other = (Comment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -151,16 +120,7 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "com.husony.pojo.Post[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Set<Comment> getCommentSet() {
-        return commentSet;
-    }
-
-    public void setCommentSet(Set<Comment> commentSet) {
-        this.commentSet = commentSet;
+        return "com.husony.pojo.Comment[ id=" + id + " ]";
     }
     
 }

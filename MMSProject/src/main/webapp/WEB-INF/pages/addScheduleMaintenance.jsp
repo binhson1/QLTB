@@ -43,14 +43,14 @@
                 </c:forEach>
             </form:select>
         </div>
-        <div class="mb-3 mt-3 text-center form-control">
-            <form:hidden path="id" />
+        <form:hidden path="id" />
+        <button class="btn btn-success form-control" type="submit">
             <c:choose>
                 <c:when test="${maintenance.id != null}"> UPDATE </c:when>                   
                 <c:otherwise>
                     ADD
                 </c:otherwise>
             </c:choose>
-        </div>
+        </button>
     </form:form>
 </div>

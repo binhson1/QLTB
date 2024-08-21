@@ -22,6 +22,8 @@ import Forum from "./components/pages/Forum";
 import Location from "./components/pages/Location";
 import DevicesInArea from "./components/pages/DevicesInArea";
 import AddPost from "./components/pages/AddPost";
+import Chat from "./components/pages/Chat";
+import AddChat from "./components/pages/AddChat";
 
 export const MyUserContext = createContext();
 export const MyDispatchContext = createContext();
@@ -83,6 +85,8 @@ const App = () => {
                   <Route path="/forum/" element={<Forum />} />
                   <Route path="/addPost/" element={<AddPost />} />
                   <Route path="/post/:postId/" element={<Post />} />
+                  <Route path="/chat" element={<AddChat />} />
+                  <Route path="/chat/:id/" element={<Chat />} />
                 </>
               )}
             </Routes>

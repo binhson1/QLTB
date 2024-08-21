@@ -19,6 +19,7 @@ export const endpoints = {
   schedulerepair: (deviceId) => `/device/${deviceId}/schedulerepair`,
   "current-user": "/current-user",
   register: "/users",
+  userlist: "/userlist",
 };
 
 export const authAPIs = () => {

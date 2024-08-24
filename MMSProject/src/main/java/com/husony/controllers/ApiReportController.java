@@ -28,14 +28,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Do Gia Huy
  */
-@Controller
+@RestController
 @RequestMapping("/api")
-@CrossOrigin
+
 public class ApiReportController {
 
     @Autowired
@@ -49,12 +50,14 @@ public class ApiReportController {
 
     @DeleteMapping("/report/delete/{reportId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin("http://localhost:8080/MMSApp")
     public void delete(@PathVariable(value = "reportId") long id) {
         this.reportService.deleteReport(id);
     }
 
     @PostMapping("/report/addOrUpdate")
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin
     public ResponseEntity<?> addOrUpdate(@RequestBody @Valid Report r, BindingResult rs) throws ParseException {
         if (rs.hasErrors()) {
             System.out.println(rs);
@@ -70,6 +73,7 @@ public class ApiReportController {
     }
 
     @GetMapping("/report")
+    @CrossOrigin
     public ResponseEntity<List<Report>> list(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.reportService.getReports(params), HttpStatus.OK);
     }

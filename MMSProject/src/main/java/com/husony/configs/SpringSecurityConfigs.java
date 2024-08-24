@@ -71,15 +71,15 @@ public class SpringSecurityConfigs extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
 
-        http.authorizeRequests().antMatchers("/api/**").permitAll()
-                .antMatchers("/").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/job/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/category/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/location/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/maintenancetype/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/repairtype/**").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/report").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers("/**").hasRole("ADMIN");
+//        http.authorizeRequests().antMatchers("/api/**").permitAll()
+//                .antMatchers("/").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/job/**").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/category/**").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/location/**").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/maintenancetype/**").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/repairtype/**").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/report").hasAnyRole("ADMIN", "EMPLOYEE")
+//                .antMatchers("/**").hasRole("ADMIN");
                 
                 
 

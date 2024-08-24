@@ -38,8 +38,6 @@ public class DeviceServiceImpl implements DeviceService {
     @Autowired
     private Cloudinary cloudinary;
     
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     @Override
     public List<Device> getDevices(Map<String, String> params) {

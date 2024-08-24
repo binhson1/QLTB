@@ -5,6 +5,7 @@
 package com.husony.repository.impl;
 
 import com.husony.pojo.Device;
+import com.husony.pojo.Schedulerepair;
 import com.husony.repository.StatsRepository;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,8 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class StatsRepositoryImpl implements StatsRepository{
-
+public class StatsRepositoryImpl implements StatsRepository {
+    
     @Autowired
     private LocalSessionFactoryBean factory;
     
@@ -33,16 +34,64 @@ public class StatsRepositoryImpl implements StatsRepository{
         Session s = this.factory.getObject().getCurrentSession();
         
         CriteriaBuilder b = s.getCriteriaBuilder();
-            CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-            
-            Root rP = q.from(Device.class);
-//            Root rD = q.from(OrderDetail.class);
-            
-            q.multiselect(rP.get("id"), rP.get("name"));
-            
-            Query query = s.createQuery(q);
-            
-            return query.getResultList();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rP = q.from(Device.class);
+        
+        q.multiselect(rP.get("id"), rP.get("name"), rP.get("status"));
+        
+        Query query = s.createQuery(q);
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> statsDeviceByCategory() {
+        Session s = this.factory.getObject().getCurrentSession();
+        
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rP = q.from(Device.class);
+        
+        q.multiselect(b.count(rP.get("id")), rP.get("deviceCategoryId").get("name")).groupBy(rP.get("deviceCategoryId").get("name"));
+        
+        Query query = s.createQuery(q);
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> statsDeviceByStatus() {
+        Session s = this.factory.getObject().getCurrentSession();
+        
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rP = q.from(Device.class);
+        
+        q.multiselect(b.count(rP.get("id")), rP.get("status")).groupBy(rP.get("status"));
+        
+        Query query = s.createQuery(q);
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> statsRepairCostDevice() {
+        Session s = this.factory.getObject().getCurrentSession();
+        
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
+        
+        Root rP = q.from(Schedulerepair.class);
+        
+        q.multiselect(b.sum(rP.get("cost")), rP.get("reportId").get("deviceId").get("name"))
+                .groupBy(rP.get("reportId").get("deviceId").get("name"));
+        
+        Query query = s.createQuery(q);
+        
+        return query.getResultList();
     }
     
 }

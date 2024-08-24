@@ -107,8 +107,9 @@ public class JobController {
                 LocalDateTime date = LocalDateTime.now();
                 LocalDateTime truncatedNow = date.truncatedTo(ChronoUnit.MINUTES);
                 j.setUpdatedDate(truncatedNow);
-
+                
                 if (!j.getStatus().equals(JobStatus.PENDING.toString())) {
+                    //Truong hop la lich bao tri
                     if (j.getMaintenanceId() != null) {
                         System.out.println("1111");
                         Schedulemaintenance maintenance = maintenanceService.getMaintenanceById(j.getMaintenanceId().getId());
@@ -117,6 +118,8 @@ public class JobController {
                         List<Device> devices = this.deviceMaintenanceService.getDeviceMaintenance(params).stream()
                                 .map(m -> m.getDeviceId())
                                 .collect(Collectors.toList());
+                        
+                        // Cap nhat trang thai device sang active, ngay bao tri cuoi cung cua lich bao tri
                         devices.stream().forEach(d -> {
                             if (j.getStatus().equals(JobStatus.DONE.toString())) {
                                 d.setStatus(DeviceStatus.ACTIVE.toString());
@@ -130,14 +133,21 @@ public class JobController {
                             d.setFile(null);
                             this.deviceService.addOrUpdate(d);
                         });
+                        
+                        // Truong hop la lich sua chua 
                     } else if (j.getRepairId() != null) {
                         System.out.println("2222");
                         Schedulerepair repair = this.repairService.getScheduleRepairById(j.getRepairId().getId());
                         Report report = repair.getReportId();
                         Device d = report.getDeviceId();
+                        // neu cong viec hoan thanh => cap nhat trang thai report thanh repaired, 
+                        // device thanh active
                         if (j.getStatus().equals(JobStatus.DONE.toString())) {
                             report.setStatus(ReportStatus.REPAIRED.toString());
                             d.setStatus(DeviceStatus.ACTIVE.toString());
+                            // Neu cong viec trang thai dang tien hanh
+                            // Cap nhat trang thai report dang tien hanh
+                            // device thanh repair
                         } else if (j.getStatus().equals(JobStatus.PROCCESSED.toString())) {
                             report.setStatus(ReportStatus.PROCESS.toString());
                             d.setStatus(DeviceStatus.REPAIR.toString());

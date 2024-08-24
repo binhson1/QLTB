@@ -41,8 +41,6 @@ const Device = () => {
 
       let res = await authAPIs(cookie.load("access-token")).get(url);
 
-      console.info(res.data);
-
       if (page === 1) setDevices(res.data);
       else setDevices((current) => [...current, ...res.data]);
 

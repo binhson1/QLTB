@@ -1,7 +1,11 @@
 import { useReducer, useRef, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import APIs, { endpoints } from "../../configs/APIs";
+import APIs, { authAPIs, endpoints } from "../../configs/APIs";
+import { auth, db } from "../../configs/FireBase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import cookie from "react-cookies";
 
 const Register = () => {
   const [user, setUser] = useState({});
@@ -31,6 +35,38 @@ const Register = () => {
       });
       console.info(res.data);
 
+      let res_login = await APIs.post(endpoints["login"], {
+        username: form.get("username"),
+        password: form.get("password"),
+      });
+
+      cookie.save("access-token", res_login.data);
+
+      let res_current = await authAPIs(res_login.data).get(
+        endpoints["current-user"]
+      );
+
+      cookie.remove("access-token");
+
+      let userFireBase = await createUserWithEmailAndPassword(
+        auth,
+        form.get("email"),
+        form.get("password")
+      );
+
+      console.log(userFireBase);
+
+      const newUser = {
+        avatar: res_current.data.avatar,
+        username: res_current.data.username,
+        firstName: res_current.data.firstName,
+        lastName: res_current.data.lastName,
+        uid: userFireBase.user.uid,
+      };
+
+      const userCollection = collection(db, "User-Info");
+
+      const docRef = await addDoc(userCollection, newUser);
       nav("/login");
     }
   };

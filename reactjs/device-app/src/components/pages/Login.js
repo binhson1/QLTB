@@ -4,6 +4,8 @@ import cookie from "react-cookies";
 import { Navigate } from "react-router";
 import { MyDispatchContext, MyUserContext } from "../../App";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
+import { auth } from "../../configs/FireBase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [username, setUsername] = useState();
@@ -20,13 +22,17 @@ const Login = () => {
         password: password,
       });
 
-      console.info(res.data);
-
       cookie.save("access-token", res.data);
-
       let user = await authAPIs().get(endpoints["current-user"]);
       cookie.save("user", user.data);
 
+      let sign_in = await signInWithEmailAndPassword(
+        auth,
+        user.data.email,
+        password
+      );
+      user.data.uid = sign_in.user.uid;
+      cookie.save("user", user.data);
       dispatch({
         type: "login",
         payload: user.data,

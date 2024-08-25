@@ -38,7 +38,8 @@ public class ApiLocationController {
 
     @Autowired
     private LocationHistoryService locationHistoryService;
-
+    
+    @CrossOrigin("http://localhost:8080/MMSApp")
     @DeleteMapping("/location/delete/{locationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "locationId") long id) {

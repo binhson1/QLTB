@@ -31,6 +31,7 @@ public class ApiMaintenanceTypeController {
     private MaintenanceTypeService maintenService;
     
     @DeleteMapping("/maintenancetype/delete/{maintenancetypeId}")
+    @CrossOrigin("http://localhost:8080/MMSApp")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "maintenancetypeId") long id) {
         this.maintenService.deleteMaintenanceType(id);

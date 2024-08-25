@@ -37,8 +37,8 @@ public class StatsServiceImpl implements StatsService{
     }
 
     @Override
-    public List<Object[]> statsRepairCostDevice() {
-        return this.statsRepo.statsRepairCostDevice();
+    public List<Object[]> statsRepairCostDevice(int year, String period) {
+        return this.statsRepo.statsRepairCostDevice(year, period);
     }
     
 }

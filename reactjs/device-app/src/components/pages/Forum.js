@@ -25,6 +25,7 @@ const Forum = () => {
   return (
     <div className="col-10 container-fluid">
       <h1 className="text-center mb-4">FORUM</h1>
+      <Link to="/addPost"><buttoon className="btn form-control btn-primary mb-3">THÊM BÀI VIẾT</buttoon></Link>
       <Row>
         {posts !== undefined &&
           posts.map((p, index) => (

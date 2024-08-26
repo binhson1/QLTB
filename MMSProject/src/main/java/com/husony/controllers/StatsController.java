@@ -5,6 +5,7 @@
 package com.husony.controllers;
 
 import com.husony.service.StatsService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,9 @@ public class StatsController {
     @RequestMapping("/stats")
     public String deviceStats(Model model){
         model.addAttribute("stats", this.statsService.statsRevenueByDevice());
+        model.addAttribute("statsDeviceByCate", this.statsService.statsDeviceByCategory());
+        model.addAttribute("statsDeviceByStatus", this.statsService.statsDeviceByStatus());
+        model.addAttribute("statsRepairCostDevice", this.statsService.statsRepairCostDevice());
         return "stats";
     }
 }

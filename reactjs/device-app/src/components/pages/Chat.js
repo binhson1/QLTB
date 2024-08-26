@@ -25,6 +25,7 @@ import {
   doc,
   arrayUnion,
   serverTimestamp,
+  increment,
 } from "firebase/firestore";
 import { db } from "../../configs/FireBase";
 import { MyUserContext } from "../../App";
@@ -57,12 +58,27 @@ const Chat = () => {
         .find((chat) => chat.users.includes(id));
 
       if (chatDoc) {
+        if (chatDoc.users[0] != user.uid) {
+          updateDoc(doc(db, "User-Chat", chatDoc.id), { nummessage0: 0 });
+          console.log(chatDoc.ref);
+          console.log(chatDoc);
+        } else {
+          updateDoc(doc(db, "User-Chat", chatDoc.id), { nummessage1: 0 });
+          console.log(chatDoc.ref);
+          console.log(chatDoc);
+        }
         const chatDataRef = query(
           collection(db, "User-Chat", chatDoc.id, "Chat"),
           orderBy("created_date")
         );
         const chatDataSnapshot = await getDocs(chatDataRef);
         const chatData = chatDataSnapshot.docs.map((doc) => doc.data());
+        chatDataSnapshot.forEach((doc) => {
+          const messages = doc.data();
+          if (messages.from != user.uid && messages.status == "đã gửi") {
+            updateDoc(doc.ref, { status: "đã xem" });
+          }
+        });
         console.log("Updated chat data:", chatData);
         setChatData(chatData);
       }
@@ -106,12 +122,26 @@ const Chat = () => {
           .find((chat) => chat.users.includes(id));
 
         if (chatDoc) {
+          console.log(chatDoc);
+          console.log(chatDoc.nummessage0);
+          console.log(chatDoc.nummessage1 + 1);
+          if (chatDoc.users[0] == user.uid) {
+            updateDoc(doc(db, "User-Chat", chatDoc.id), {
+              nummessage0: increment(1),
+            });
+          } else {
+            updateDoc(doc(db, "User-Chat", chatDoc.id), {
+              nummessage1: increment(1),
+            });
+          }
           const chatDataRef = collection(db, "User-Chat", chatDoc.id, "Chat");
           await addDoc(chatDataRef, {
             created_date: Timestamp.fromDate(new Date()),
             from: user.uid,
             messages: newMessage,
+            status: "đã gửi",
           });
+          console.log("loi3");
           setNewMessage("");
           loadChat();
         }
@@ -144,7 +174,12 @@ const Chat = () => {
       <div
         className="overflow-y-auto"
         ref={chatEndRef}
-        style={{ maxHeight: "665px", padding: "10px", overflowX: "hidden" }}
+        style={{
+          maxHeight: "80vh",
+          padding: "10px",
+          overflowX: "hidden",
+          height: "80vh",
+        }}
       >
         {chatData.map((msg, index) => (
           <Row
@@ -177,6 +212,9 @@ const Chat = () => {
               >
                 {msg.messages}
               </div>
+              <p className="m-0">
+                {msg.status} - {moment.unix(msg.created_date.seconds).fromNow()}
+              </p>
             </Col>
             {msg.from === user.uid && (
               <Col xs="auto">

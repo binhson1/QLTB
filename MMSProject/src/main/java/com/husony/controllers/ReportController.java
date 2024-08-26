@@ -66,7 +66,7 @@ public class ReportController {
         }
 
         try {
-            if (r.getStatus() == ReportStatus.PENDING.toString()) {
+            if (r.getStatus().equals(ReportStatus.PENDING.toString())) {
                 Device d = this.deviceService.getDeviceById(r.getDeviceId().getId());
                 d.setStatus(DeviceStatus.PENDING.toString());
                 d.setFile(null);

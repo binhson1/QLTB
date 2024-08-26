@@ -48,6 +48,10 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
+    private Set<Comment> commentSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
     private Set<Post> postSet;
 
     private static final long serialVersionUID = 1L;
@@ -253,6 +257,15 @@ public class User implements Serializable {
 
     public void setPostSet(Set<Post> postSet) {
         this.postSet = postSet;
+    }
+
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
     }
 
 }

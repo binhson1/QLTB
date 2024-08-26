@@ -17,6 +17,7 @@ const Device = () => {
 
   const loadDevices = async () => {
     try {
+      console.log(user);
       let url = `${endpoints["devices"]}?page=${page}`;
 
       let cId = q.get("cateId");

@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ACER
  */
-@Controller
+@RestController
 @RequestMapping("/api")
 @CrossOrigin
 public class ApiRepairTypeController {
@@ -30,6 +31,7 @@ public class ApiRepairTypeController {
     @Autowired
     private RepairTypeService repairTypeService;
     
+    @CrossOrigin("http://localhost:8080/MMSApp")
     @DeleteMapping("/repairtype/delete/{repairtypeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "repairtypeId") long id){

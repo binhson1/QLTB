@@ -17,6 +17,7 @@
     <class>com.husony.pojo.Report</class>
     <class>com.husony.pojo.DeviceMaintenance</class>
     <class>com.husony.pojo.Post</class>
+    <class>com.husony.pojo.Comment</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/devicedb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

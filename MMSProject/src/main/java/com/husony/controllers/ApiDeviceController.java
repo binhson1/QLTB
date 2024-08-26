@@ -60,6 +60,7 @@ public class ApiDeviceController {
     @Autowired
     private ScheduleRepairService scheduleRepairService;
 
+    @CrossOrigin
     @GetMapping("/device")
     public ResponseEntity<List<Device>> list(@RequestParam Map<String, String> params) {
         List<Device> devices = this.deviceService.getDevices(params);
@@ -119,18 +120,21 @@ public class ApiDeviceController {
         }
     }
 
+
     @DeleteMapping("/device/delete/{deviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "deviceId") long id) {
         this.deviceService.deleteDevice(id);
     }
 
+    @CrossOrigin
     @GetMapping("/device/{deviceId}/schedulerepair")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Schedulerepair>> list(@PathVariable(value = "deviceId") long id) {
         return new ResponseEntity<>(this.scheduleRepairService.getScheduleRepairByDeviceId(id), HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping("/device/{deviceId}/location_history")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Locationhistory>> locationdevices(@PathVariable(value = "deviceId") long id) {

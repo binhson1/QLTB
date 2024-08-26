@@ -22,7 +22,23 @@ public class StatsServiceImpl implements StatsService{
     
     @Override
     public List<Object[]> statsRevenueByDevice() {
-        return this.statsRepo.statsRevenueByDevice();
+        List<Object[]> stats = this.statsRepo.statsRevenueByDevice();
+        return stats;
+    }
+
+    @Override
+    public List<Object[]> statsDeviceByCategory() {
+        return this.statsRepo.statsDeviceByCategory();
+    }
+
+    @Override
+    public List<Object[]> statsDeviceByStatus() {
+        return this.statsRepo.statsDeviceByStatus();
+    }
+
+    @Override
+    public List<Object[]> statsRepairCostDevice() {
+        return this.statsRepo.statsRepairCostDevice();
     }
     
 }

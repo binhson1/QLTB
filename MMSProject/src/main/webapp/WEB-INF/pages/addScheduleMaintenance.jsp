@@ -44,7 +44,11 @@
             </form:select>
         </div>
         <form:hidden path="id" />
+<<<<<<< HEAD
         <button class="btn btn-success form-control" type="submit">
+=======
+        <button class="mb-3 mt-3 text-center form-control btn btn-success" type="submit">
+>>>>>>> a3b3e89e3752ffbc2f126f6c8e3ba926657a6a52
             <c:choose>
                 <c:when test="${maintenance.id != null}"> UPDATE </c:when>                   
                 <c:otherwise>

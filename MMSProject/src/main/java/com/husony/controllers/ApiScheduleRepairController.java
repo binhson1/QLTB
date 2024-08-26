@@ -37,12 +37,14 @@ public class ApiScheduleRepairController {
     @Autowired
     private ScheduleRepairService scheduleRepairService;
     
+    @CrossOrigin("http://localhost:8080/MMSApp")
     @DeleteMapping("/schedulerepair/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") long id) {
         this.scheduleRepairService.deleteScheduleRepair(id);
     }
     
+    @CrossOrigin
     @PostMapping("/schedulerepair/addOrUpdate/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> addOrUpdate(@RequestBody @Valid Schedulerepair r, BindingResult rs) throws ParseException {

@@ -2,7 +2,19 @@
 --%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@page
     contentType="text/html" pageEncoding="UTF-8"%>
     <div class="col-10 container-fluid">
-
+        <c:forEach items="${scheduleRepair}" var="r" >
+            <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
+                Sap den ${r.name} - ${r.date}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+        </c:forEach>
+        <c:forEach items="${scheduleMaintenance}" var="m" >
+            <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">
+                Sap den ${m.name} - ${m.nextMaintenanceDate}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </c:forEach>
         <h1 class="text-center">DEVICE MANAGE</h1>
         <c:url value="/" var="action" />
         <form action="${action}">
@@ -11,20 +23,20 @@
                 <input type="text" class="form-control ms-3" style="width: 60%" id="kw" placeholder="Keyword..." name="q">
                 <button class="btn btn-info ms-3" type="submit">Find</button>
                 <a href="<c:url value="/device/add"></c:url>"class="btn btn-success ms-3">ADD DEVICE</a> 
-            </div>
-        </form>
-        <table class="table table-striped mt-3">
-            <tr>
-                <th></th>
-                <th>Id</th>
-                <th>Device name</th>
-                <th>Bought date</th>
-                <th>Location</th>
-                <th>Category</th>
-                <th>Manufacturer</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
+                </div>
+            </form>
+            <table class="table table-striped mt-3">
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Device name</th>
+                    <th>Bought date</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
             <c:forEach items="${devices}" var="d">
                 <tr id="device${d.id}">
                     <td>

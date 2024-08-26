@@ -12,4 +12,7 @@ import java.util.List;
  */
 public interface StatsRepository {
     public List<Object[]> statsRevenueByDevice();
+    public List<Object[]> statsDeviceByCategory();
+    public List<Object[]> statsDeviceByStatus();
+    public List<Object[]> statsRepairCostDevice();
 }

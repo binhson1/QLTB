@@ -17,24 +17,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ACER
  */
-@Controller
+@RestController
 @RequestMapping("/api")
-@CrossOrigin
 public class ApiCategoryController {
     @Autowired
     private CategoryService cateService;
     
+    @CrossOrigin("http://localhost:8080/MMSApp")
     @DeleteMapping("/category/delete/{categoryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "categoryId") long id) {
         this.cateService.deleteCate(id);
     }
     
+    @CrossOrigin
     @GetMapping("/categories")
     public ResponseEntity<List<Devicecategory>> list() {
         return new ResponseEntity<>(this.cateService.getCates(), HttpStatus.OK);

@@ -46,9 +46,9 @@ public class HomeController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(date);
         Map<String, String> p1 = new HashMap<>();
-        params.put("date", dateString);
+        p1.put("date", dateString);
         Map<String, String> p2 = new HashMap<>();
-        params.put("nextMaintenanceDate", dateString);
+        p2.put("nextMaintenanceDate", dateString);
         List<Schedulerepair> scheduleRepair = this.scheduleRepairService.getScheduleRepair(p1);
         List<Schedulemaintenance> scheduleMaintenance = this.scheduleMaintenanceService.getMaintenance(p2);
         System.out.println(scheduleRepair);

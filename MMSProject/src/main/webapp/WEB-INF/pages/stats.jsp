@@ -42,13 +42,15 @@
     </c:if>
     <table class="table table-striped">
         <tr>
+            <th>Tháng/Quý</th>
             <th>Thiet bi</th>
             <th>Chi phi</th>
         </tr>
         <c:forEach items="${statsRepairCostDevice}" var="rP">
             <tr>
-                <td>${rP[1]}</td>
-                <td>${String.format("%,d", rP[0])} VNĐ</td>
+                <td>${rP[0]}</td>
+                <td>${rP[2]}</td>
+                <td>${rP[1]} VNĐ</td>
             </tr>
         </c:forEach>
     </table>

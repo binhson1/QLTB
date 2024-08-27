@@ -31,6 +31,7 @@ public class StatsController {
         model.addAttribute("statsDeviceByStatus", this.statsService.statsDeviceByStatus());
         String year = params.getOrDefault("year", String.valueOf(LocalDate.now().getYear()));
         String period = params.getOrDefault("period", "MONTH");
+        System.out.println("hello: " + this.statsService.statsRepairCostDevice(Integer.parseInt(year), period));
         model.addAttribute("statsRepairCostDevice", this.statsService.statsRepairCostDevice(Integer.parseInt(year), period));
         return "stats";
     }

@@ -87,14 +87,13 @@ public class StatsRepositoryImpl implements StatsRepository {
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
 
         Root rP = q.from(Schedulerepair.class);
-
-        q.multiselect(b.sum(rP.get("cost")), rP.get("reportId").get("deviceId").get("name"));
+        q.multiselect(b.function(period, Integer.class, rP.get("date")),
+                b.sum(rP.get("cost")), rP.get("reportId").get("deviceId").get("name"));
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(b.equal(b.function("YEAR", Integer.class, rP.get("date")), year));
         q.where(predicates.toArray(Predicate[]::new));
-        q.groupBy(rP.get("reportId").get("deviceId").get("name"));
-        q.groupBy(b.function(period, Integer.class, rP.get("date")));
+        q.groupBy(b.function(period, Integer.class, rP.get("date")), rP.get("reportId").get("deviceId").get("name"));
         
         Query query = s.createQuery(q);
 

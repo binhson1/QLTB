@@ -27,13 +27,40 @@ const CustomerService = () => {
   const chatEndRef = useRef(null);
 
   const loadUsers = async () => {
-    const q1 = query(collection(db, "User-Info"), where("uid", "!=", user.uid));
-    const querySnapshot = await getDocs(q1);
-    const listUser = [];
-    querySnapshot.forEach((doc) => {
-      listUser.push({ id: doc.id, ...doc.data() });
+    const q = query(
+      collection(db, "User-Chat"),
+      where("users", "array-contains", user.uid)
+    );
+
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
+      let listUser = [];
+      const promises = snapshot.docs.map(async (docs) => {
+        const doc = docs.data();
+        if (doc) {
+          let q1;
+          if (doc.users[0] !== user.uid) {
+            q1 = query(
+              collection(db, "User-Info"),
+              where("uid", "==", doc.users[0])
+            );
+          } else {
+            q1 = query(
+              collection(db, "User-Info"),
+              where("uid", "==", doc.users[1])
+            );
+          }
+
+          const querySnapshot = await getDocs(q1);
+          querySnapshot.forEach((d) => {
+            const nummessage =
+              doc.users[0] !== user.uid ? doc.nummessage0 : doc.nummessage1;
+            listUser.push({ nummessage, ...d.data() });
+          });
+        }
+      });
+      await Promise.all(promises);
+      setUser(listUser);
     });
-    setUser(listUser);
   };
 
   const fetchOtherUserInfo = async () => {
@@ -108,6 +135,7 @@ const CustomerService = () => {
   useEffect(() => {
     // if (user) {
     loadUsers();
+    console.log(users);
     // }
   }, []);
 
@@ -148,7 +176,7 @@ const CustomerService = () => {
         setChatData(chatData);
       }
     });
-
+    scrollToBottom();
     return () => unsubscribe();
   };
 
@@ -203,7 +231,7 @@ const CustomerService = () => {
             <ListGroup>
               {users.map((user) => (
                 <ListGroup.Item
-                  key={user.id}
+                  key={user.uid}
                   className="d-flex align-items-center p-2 mb-2 border-0 rounded shadow-sm"
                   style={{ backgroundColor: "#f8f9fa", cursor: "pointer" }}
                   onClick={() => addUserChat(user.uid)}
@@ -221,6 +249,12 @@ const CustomerService = () => {
                   <div className="flex-grow-1">
                     <h5 className="mb-0">{user.username}</h5>
                   </div>
+                  <span
+                    className="h5 mb-0"
+                    style={{ color: user.nummessage > 0 ? "red" : "black" }}
+                  >
+                    {user.nummessage}
+                  </span>
                 </ListGroup.Item>
               ))}
             </ListGroup>

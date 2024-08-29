@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     "com.husony.components"})
 @Order(1)
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter{
-      @Bean
+    @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
         JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter = new JwtAuthenticationTokenFilter();
         jwtAuthenticationTokenFilter.setAuthenticationManager(authenticationManager());

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+
 public class ApiCategoryController {
     @Autowired
     private CategoryService cateService;

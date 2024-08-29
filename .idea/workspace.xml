@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a91c3bef-9789-4bdd-beef-59d9f8ee10e1" name="Changes" comment="" />
+    <list default="true" id="a91c3bef-9789-4bdd-beef-59d9f8ee10e1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/configs/JwtSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/configs/JwtSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/configs/SpringSecurityConfigs.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/configs/SpringSecurityConfigs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiDeviceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiDeviceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiEmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiEmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiLocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiLocationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiMaintenanceTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiMaintenanceTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiManufactureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiManufactureController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiRepairTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiRepairTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiScheduleMaintenanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiScheduleMaintenanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiScheduleRepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/ApiScheduleRepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/StatsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/controllers/StatsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/repository/StatsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/repository/StatsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/repository/impl/StatsRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/repository/impl/StatsRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/service/StatsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/service/StatsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/service/impl/StatsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/java/com/husony/service/impl/StatsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/webapp/WEB-INF/pages/addScheduleMaintenance.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/webapp/WEB-INF/pages/addScheduleMaintenance.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MMSProject/src/main/webapp/WEB-INF/pages/stats.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/MMSProject/src/main/webapp/WEB-INF/pages/stats.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/django/deviceapp/deviceapp/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/django/deviceapp/deviceapp/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reactjs/device-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/reactjs/device-app/package-lock.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

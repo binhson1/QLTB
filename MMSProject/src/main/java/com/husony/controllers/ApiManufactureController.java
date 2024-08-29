@@ -34,7 +34,7 @@ public class ApiManufactureController {
     private ManufacturerService manuService;
     
     @CrossOrigin("http://localhost:8080/MMSApp")
-    @DeleteMapping("/manufacturer/delete/{manufacturerId}")
+    @DeleteMapping("/manufacturer/delete/{manufacturerId}")    
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "manufacturerId") long id){
         this.manuService.deleteManu(id);

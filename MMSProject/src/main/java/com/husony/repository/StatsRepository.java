@@ -5,6 +5,7 @@
 package com.husony.repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,5 +15,5 @@ public interface StatsRepository {
     public List<Object[]> statsRevenueByDevice();
     public List<Object[]> statsDeviceByCategory();
     public List<Object[]> statsDeviceByStatus();
-    public List<Object[]> statsRepairCostDevice();
+    public List<Object[]> statsRepairCostDevice(int year, String period);
 }

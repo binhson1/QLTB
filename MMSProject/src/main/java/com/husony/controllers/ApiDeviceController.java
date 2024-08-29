@@ -123,6 +123,7 @@ public class ApiDeviceController {
 
     @DeleteMapping("/device/delete/{deviceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin("http://localhost:8080/MMSApp")
     public void delete(@PathVariable(value = "deviceId") long id) {
         this.deviceService.deleteDevice(id);
     }

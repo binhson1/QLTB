@@ -40,101 +40,110 @@ class User(AbstractUser):
 #     class Meta:
 #         db_table = 'Device'
 
-# class Employee(models.Model):
+
+# class Location(models.Model):
 #     name = models.CharField(max_length=50, null=False)
-#     CCCD = models.CharField(max_length=20, null=False, unique=True)
-#     phone = models.CharField(max_length=15, null=True, unique=True)
+#     address = models.TextField()
 #
 #     class Meta:
-#         db_table = 'Employee'
-class Location(models.Model):
+#         db_table = 'Location'
+
+class Employee(models.Model):
     name = models.CharField(max_length=50, null=False)
-    address = models.TextField()
+    CCCD = models.CharField(max_length=20, null=False, unique=True)
+    phone = models.CharField(max_length=15, null=True, unique=True)
+    user = models.BigIntegerField(null=True, blank=True)
 
     class Meta:
-        db_table = 'Location'
+        db_table = 'Employee'
 
 
-# class ScheduleRepair(models.Model):
-#     date = models.DateField(auto_now=True)
-#     cost = models.FloatField(null=False)
-#     report = models.ForeignKey('Report', on_delete=models.CASCADE)
-#     repair_type = models.ForeignKey('RepairType', on_delete=models.CASCADE)
-#     name = models.TextField()
-#
-#     class Meta:
-#         db_table = 'ScheduleRepair'
-#
-#
-# class ScheduleMaintenance(models.Model):
-#     last_maintenance_date = models.DateField()
-#     next_maintenance_date = models.DateField()
-#     interval_month = models.IntegerField()
-#     maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
-#     device = models.ManyToManyField("Device", through="Device_Maintenance")
-#     name = models.TextField()
-#
-#     class Meta:
-#         db_table = 'ScheduleMaintenance'
-#
-#
-# class Device_Maintenance(models.Model):
-#     device = models.ForeignKey("Device", on_delete=models.CASCADE)
-#     schedule_maintenance = models.ForeignKey("ScheduleMaintenance", on_delete=models.CASCADE)
-#
-#     class Meta:
-#         db_table = 'Device_Maintenance'
-#
-#
-# class Job(models.Model):
-#     employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
-#     maintenance = models.ForeignKey('ScheduleMaintenance', on_delete=models.CASCADE, blank=True, null=True)
-#     repair = models.ForeignKey('ScheduleRepair', on_delete=models.CASCADE, blank=True, null=True)
-#     start_date = models.DateTimeField()
-#     end_date = models.DateTimeField(null=True)
-#     status = models.CharField(max_length=50)
-#     updated_date = models.DateTimeField(auto_now=True)
-#     name = models.TextField()
-#
-#     class Meta:
-#         db_table = 'Job'
+class Repair(models.Model):
+    date = models.DateField(auto_now=True)
+    cost = models.FloatField(null=False)
+    report = models.ForeignKey('Report', on_delete=models.CASCADE)
+    repair_type = models.ForeignKey('RepairType', on_delete=models.CASCADE)
+    name = models.TextField()
+    created_date = models.DateField(auto_now=True)
+
+    class Meta:
+        db_table = 'Repair'
+
+
+class MaintenanceType(models.Model):
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'MaintenanceType'
+
+
+class RepairType(models.Model):
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'RepairType'
+
+
+class Maintenance(models.Model):
+    name = models.TextField()
+    last_maintenance_date = models.DateField(null=True)
+    next_maintenance_date = models.DateField()
+    interval_month = models.IntegerField()
+    maintenance_type = models.ForeignKey('MaintenanceType', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'Maintenance'
+
+
 #
 #
-# class Report(models.Model):
-#     user = models.ForeignKey('User', on_delete=models.CASCADE)
-#     device = models.ForeignKey('Device', on_delete=models.CASCADE)
-#     description = models.TextField()
-#     occurrence_date = models.DateTimeField(auto_now=True)
-#     severity = models.CharField(max_length=50)
-#     status = models.CharField(max_length=50)
-#
-#     class Meta:
-#         db_table = 'Report'
-#
-#
-class LocationHistory(models.Model):
+class Device_Maintenance(models.Model):
     device = models.BigIntegerField()
-    location = models.ForeignKey('Location', on_delete=models.CASCADE)
-    begin_date = models.DateField(auto_now=True)
-    end_date = models.DateField(null=True, blank=True)
-    active = models.BooleanField(default=True)
+    maintenance = models.ForeignKey("Maintenance", on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'LocationHistory'
+        db_table = 'Maintenance_device'
+
+
+class Job(models.Model):
+    employee = models.ForeignKey('Employee', on_delete=models.CASCADE)
+    maintenance = models.ForeignKey('Maintenance', on_delete=models.CASCADE, blank=True, null=True)
+    repair = models.ForeignKey('Repair', on_delete=models.CASCADE, blank=True, null=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True)
+    status = models.CharField(max_length=50)
+    updated_date = models.DateTimeField(auto_now=True)
+    name = models.TextField()
+
+    class Meta:
+        db_table = 'Job'
+
+
+class Report(models.Model):
+    user = models.BigIntegerField()
+    device = models.BigIntegerField()
+    description = models.TextField()
+    occurrence_date = models.DateTimeField()
+    severity = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+    created_date = models.DateField(auto_now=True)
+
+    class Meta:
+        db_table = 'Report'
 #
 #
-# class MaintenanceType(models.Model):
-#     name = models.TextField()
+# class LocationHistory(models.Model):
+#     device = models.BigIntegerField()
+#     location = models.ForeignKey('Location', on_delete=models.CASCADE)
+#     begin_date = models.DateField(auto_now=True)
+#     end_date = models.DateField(null=True, blank=True)
+#     active = models.BooleanField(default=True)
 #
 #     class Meta:
-#         db_table = 'MaintenanceType'
+#         db_table = 'LocationHistory'
 #
 #
-# class RepairType(models.Model):
-#     name = models.TextField()
-#
-#     class Meta:
-#         db_table = 'RepairType'
+
 #
 #
 # class ReportRepairHistory(models.Model):
@@ -150,7 +159,7 @@ class LocationHistory(models.Model):
 # class Post(models.Model):
 #     title = models.TextField()
 #     content = models.TextField()
-#     create_date = models.DateField(auto_now=True)
+#     created_date = models.DateField(auto_now=True)
 #     user = models.ForeignKey('User', on_delete=models.CASCADE)
 #
 #     class Meta:

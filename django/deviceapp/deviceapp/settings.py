@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'deviceapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'identityservicedb',
+        'NAME': 'mainservicedb',
         'USER': 'root',
         'PASSWORD': '123456',
         # 'PASSWORD': 'Sonhaian123.',

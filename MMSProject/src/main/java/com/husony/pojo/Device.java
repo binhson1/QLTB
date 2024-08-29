@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -30,7 +31,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -60,6 +60,9 @@ public class Device implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "image")
     private String image;
     @Basic(optional = false)
@@ -72,7 +75,6 @@ public class Device implements Serializable {
     @NotNull
     @Column(name = "bought_date")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date boughtDate;
     @Basic(optional = false)
     @NotNull
@@ -94,12 +96,13 @@ public class Device implements Serializable {
     @JoinColumn(name = "manufacturer_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Manufacturer manufacturerId;
-
+    
+    
     @Transient
     private Location location;
     @Transient
     private MultipartFile file;
-
+    
     public Device() {
     }
 
@@ -107,12 +110,13 @@ public class Device implements Serializable {
         this.id = id;
     }
 
-    public Device(Long id, String name, String image, String descriptions, Date boughtDate) {
+    public Device(Long id, String name, String image, String descriptions, Date boughtDate, String status) {
         this.id = id;
         this.name = name;
         this.image = image;
         this.descriptions = descriptions;
         this.boughtDate = boughtDate;
+        this.status = status;
     }
 
     public Long getId() {
@@ -155,6 +159,14 @@ public class Device implements Serializable {
         this.boughtDate = boughtDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @XmlTransient
     public Set<DeviceMaintenance> getDeviceMaintenanceSet() {
         return deviceMaintenanceSet;
@@ -194,8 +206,8 @@ public class Device implements Serializable {
         return manufacturerId;
     }
 
-    public void setManufacturerId(Manufacturer manufacturerId) {
-        this.manufacturerId = manufacturerId;
+    public void setManufacturerId(Manufacturer manufacturer) {
+        this.manufacturerId = manufacturer;
     }
 
     @Override
@@ -250,19 +262,5 @@ public class Device implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
+    
 }

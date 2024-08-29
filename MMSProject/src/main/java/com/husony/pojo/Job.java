@@ -5,16 +5,16 @@
 package com.husony.pojo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -50,12 +50,6 @@ public class Job implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Lob
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "name")
-    private String name;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "start_date")
     private LocalDateTime startDate;
     @Column(name = "end_date")
@@ -66,8 +60,15 @@ public class Job implements Serializable {
     @Column(name = "status")
     private String status;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "name")
+    private String name;
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Employee employeeId;
@@ -85,10 +86,12 @@ public class Job implements Serializable {
         this.id = id;
     }
 
-    public Job(Long id, LocalDateTime startDate, LocalDateTime updatedDate) {
+    public Job(Long id, LocalDateTime startDate, String status, LocalDateTime updatedDate, String name) {
         this.id = id;
         this.startDate = startDate;
+        this.status = status;
         this.updatedDate = updatedDate;
+        this.name = name;
     }
 
     public Long getId() {
@@ -114,7 +117,15 @@ public class Job implements Serializable {
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public LocalDateTime getUpdatedDate() {
         return updatedDate;
     }
@@ -123,12 +134,20 @@ public class Job implements Serializable {
         this.updatedDate = updatedDate;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Employee getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeId(Employee employee) {
+        this.employeeId = employee;
     }
 
     public Schedulemaintenance getMaintenanceId() {
@@ -170,34 +189,6 @@ public class Job implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Job[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

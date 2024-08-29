@@ -19,12 +19,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -45,14 +43,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone")})
 public class User implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    @JsonIgnore
-    private Set<Comment> commentSet;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    @JsonIgnore
-    private Set<Post> postSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -109,7 +99,13 @@ public class User implements Serializable {
     private String phone;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     @JsonIgnore
+    private Set<Post> postSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
     private Set<Report> reportSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @JsonIgnore
+    private Set<Comment> commentSet;
 
     public User() {
     }
@@ -211,6 +207,33 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    @XmlTransient
+    public Set<Post> getPostSet() {
+        return postSet;
+    }
+
+    public void setPostSet(Set<Post> postSet) {
+        this.postSet = postSet;
+    }
+
+    @XmlTransient
+    public Set<Report> getReportSet() {
+        return reportSet;
+    }
+
+    public void setReportSet(Set<Report> reportSet) {
+        this.reportSet = reportSet;
+    }
+
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -235,37 +258,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.husony.pojo.User[ id=" + id + " ]";
     }
-
-    /**
-     * @return the reportSet
-     */
-    public Set<Report> getReportSet() {
-        return reportSet;
-    }
-
-    /**
-     * @param reportSet the reportSet to set
-     */
-    public void setReportSet(Set<Report> reportSet) {
-        this.reportSet = reportSet;
-    }
-
-//    @XmlTransient
-    public Set<Post> getPostSet() {
-        return postSet;
-    }
-
-    public void setPostSet(Set<Post> postSet) {
-        this.postSet = postSet;
-    }
-
-    @XmlTransient
-    public Set<Comment> getCommentSet() {
-        return commentSet;
-    }
-
-    public void setCommentSet(Set<Comment> commentSet) {
-        this.commentSet = commentSet;
-    }
-
+    
 }

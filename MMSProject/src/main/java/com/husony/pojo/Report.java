@@ -28,7 +28,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -44,6 +43,10 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Report.findBySeverity", query = "SELECT r FROM Report r WHERE r.severity = :severity"),
     @NamedQuery(name = "Report.findByStatus", query = "SELECT r FROM Report r WHERE r.status = :status")})
 public class Report implements Serializable {
+
+    @OneToMany(mappedBy = "reportId")
+    @JsonIgnore
+    private Set<Reportrepairhistory> reportrepairhistorySet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,7 +64,6 @@ public class Report implements Serializable {
     @NotNull
     @Column(name = "occurrence_date")
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date occurrenceDate;
     @Basic(optional = false)
     @NotNull
@@ -80,8 +82,9 @@ public class Report implements Serializable {
     @ManyToOne(optional = false)
     private Device deviceId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)     
+    @ManyToOne(optional = false)
     private User userId;
+
     public Report() {
     }
 
@@ -185,6 +188,15 @@ public class Report implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Report[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Reportrepairhistory> getReportrepairhistorySet() {
+        return reportrepairhistorySet;
+    }
+
+    public void setReportrepairhistorySet(Set<Reportrepairhistory> reportrepairhistorySet) {
+        this.reportrepairhistorySet = reportrepairhistorySet;
     }
     
 }

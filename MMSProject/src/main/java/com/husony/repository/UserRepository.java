@@ -20,4 +20,7 @@ public interface UserRepository {
     User addUser(User user);
     
     List<User> getUsers();
+    
+    User getUserByEmail(String email);
+
 }

@@ -4,6 +4,7 @@
  */
 package com.husony.controllers;
 
+import com.husony.dto.ApiResponse;
 import com.husony.pojo.Device;
 import com.husony.pojo.Locationhistory;
 import com.husony.pojo.Schedulerepair;
@@ -62,10 +63,12 @@ public class ApiDeviceController {
 
     @CrossOrigin
     @GetMapping("/device")
-    public ResponseEntity<List<Device>> list(@RequestParam Map<String, String> params) {
+    public ResponseEntity<ApiResponse> list(@RequestParam Map<String, String> params) {
         List<Device> devices = this.deviceService.getDevices(params);
-
-        return new ResponseEntity<>(devices, HttpStatus.OK);
+        params.remove("page");
+        int numdevices = this.deviceService.getDevices(params).size();
+        int pageTotal = numdevices/4;
+        return new ResponseEntity<>(new ApiResponse(devices,pageTotal), HttpStatus.OK);
     }
 
     @PostMapping(path = "/device/addOrUpdate",

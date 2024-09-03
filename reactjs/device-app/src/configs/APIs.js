@@ -4,6 +4,7 @@ import cookie from "react-cookies";
 const BASE_URL = "http://localhost:8080/MMSApp/api/";
 
 export const endpoints = {
+  generatetoken: "/generatetoken",
   categories: "/categories",
   maintenances: "/maintenances",
   manufacturer: "/manufacturers",

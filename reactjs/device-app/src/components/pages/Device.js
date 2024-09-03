@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../../App";
+import * as React from "react";
 import { Navigate } from "react-router";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { Link, useSearchParams } from "react-router-dom";
 import cookie from "react-cookies";
 import { Badge, Button } from "react-bootstrap";
+import { Pagination, Stack, Typography } from "@mui/material";
 
 const Device = () => {
   const user = useContext(MyUserContext);
@@ -13,7 +15,13 @@ const Device = () => {
 
   const [devices, setDevices] = useState([]);
 
+  const [maxPage, setMaxPage] = useState(10);
+
   const [page, setPage] = useState(1);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+  };
 
   const loadDevices = async () => {
     try {
@@ -39,11 +47,8 @@ const Device = () => {
       }
 
       let res = await authAPIs(cookie.load("access-token")).get(url);
-
-      if (page === 1) setDevices(res.data);
-      else setDevices((current) => [...current, ...res.data]);
-
-      console.info(devices);
+      if (res.data.pageTotal != maxPage) setMaxPage(res.data.pageTotal);
+      setDevices(res.data.listResponse);
     } catch (ex) {
       console.error(ex);
     }
@@ -124,10 +129,10 @@ const Device = () => {
           </table>
         </div>
       </div>
-      <div className="mt-2 text-center mb-1">
-        <Button onClick={loadMore} variant="primary">
-          Xem thêm
-        </Button>
+      <div className="mt-2 d-flex justify-content-center">
+        <Stack spacing={2}>
+          <Pagination count={maxPage} page={page} onChange={handleChange} />
+        </Stack>
       </div>
     </div>
   );

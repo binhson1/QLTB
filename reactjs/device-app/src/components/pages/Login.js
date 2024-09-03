@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import firebase from "firebase/compat/app";
 import cookie from "react-cookies";
 import { Navigate } from "react-router";
 import { MyDispatchContext, MyUserContext } from "../../App";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
-import { auth } from "../../configs/FireBase";
+import { auth, provider } from "../../configs/FireBase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
@@ -42,6 +44,34 @@ const Login = () => {
     }
   };
 
+  const provider = new GoogleAuthProvider();
+
+  const loginWithGoogle = async () => {
+    let resUser = null;
+    await signInWithPopup(auth, provider).then((result) => {
+      resUser = result.user;
+    });
+
+    try {
+      let res = await APIs.post(endpoints["generatetoken"], {
+        email: resUser.email,
+        secretkey: "12345",
+      });
+
+      cookie.save("access-token", res.data);
+      let user = await authAPIs().get(endpoints["current-user"]);
+      cookie.save("user", user.data);
+
+      user.data.uid = resUser.uid;
+      cookie.save("user", user.data);
+      dispatch({
+        type: "login",
+        payload: user.data,
+      });
+    } catch (ex) {
+      console.error(ex);
+    }
+  };
   if (user !== null) return <Navigate to="/" />;
 
   return (
@@ -72,6 +102,7 @@ const Login = () => {
             Đăng nhập
           </Button>
         </Form.Group>
+        <Button onClick={loginWithGoogle}>Dang Nhap Google</Button>
       </Form>
     </div>
   );

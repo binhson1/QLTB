@@ -121,6 +121,14 @@ public class MaintenanceController {
         return "device_maintenance";
     }
 
+    @GetMapping("/maintenance/{maintenanceId}")
+    public String detailsLocationView(Model model, @PathVariable(value = "maintenanceId") long id) {
+        model.addAttribute("maintenanceType", this.maintenanceTypeService.getMaintenanceType());
+        model.addAttribute("devices", this.deviceService.getDevices(null));
+        model.addAttribute("maintenance", this.maintenanceService.getMaintenanceById(id));
+        return "addMaintenance";
+    }
+    
     @GetMapping("/maintenance/{maintenanceId}/job")
     public String jobMaintenanceView(Model model, @PathVariable(value = "maintenanceId") long id) {
         Map<String, String> params = new HashMap<>();

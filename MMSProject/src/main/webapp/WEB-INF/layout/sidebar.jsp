@@ -129,6 +129,14 @@
                                 <c:url value="/report/add" var="rp2" />
                                 <a href="${rp2}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add report</span> </a>
                             </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/reportrepairhistory" var="rp3" />
+                                <a href="${rp3}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">List report repair history</span> </a>
+                            </li>
+                            <li class="w-100 border-bottom border-white">
+                                <c:url value="/reportrepairhistory/add" var="rp4" />
+                                <a href="${rp4}" class="nav-link px-0 text-white"> <span class="d-none d-sm-inline">Add report repair history</span> </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="border-bottom border-white w-100">

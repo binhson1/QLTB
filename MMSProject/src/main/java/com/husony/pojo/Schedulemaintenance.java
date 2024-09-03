@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -50,26 +50,24 @@ public class Schedulemaintenance implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Column(name = "last_maintenance_date")
+    @Temporal(TemporalType.DATE)
+    private Date lastMaintenanceDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "next_maintenance_date")
+    @Temporal(TemporalType.DATE)
+    private Date nextMaintenanceDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "interval_month")
+    private int intervalMonth;
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "name")
     private String name;
-    @Column(name = "last_maintenance_date")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
-    private Date lastMaintenanceDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "next_maintenance_date")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
-    private Date nextMaintenanceDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "interval_month")
-    private int intervalMonth;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "scheduleMaintenanceId")
     @JsonIgnore
     private Set<DeviceMaintenance> deviceMaintenanceSet;
@@ -87,11 +85,11 @@ public class Schedulemaintenance implements Serializable {
         this.id = id;
     }
 
-    public Schedulemaintenance(Long id, Date lastMaintenanceDate, Date nextMaintenanceDate, int intervalMonth) {
+    public Schedulemaintenance(Long id, Date nextMaintenanceDate, int intervalMonth, String name) {
         this.id = id;
-        this.lastMaintenanceDate = lastMaintenanceDate;
         this.nextMaintenanceDate = nextMaintenanceDate;
         this.intervalMonth = intervalMonth;
+        this.name = name;
     }
 
     public Long getId() {
@@ -126,6 +124,32 @@ public class Schedulemaintenance implements Serializable {
         this.intervalMonth = intervalMonth;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlTransient
+    public Set<DeviceMaintenance> getDeviceMaintenanceSet() {
+        return deviceMaintenanceSet;
+    }
+
+    public void setDeviceMaintenanceSet(Set<DeviceMaintenance> deviceMaintenanceSet) {
+        this.deviceMaintenanceSet = deviceMaintenanceSet;
+    }
+
+    @XmlTransient
+    public Set<Job> getJobSet() {
+        return jobSet;
+    }
+
+    public void setJobSet(Set<Job> jobSet) {
+        this.jobSet = jobSet;
+    }
+
     public Maintenancetype getMaintenanceTypeId() {
         return maintenanceTypeId;
     }
@@ -157,20 +181,6 @@ public class Schedulemaintenance implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Schedulemaintenance[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
     
 }

@@ -47,7 +47,7 @@ public class Repairtype implements Serializable {
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "name")
-    private String name;    
+    private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "repairTypeId")
     @JsonIgnore
     private Set<Schedulerepair> schedulerepairSet;

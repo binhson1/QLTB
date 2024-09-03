@@ -125,4 +125,12 @@
         <put-attribute name="title" value="Add job" />
         <put-attribute name="content" value="/WEB-INF/pages/addJobRepair.jsp" />
     </definition>
+    <definition name="reportRepairHistory" extends="baseLayout">
+        <put-attribute name="title" value="Report repair history" />
+        <put-attribute name="content" value="/WEB-INF/pages/reportRepairHistory.jsp" />
+    </definition>
+     <definition name="addReportRepairHistory" extends="baseLayout">
+        <put-attribute name="title" value="Add report repair history" />
+        <put-attribute name="content" value="/WEB-INF/pages/addReportRepairHistory.jsp" />
+    </definition>
 </tiles-definitions>

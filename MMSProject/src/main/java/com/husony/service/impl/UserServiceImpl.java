@@ -28,19 +28,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+
 /**
  *
  * @author ACER
  */
 @Service("userDetailsService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepo;
-     @Autowired
+    @Autowired
     private BCryptPasswordEncoder passEncoder;
-     @Autowired
-     private Cloudinary cloudinary;
-
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public User getUserByUsername(String username) {
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService{
     public User addUser(Map<String, String> params, MultipartFile avatar) {
         User u = new User();
         u.setFirstName(params.get("firstName"));
-        u.setLastName(params.get("lastName"));        
+        u.setLastName(params.get("lastName"));
         u.setPhone(params.getOrDefault("phone", "9999999999"));
         u.setEmail(params.getOrDefault("email", "a@gmail.com"));
         u.setUsername(params.get("username"));
@@ -78,14 +79,14 @@ public class UserServiceImpl implements UserService{
         u.setUserRole(params.get("user_role"));
         if (!avatar.isEmpty()) {
             try {
-                Map res = this.cloudinary.uploader().upload(avatar.getBytes(), 
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-      
+
         this.userRepo.addUser(u);
         return u;
     }

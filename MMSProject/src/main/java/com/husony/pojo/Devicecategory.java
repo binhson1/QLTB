@@ -36,6 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Devicecategory.findByName", query = "SELECT d FROM Devicecategory d WHERE d.name = :name")})
 public class Devicecategory implements Serializable {
 
+    @OneToMany(mappedBy = "deviceCategoryId")
+    @JsonIgnore
+    private Set<Reportrepairhistory> reportrepairhistorySet;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +115,15 @@ public class Devicecategory implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Devicecategory[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Set<Reportrepairhistory> getReportrepairhistorySet() {
+        return reportrepairhistorySet;
+    }
+
+    public void setReportrepairhistorySet(Set<Reportrepairhistory> reportrepairhistorySet) {
+        this.reportrepairhistorySet = reportrepairhistorySet;
     }
     
 }

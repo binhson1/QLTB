@@ -1,6 +1,6 @@
 <%-- Document : index Created on : Aug 5, 2024, 11:48:38 AM Author : Do Gia Huy
---%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@page
-    contentType="text/html" pageEncoding="UTF-8"%>
+--%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <div class="col-10 container-fluid">
         <c:forEach items="${scheduleRepair}" var="r" >
             <div class="alert alert-primary alert-dismissible fade show mt-2" role="alert">

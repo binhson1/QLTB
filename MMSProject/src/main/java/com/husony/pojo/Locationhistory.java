@@ -4,7 +4,6 @@
  */
 package com.husony.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -14,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -120,8 +120,8 @@ public class Locationhistory implements Serializable {
         return locationId;
     }
 
-    public void setLocationId(Location locationId) {
-        this.locationId = locationId;
+    public void setLocationId(Location location) {
+        this.locationId = location;
     }
 
     @Override

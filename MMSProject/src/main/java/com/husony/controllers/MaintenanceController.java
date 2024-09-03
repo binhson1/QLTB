@@ -185,8 +185,6 @@ public class MaintenanceController {
     @Scheduled(cron = "0 0 0 * * *")
     public void scheduleNotifyEarly() {
         try {
-            System.out.println("Start");
-            System.out.println("năng cực");
             LocalDate today = LocalDate.now();
             LocalDate tomorrow = today.plusDays(1);
             Date date = Date.from(tomorrow.atStartOfDay(ZoneId.systemDefault()).toInstant());

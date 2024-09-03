@@ -4,10 +4,8 @@
  */
 package com.husony.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,28 +17,25 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Do Gia Huy
  */
 @Entity
-@Table(name = "schedulerepair")
+@Table(name = "reportrepairhistory")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Schedulerepair.findAll", query = "SELECT s FROM Schedulerepair s"),
-    @NamedQuery(name = "Schedulerepair.findById", query = "SELECT s FROM Schedulerepair s WHERE s.id = :id"),
-    @NamedQuery(name = "Schedulerepair.findByDate", query = "SELECT s FROM Schedulerepair s WHERE s.date = :date"),
-    @NamedQuery(name = "Schedulerepair.findByCost", query = "SELECT s FROM Schedulerepair s WHERE s.cost = :cost")})
-public class Schedulerepair implements Serializable {
+    @NamedQuery(name = "Reportrepairhistory.findAll", query = "SELECT r FROM Reportrepairhistory r"),
+    @NamedQuery(name = "Reportrepairhistory.findById", query = "SELECT r FROM Reportrepairhistory r WHERE r.id = :id"),
+    @NamedQuery(name = "Reportrepairhistory.findByCreatedDate", query = "SELECT r FROM Reportrepairhistory r WHERE r.createdDate = :createdDate")})
+public class Reportrepairhistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,41 +45,38 @@ public class Schedulerepair implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cost")
-    private double cost;
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "title")
+    private String title;
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
-    @Column(name = "name")
-    private String name;
-    @JoinColumn(name = "repair_type_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Repairtype repairTypeId;
+    @Column(name = "content")
+    private String content;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.DATE)
+    private Date createdDate;
+    @JoinColumn(name = "device_category_id", referencedColumnName = "id")
+    @ManyToOne
+    private Devicecategory deviceCategoryId;
     @JoinColumn(name = "report_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Report reportId;
-    @OneToMany(mappedBy = "repairId")
-    @JsonIgnore
-    private Set<Job> jobSet;
 
-    public Schedulerepair() {
+    public Reportrepairhistory() {
     }
 
-    public Schedulerepair(Long id) {
+    public Reportrepairhistory(Long id) {
         this.id = id;
     }
 
-    public Schedulerepair(Long id, Date date, double cost, String name) {
+    public Reportrepairhistory(Long id, String title, String content, Date createdDate) {
         this.id = id;
-        this.date = date;
-        this.cost = cost;
-        this.name = name;
+        this.title = title;
+        this.content = content;
+        this.createdDate = createdDate;
     }
 
     public Long getId() {
@@ -95,36 +87,36 @@ public class Schedulerepair implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public double getCost() {
-        return cost;
+    public String getContent() {
+        return content;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getName() {
-        return name;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Repairtype getRepairTypeId() {
-        return repairTypeId;
+    public Devicecategory getDeviceCategoryId() {
+        return deviceCategoryId;
     }
 
-    public void setRepairTypeId(Repairtype repairTypeId) {
-        this.repairTypeId = repairTypeId;
+    public void setDeviceCategoryId(Devicecategory deviceCategoryId) {
+        this.deviceCategoryId = deviceCategoryId;
     }
 
     public Report getReportId() {
@@ -133,15 +125,6 @@ public class Schedulerepair implements Serializable {
 
     public void setReportId(Report reportId) {
         this.reportId = reportId;
-    }
-
-    @XmlTransient
-    public Set<Job> getJobSet() {
-        return jobSet;
-    }
-
-    public void setJobSet(Set<Job> jobSet) {
-        this.jobSet = jobSet;
     }
 
     @Override
@@ -154,10 +137,10 @@ public class Schedulerepair implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Schedulerepair)) {
+        if (!(object instanceof Reportrepairhistory)) {
             return false;
         }
-        Schedulerepair other = (Schedulerepair) object;
+        Reportrepairhistory other = (Reportrepairhistory) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -166,7 +149,7 @@ public class Schedulerepair implements Serializable {
 
     @Override
     public String toString() {
-        return "com.husony.pojo.Schedulerepair[ id=" + id + " ]";
+        return "com.husony.pojo.Reportrepairhistory[ id=" + id + " ]";
     }
     
 }

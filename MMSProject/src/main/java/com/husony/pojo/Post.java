@@ -28,11 +28,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
- * @author ACER
+ * @author Do Gia Huy
  */
 @Entity
 @Table(name = "post")
@@ -42,10 +41,6 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = "Post.findById", query = "SELECT p FROM Post p WHERE p.id = :id"),
     @NamedQuery(name = "Post.findByCreateDate", query = "SELECT p FROM Post p WHERE p.createDate = :createDate")})
 public class Post implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
-    @JsonIgnore
-    private Set<Comment> commentSet;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -68,12 +63,14 @@ public class Post implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "create_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date createDate;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User userId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @JsonIgnore
+    private Set<Comment> commentSet;
 
     public Post() {
     }
@@ -129,6 +126,15 @@ public class Post implements Serializable {
         this.userId = userId;
     }
 
+    @XmlTransient
+    public Set<Comment> getCommentSet() {
+        return commentSet;
+    }
+
+    public void setCommentSet(Set<Comment> commentSet) {
+        this.commentSet = commentSet;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -152,15 +158,6 @@ public class Post implements Serializable {
     @Override
     public String toString() {
         return "com.husony.pojo.Post[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Set<Comment> getCommentSet() {
-        return commentSet;
-    }
-
-    public void setCommentSet(Set<Comment> commentSet) {
-        this.commentSet = commentSet;
     }
     
 }

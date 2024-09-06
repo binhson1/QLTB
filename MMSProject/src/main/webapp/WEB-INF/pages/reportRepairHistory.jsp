@@ -34,10 +34,10 @@
                 <td>${r.reportId.id}</td>
                 <td>${r.createdDate}</td>
                 <td>
-                    <c:url value="/report/${r.id}" var="u" />
+                    <c:url value="/reportrepairhistory/${r.id}" var="u" />
                     <a href="${u}" class="btn btn-success">&orarr;</a>
 
-                    <c:url value="/api/report/delete/${r.id}" var="uD" />
+                    <c:url value="/api/reportrepairhistory/delete/${r.id}" var="uD" />
                     <button
                         onclick="deletes('${uD}', ${r.id}, 'report')"
                         class="btn btn-danger"

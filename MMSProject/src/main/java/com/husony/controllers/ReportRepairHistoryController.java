@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,13 +72,11 @@ public class ReportRepairHistoryController {
         return "addReportRepairHistory";
     }
 
-//    @GetMapping("/report/{reportId}")
-//    public String updateView(Model model, @PathVariable(value = "reportId") long id) {
-//        model.addAttribute("report", this.reportService.getReportById(id));
-//        model.addAttribute("devices", this.deviceService.getDevices(null));
-//        model.addAttribute("users", this.userService.getUsers());
-//        ReportStatus[] statuses = ReportStatus.values();
-//        model.addAttribute("status", statuses);
-//        return "addReport";
-//    }
+    @GetMapping("/reportrepairhistory/{reportId}")
+    public String updateView(Model model, @PathVariable(value = "reportId") long id) {
+        model.addAttribute("reportRepair", this.reportRepairService.getReportRepairHistoryById(id));
+        model.addAttribute("cates", this.cateService.getCates());
+        model.addAttribute("reports", this.reportService.getReports(null));
+        return "addReportRepairHistory";
+    }
 }

@@ -144,7 +144,11 @@
                         <a href="${job}" class="nav-link px-0 align-middle text-white">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Job</span> </a>
                     </li>
-                    
+                    <li class="border-bottom border-white w-100">
+                        <c:url value="/stats" var="stats" />
+                        <a href="${stats}" class="nav-link px-0 align-middle text-white">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Stats</span> </a>
+                    </li>
                 </ul>
             </div>
         </div>

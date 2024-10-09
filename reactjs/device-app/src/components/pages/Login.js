@@ -1,6 +1,12 @@
 import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  EmailAuthProvider,
+  linkWithCredential,
+} from "firebase/auth";
 import firebase from "firebase/compat/app";
 import cookie from "react-cookies";
 import { Navigate } from "react-router";
@@ -8,6 +14,7 @@ import { MyDispatchContext, MyUserContext } from "../../App";
 import APIs, { authAPIs, endpoints } from "../../configs/APIs";
 import { auth, provider } from "../../configs/FireBase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { EmailAuthCredential } from "firebase/auth/web-extension";
 
 const Login = () => {
   const [username, setUsername] = useState();
